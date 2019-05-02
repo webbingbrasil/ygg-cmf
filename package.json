@@ -1,0 +1,74 @@
+{
+  "private": true,
+  "browserslist": [
+    "last 1 version",
+    "> 1%",
+    "IE 10"
+  ],
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "vue"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.vue$": "<rootDir>/node_modules/vue-jest"
+    },
+    "snapshotSerializers": [
+      "<rootDir>/resources/assets/js/__tests__/utils/htmlSnapshotBeautifier.js"
+    ],
+    "moduleNameMapper": {
+      "^vue$": "vue/dist/vue.common.js",
+      "\\.(css|less)$": "<rootDir>/resources/assets/js/__tests__/__mocks__/styleMock.js"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(vue2-google-maps|bootstrap-vue|vue-clip|vue2-timepicker))"
+    ],
+    "testMatch": [
+      "**/__tests__/**/?(*.)(spec|test).js?(x)"
+    ],
+    "verbose": true,
+    "setupFiles": [
+      "<rootDir>/resources/assets/js/__tests__/setup/mockument.js",
+      "<rootDir>/resources/assets/js/__tests__/setup/mockBootstrapVue.js",
+      "<rootDir>/resources/assets/js/__tests__/setup/setupVue.js"
+    ]
+  },
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "npm run dev -- --watch",
+    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "npm run production",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.29",
+    "axios": "^0.15.2",
+    "babel-jest": "^24.1.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "core-js": "^3.0.0-beta.8",
+    "cross-env": "3.1.3",
+    "jest": "^24.1.0",
+    "jest-vue-preprocessor": "^1.3.1",
+    "js-beautify": "^1.7.4",
+    "laravel-mix": "^4.0.14",
+    "moxios": "^0.4.0",
+    "qs": "^6.6.0",
+    "sass": "^1.16.0",
+    "sass-loader": "^7.1.0",
+    "tailwindcss": "^0.7.4",
+    "webpack-bundle-analyzer": "^3.0.3"
+  },
+  "dependencies": {
+    "font-awesome": "^4.7.0",
+    "vue": "^2.5.21",
+    "vue-router": "^3.0.2",
+    "vuex": "^3.0.1"
+  }
+}
