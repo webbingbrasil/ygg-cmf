@@ -3,10 +3,10 @@
 namespace Ygg\Composers\Menu;
 
 /**
- * Class MenuItemResource
+ * Class ItemResource
  * @package Ygg\Composers\Menu
  */
-class MenuItemResource extends MenuItem
+class ItemResource extends Item
 {
     /**
      * @var mixed
@@ -47,7 +47,7 @@ class MenuItemResource extends MenuItem
     /**
      * @return bool
      */
-    public function isValid() : bool
+    public function isValid(): bool
     {
         return $this->key !== null;
     }
@@ -55,7 +55,7 @@ class MenuItemResource extends MenuItem
     /**
      * @return bool
      */
-    public function isResource() : bool
+    public function isResource(): bool
     {
         return true;
     }

@@ -2,13 +2,13 @@
 
 namespace Ygg\Actions;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 use Ygg\Form\HandleFormFields;
 use Ygg\Form\Layout\FormLayoutColumn;
 use Ygg\Traits\Transformers\WithCustomTransformers;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Validation\ValidationException;
 
 /**
  * Class Action
@@ -19,6 +19,116 @@ abstract class Action
     use HandleFormFields, WithCustomTransformers;
 
     protected $groupIndex = 0;
+
+    /**
+     * @return array|bool
+     */
+    public function getGlobalAuthorization()
+    {
+        return $this->authorize();
+    }
+
+    /**
+     * @return bool
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function confirmationText(): ?string
+    {
+        return null;
+    }
+
+    public function buildFormFields(): void
+    {
+    }
+
+    /**
+     * @return array
+     */
+    public function form(): array
+    {
+        return $this->fields();
+    }
+
+    /**
+     * @return array|null
+     */
+    public function formLayout(): ?array
+    {
+        if (!$this->fields) {
+            return null;
+        }
+
+        $column = new FormLayoutColumn(12);
+        $this->buildFormLayout($column);
+
+        if (empty($column->fieldsToArray()['fields'])) {
+            foreach ($this->fields as $field) {
+                $column->withSingleField($field->key());
+            }
+        }
+
+        return $column->fieldsToArray()['fields'];
+    }
+
+    /**
+     * @param FormLayoutColumn $column
+     */
+    public function buildFormLayout(FormLayoutColumn $column): void
+    {
+    }
+
+    /**
+     * @param $index
+     */
+    public function setGroupIndex($index): void
+    {
+        $this->groupIndex = $index;
+    }
+
+    /**
+     * @return int
+     */
+    public function groupIndex(): int
+    {
+        return $this->groupIndex;
+    }
+
+    /**
+     * @param array $params
+     * @param array $rules
+     * @param array $messages
+     * @throws ValidationException
+     */
+    public function validate(array $params, array $rules, array $messages = []): void
+    {
+        $validator = Validator::make($params, $rules, $messages);
+
+        if ($validator->fails()) {
+            throw new ValidationException(
+                $validator, new JsonResponse($validator->errors()->getMessages(), 422)
+            );
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function description(): string
+    {
+        return '';
+    }
+
+    /**
+     * @return string
+     */
+    abstract public function label(): string;
 
     /**
      * @param string $message
@@ -95,114 +205,4 @@ abstract class Action
             'name' => $fileName
         ];
     }
-
-    /**
-     * @return bool
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
-    /**
-     * @return array|bool
-     */
-    public function getGlobalAuthorization()
-    {
-        return $this->authorize();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function confirmationText(): ?string
-    {
-        return null;
-    }
-
-    public function buildFormFields(): void
-    {
-    }
-
-    /**
-     * @param FormLayoutColumn $column
-     */
-    public function buildFormLayout(FormLayoutColumn $column): void
-    {
-    }
-
-    /**
-     * @return array
-     */
-    public function form(): array
-    {
-        return $this->fields();
-    }
-
-    /**
-     * @return array|null
-     */
-    public function formLayout(): ?array
-    {
-        if(!$this->fields) {
-            return null;
-        }
-
-        $column = new FormLayoutColumn(12);
-        $this->buildFormLayout($column);
-
-        if(empty($column->fieldsToArray()['fields'])) {
-            foreach($this->fields as $field) {
-                $column->withSingleField($field->key());
-            }
-        }
-
-        return $column->fieldsToArray()['fields'];
-    }
-
-    /**
-     * @param $index
-     */
-    public function setGroupIndex($index): void
-    {
-        $this->groupIndex = $index;
-    }
-
-    /**
-     * @return int
-     */
-    public function groupIndex(): int
-    {
-        return $this->groupIndex;
-    }
-
-    /**
-     * @param array $params
-     * @param array $rules
-     * @param array $messages
-     * @throws ValidationException
-     */
-    public function validate(array $params, array $rules, array $messages = []): void
-    {
-        $validator = Validator::make($params, $rules, $messages);
-
-        if ($validator->fails()) {
-            throw new ValidationException(
-                $validator, new JsonResponse($validator->errors()->getMessages(), 422)
-            );
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function description(): string
-    {
-        return '';
-    }
-
-    /**
-     * @return string
-     */
-    abstract public function label(): string;
 }

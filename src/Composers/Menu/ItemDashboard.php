@@ -3,28 +3,28 @@
 namespace Ygg\Composers\Menu;
 
 /**
- * Class MenuItemDashboard
+ * Class ItemDashboard
  * @package Ygg\Composers\Menu
  */
-class MenuItemDashboard extends MenuItem
+class ItemDashboard extends Item
 {
     /**
-     * @var mixed 
+     * @var mixed
      */
     public $key;
 
     /**
-     * @var mixed|null 
+     * @var mixed|null
      */
     public $icon;
 
     /**
-     * @var string 
+     * @var string
      */
     public $type = 'dashboard';
 
     /**
-     * @var string 
+     * @var string
      */
     public $url;
 
@@ -47,7 +47,7 @@ class MenuItemDashboard extends MenuItem
     /**
      * @return bool
      */
-    public function isValid() : bool
+    public function isValid(): bool
     {
         return $this->key !== null;
     }
@@ -55,7 +55,7 @@ class MenuItemDashboard extends MenuItem
     /**
      * @return bool
      */
-    public function isDashboard() : bool
+    public function isDashboard(): bool
     {
         return true;
     }

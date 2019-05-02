@@ -5,10 +5,10 @@ namespace Ygg\Composers\Menu;
 use function count;
 
 /**
- * Class MenuItemCategory
- * @package Ygg\Composers\Utils
+ * Class ItemCategory
+ * @package Ygg\Composers\Menu
  */
-class MenuItemCategory extends MenuItem
+class ItemCategory extends Item
 {
     /**
      * @var string
@@ -16,7 +16,7 @@ class MenuItemCategory extends MenuItem
     public $type = 'category';
 
     /**
-     * @var MenuItemResource[]
+     * @var ItemResource[]
      */
     public $resources = [];
 
@@ -38,7 +38,7 @@ class MenuItemCategory extends MenuItem
     /**
      * @return bool
      */
-    public function isValid() : bool
+    public function isValid(): bool
     {
         return count($this->resources) !== 0;
     }
@@ -46,7 +46,7 @@ class MenuItemCategory extends MenuItem
     /**
      * @return bool
      */
-    public function isCategory() : bool
+    public function isCategory(): bool
     {
         return true;
     }

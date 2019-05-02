@@ -3,28 +3,28 @@
 namespace Ygg\Composers\Menu;
 
 /**
- * Class MenuItemUrl
+ * Class ItemUrl
  * @package Ygg\Composers\Menu
  */
-class MenuItemUrl extends MenuItem
+class ItemUrl extends Item
 {
     /**
-     * @var mixed|null 
+     * @var mixed|null
      */
     public $icon;
 
     /**
-     * @var mixed 
+     * @var mixed
      */
     public $url;
 
     /**
-     * @var string 
+     * @var string
      */
     public $key;
 
     /**
-     * @var string 
+     * @var string
      */
     public $type = 'url';
 
@@ -43,7 +43,7 @@ class MenuItemUrl extends MenuItem
     /**
      * @return bool
      */
-    public function isValid() : bool
+    public function isValid(): bool
     {
         return true;
     }
@@ -51,7 +51,7 @@ class MenuItemUrl extends MenuItem
     /**
      * @return bool
      */
-    public function isUrl() : bool
+    public function isUrl(): bool
     {
         return true;
     }

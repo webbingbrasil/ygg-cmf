@@ -3,10 +3,10 @@
 namespace Ygg\Composers\Menu;
 
 /**
- * Class MenuItem
- * @package Ygg\Composers\Utils
+ * Class Item
+ * @package Ygg\Composers\Menu
  */
-abstract class MenuItem
+abstract class Item
 {
     /**
      * @var string
@@ -15,23 +15,23 @@ abstract class MenuItem
 
     /**
      * @param array $config
-     * @return MenuItemCategory|MenuItemDashboard|MenuItemResource|MenuItemUrl|null
+     * @return ItemCategory|ItemDashboard|ItemResource|ItemUrl|null
      */
     public static function parse(array $config)
     {
         $menuItem = null;
 
         if (isset($config['resources'])) {
-            $menuItem = new MenuItemCategory($config);
+            $menuItem = new ItemCategory($config);
 
         } elseif (isset($config['resource'])) {
-            $menuItem = new MenuItemResource($config);
+            $menuItem = new ItemResource($config);
 
         } elseif (isset($config['url'])) {
-            $menuItem = new MenuItemUrl($config);
+            $menuItem = new ItemUrl($config);
 
         } elseif (isset($config['dashboard'])) {
-            $menuItem = new MenuItemDashboard($config);
+            $menuItem = new ItemDashboard($config);
         }
 
         return $menuItem && $menuItem->isValid() ? $menuItem : null;
@@ -40,7 +40,7 @@ abstract class MenuItem
     /**
      * @return bool
      */
-    public function isCategory() : bool
+    public function isCategory(): bool
     {
         return false;
     }
@@ -48,7 +48,7 @@ abstract class MenuItem
     /**
      * @return bool
      */
-    public function isResource() : bool
+    public function isResource(): bool
     {
         return false;
     }
@@ -56,7 +56,7 @@ abstract class MenuItem
     /**
      * @return bool
      */
-    public function isUrl() : bool
+    public function isUrl(): bool
     {
         return false;
     }
@@ -64,7 +64,7 @@ abstract class MenuItem
     /**
      * @return bool
      */
-    public function isDashboard() : bool
+    public function isDashboard(): bool
     {
         return false;
     }
@@ -72,5 +72,5 @@ abstract class MenuItem
     /**
      * @return bool
      */
-    abstract public function isValid() : bool;
+    abstract public function isValid(): bool;
 }

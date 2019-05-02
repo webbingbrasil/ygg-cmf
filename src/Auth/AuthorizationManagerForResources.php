@@ -2,9 +2,9 @@
 
 namespace Ygg\Auth;
 
-use function in_array;
-use Ygg\Exceptions\Auth\AuthorizationException;
 use Illuminate\Contracts\Auth\Access\Gate;
+use Ygg\Exceptions\Auth\AuthorizationException;
+use function in_array;
 
 /**
  * Class AuthorizationManagerForResources
@@ -18,7 +18,7 @@ class AuthorizationManagerForResources
      * @param null   $instanceId
      * @throws AuthorizationException
      */
-    public function checkForResource(string $ability, string $resourceKey, $instanceId = null) : void
+    public function checkForResource(string $ability, string $resourceKey, $instanceId = null): void
     {
         $this->checkResourceLevelAuthorization($resourceKey);
 
@@ -26,7 +26,7 @@ class AuthorizationManagerForResources
             $this->deny();
         }
 
-        if($this->isSpecificallyForbidden($ability, $resourceKey, $instanceId)) {
+        if ($this->isSpecificallyForbidden($ability, $resourceKey, $instanceId)) {
             $this->deny();
         }
     }
@@ -35,11 +35,52 @@ class AuthorizationManagerForResources
      * @param string $resourceKey
      * @throws AuthorizationException
      */
-    protected function checkResourceLevelAuthorization(string $resourceKey) : void
+    protected function checkResourceLevelAuthorization(string $resourceKey): void
     {
-        if($this->isSpecificallyForbidden('resource', $resourceKey)) {
+        if ($this->isSpecificallyForbidden('resource', $resourceKey)) {
             $this->deny();
         }
+    }
+
+    /**
+     * @param string $ability
+     * @param string $resourceKey
+     * @param null   $instanceId
+     * @return bool
+     */
+    protected function isSpecificallyForbidden(string $ability, string $resourceKey, $instanceId = null): bool
+    {
+        if (!$this->hasPolicyFor($resourceKey)) {
+            return false;
+        }
+
+        if ($instanceId) {
+            // Form case: edit, update, store, delete
+            return !app(Gate::class)->check('ygg.'.$resourceKey.'.'.$ability, $instanceId);
+        }
+
+        if (in_array($ability, ['resource', 'create'])) {
+            return !app(Gate::class)->check('ygg.'.$resourceKey.'.'.$ability);
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $resourceKey
+     * @return bool
+     */
+    private function hasPolicyFor(string $resourceKey): bool
+    {
+        return config('ygg.resources.'.$resourceKey.'.policy') !== null;
+    }
+
+    /**
+     * @throws AuthorizationException
+     */
+    private function deny(): void
+    {
+        throw new AuthorizationException('Unauthorized action');
     }
 
     /**
@@ -48,15 +89,15 @@ class AuthorizationManagerForResources
      * @param        $instanceId
      * @return bool
      */
-    protected function isGloballyForbidden(string $ability, string $resourceKey, $instanceId) : bool
+    protected function isGloballyForbidden(string $ability, string $resourceKey, $instanceId): bool
     {
         $globalAuthorizations = config('ygg.resources.'.$resourceKey.'.authorizations', []);
 
-        if(!isset($globalAuthorizations[$ability])) {
+        if (!isset($globalAuthorizations[$ability])) {
             return false;
         }
 
-        if(($instanceId && $ability === 'view') || $ability === 'create') {
+        if (($instanceId && $ability === 'view') || $ability === 'create') {
             // Create or edit form case: we check for the global ability even on a GET
             return !$globalAuthorizations[$ability];
         }
@@ -66,56 +107,15 @@ class AuthorizationManagerForResources
     }
 
     /**
-     * @param string $ability
-     * @param string $resourceKey
-     * @param null   $instanceId
-     * @return bool
-     */
-    protected function isSpecificallyForbidden(string $ability, string $resourceKey, $instanceId = null) : bool
-    {
-        if(!$this->hasPolicyFor($resourceKey)) {
-            return false;
-        }
-
-        if($instanceId) {
-            // Form case: edit, update, store, delete
-            return !app(Gate::class)->check('ygg.'.$resourceKey.'.'.$ability, $instanceId);
-        }
-
-        if(in_array($ability, ['resource', 'create'])) {
-            return !app(Gate::class)->check('ygg.'.$resourceKey.'.'.$ability);
-        }
-
-        return false;
-    }
-
-    /**
      * @param string $resourceKey
      * @return string
      */
-    protected function getBaseResourceKey(string $resourceKey) : string
+    protected function getBaseResourceKey(string $resourceKey): string
     {
-        if(($pos = strpos($resourceKey, ':')) !== false) {
+        if (($pos = strpos($resourceKey, ':')) !== false) {
             return substr($resourceKey, 0, $pos);
         }
 
         return $resourceKey;
-    }
-
-    /**
-     * @throws AuthorizationException
-     */
-    private function deny() : void
-    {
-        throw new AuthorizationException('Unauthorized action');
-    }
-
-    /**
-     * @param string $resourceKey
-     * @return bool
-     */
-    private function hasPolicyFor(string $resourceKey) : bool
-    {
-        return config('ygg.resources.'.$resourceKey.'.policy') !== null;
     }
 }

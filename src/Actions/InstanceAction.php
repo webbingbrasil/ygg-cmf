@@ -50,6 +50,16 @@ abstract class InstanceAction extends Action
     abstract public function execute($instanceId, array $data = []): array;
 
     /**
+     * @param $instanceId
+     */
+    public function checkAndStoreAuthorizationFor($instanceId): void
+    {
+        if ($this->authorizeFor($instanceId)) {
+            $this->authorizedInstances[] = $instanceId;
+        }
+    }
+
+    /**
      * Check if the current user is allowed to use this action for this instance
      *
      * @param $instanceId
@@ -61,21 +71,11 @@ abstract class InstanceAction extends Action
     }
 
     /**
-     * @param $instanceId
-     */
-    public function checkAndStoreAuthorizationFor($instanceId): void
-    {
-        if($this->authorizeFor($instanceId)) {
-            $this->authorizedInstances[] = $instanceId;
-        }
-    }
-
-    /**
      * @return array|bool
      */
     public function getGlobalAuthorization()
     {
-        if(!$this->authorize()) {
+        if (!$this->authorize()) {
             return false;
         }
 

@@ -12,5 +12,5 @@ interface AuthenticationCheckHandler
      * @param $user
      * @return bool
      */
-    public function check($user) : bool;
+    public function check($user): bool;
 }
