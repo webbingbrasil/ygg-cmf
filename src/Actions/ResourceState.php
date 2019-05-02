@@ -2,8 +2,8 @@
 
 namespace Ygg\Actions;
 
-use Exception;
 use Ygg\Exceptions\ResourceList\InvalidResourceStateException;
+use Ygg\Exceptions\YggException;
 
 /**
  * Class ResourceState
@@ -86,20 +86,20 @@ abstract class ResourceState extends InstanceAction
      * @param string $bladeView
      * @param array  $params
      * @return array|void
-     * @throws Exception
+     * @throws YggException
      */
     protected function view(string $bladeView, array $params = []): ?array
     {
-        throw new Exception('View return type is not supported for a state.');
+        throw new YggException('View return type is not supported for a state.');
     }
 
     /**
      * @param string $message
      * @return array|void
-     * @throws Exception
+     * @throws YggException
      */
     protected function info(string $message): ?array
     {
-        throw new Exception('Info return type is not supported for a state.');
+        throw new YggException('Info return type is not supported for a state.');
     }
 }
