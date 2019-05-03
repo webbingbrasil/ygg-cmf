@@ -1,26 +1,24 @@
 <?php
 
-
 namespace Ygg\Layout;
 
 use Closure;
 
 /**
- * Class TabbedLayout
+ * Class ContainerLayout
  * @package Ygg\Layout
  */
-class TabbedLayout implements Element
+class ContainerLayout implements Element, Layout
 {
-    use HasElements;
+    use WithElements;
 
     /**
-     * @param string  $title
      * @param Closure $callback
      * @return $this
      */
-    public function addTab(string $title, Closure $callback): self
+    public function addTab(Closure $callback): self
     {
-        $element = new Tab($title);
+        $element = new Row();
         return $this->addElement($element, $callback);
     }
 
@@ -30,7 +28,7 @@ class TabbedLayout implements Element
     public function toArray(): array
     {
         return [
-            'tabs' => $this->elements
+            'rows' => $this->elements
         ];
     }
 }

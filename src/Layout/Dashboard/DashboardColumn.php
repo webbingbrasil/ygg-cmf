@@ -1,14 +1,16 @@
 <?php
 
-namespace Ygg\Dashboard\Layout;
+
+namespace Ygg\Layout\Dashboard;
+
+use Ygg\Layout\Column;
 
 /**
- * Class DashboardLayoutRow
- * @package Ygg\Dashboard\Layout
+ * Class DashboardColumn
+ * @package Ygg\Layout\Dashboard
  */
-class DashboardLayoutRow
+class DashboardColumn extends Column
 {
-
     /**
      * @var array
      */
@@ -21,11 +23,7 @@ class DashboardLayoutRow
      */
     public function addWidget(int $size, string $widgetKey): self
     {
-        $this->widgets[] = [
-            'size' => $size,
-            'key' => $widgetKey
-        ];
-
+        $this->widgets[] = new Widget($size, $widgetKey);
         return $this;
     }
 
@@ -34,6 +32,9 @@ class DashboardLayoutRow
      */
     public function toArray(): array
     {
-        return $this->widgets;
+        return [
+                'size' => $this->size,
+                'rows' => $this->elements
+            ] + $this->widgets;
     }
 }

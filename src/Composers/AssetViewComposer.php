@@ -25,12 +25,14 @@ class AssetViewComposer
      * @var array
      */
     public const RENDER_STRATEGIES = ['raw', 'asset', 'mix'];
+
     /**
      * The acceptable assset types to output
      *
      * @var array
      */
     protected $assetTypes = ['css'];
+
     /**
      * The templates to inject asset paths into based on file type
      *

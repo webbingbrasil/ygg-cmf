@@ -2,7 +2,7 @@
 
 namespace Ygg\Actions;
 
-use Ygg\Exceptions\ResourceList\InvalidResourceStateException;
+use Ygg\Exceptions\Resource\InvalidResourceStateException;
 use Ygg\Exceptions\YggException;
 
 /**

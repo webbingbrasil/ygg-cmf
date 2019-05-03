@@ -22,7 +22,7 @@ trait HasFiltersInQuery
      * @param string $filterName
      * @return array|null
      */
-    public function filterFor(string $filterName)
+    public function filterFor(string $filterName): ?array
     {
         $forcedFilterName = '/forced/'.$filterName;
         if(isset($this->filters[$forcedFilterName])) {
@@ -53,9 +53,9 @@ trait HasFiltersInQuery
 
     /**
      * @param array|null $query
-     * @return array
+     * @return void
      */
-    protected function fillFilterWithRequest(array $query = null): array
+    protected function fillFilterWithRequest(array $query = null): void
     {
         collect($query)
             ->filter(function($value, $name) {
@@ -69,9 +69,9 @@ trait HasFiltersInQuery
     /**
      * @param string $filter
      * @param        $value
-     * @return string
+     * @return void
      */
-    public function forceFilterValue(string $filter, $value): string
+    public function forceFilterValue(string $filter, $value): void
     {
         $this->filters["/forced/$filter"] = $value;
     }

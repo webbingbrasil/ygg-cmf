@@ -1,12 +1,12 @@
 <?php
 
-namespace Ygg\Form\Layout;
+namespace Ygg\Layout\Form;
 
 use Closure;
 
 /**
  * Trait HasFieldRows
- * @package Ygg\Form\Layout
+ * @package Ygg\Layout\Form
  */
 trait HasFieldRows
 {

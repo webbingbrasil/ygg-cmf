@@ -6,9 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Throwable;
-use Ygg\Form\HandleFormFields;
-use Ygg\Form\Layout\FormLayoutColumn;
-use Ygg\Traits\Transformers\WithCustomTransformers;
+use Ygg\Traits\Transformers\WithTransformers;
 
 /**
  * Class Action
@@ -16,9 +14,11 @@ use Ygg\Traits\Transformers\WithCustomTransformers;
  */
 abstract class Action
 {
-    use HandleFormFields, WithCustomTransformers;
+    use WithTransformers;
 
     protected $groupIndex = 0;
+
+    abstract public function type(): string;
 
     /**
      * @return array|bool
@@ -44,46 +44,6 @@ abstract class Action
         return null;
     }
 
-    public function buildFormFields(): void
-    {
-    }
-
-    /**
-     * @return array
-     */
-    public function form(): array
-    {
-        return $this->fields();
-    }
-
-    /**
-     * @return array|null
-     */
-    public function formLayout(): ?array
-    {
-        if (!$this->fields) {
-            return null;
-        }
-
-        $column = new FormLayoutColumn(12);
-        $this->buildFormLayout($column);
-
-        if (empty($column->fieldsToArray()['fields'])) {
-            foreach ($this->fields as $field) {
-                $column->withSingleField($field->key());
-            }
-        }
-
-        return $column->fieldsToArray()['fields'];
-    }
-
-    /**
-     * @param FormLayoutColumn $column
-     */
-    public function buildFormLayout(FormLayoutColumn $column): void
-    {
-    }
-
     /**
      * @param $index
      */
@@ -95,7 +55,7 @@ abstract class Action
     /**
      * @return int
      */
-    public function groupIndex(): int
+    public function getGroupIndex(): int
     {
         return $this->groupIndex;
     }
@@ -161,18 +121,6 @@ abstract class Action
     {
         return [
             'action' => 'reload'
-        ];
-    }
-
-    /**
-     * @param $ids
-     * @return array
-     */
-    protected function refresh($ids): array
-    {
-        return [
-            'action' => 'refresh',
-            'items' => (array)$ids
         ];
     }
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Ygg\Dashboard;
+namespace Ygg\Actions;
 
-use Ygg\Actions\Action;
+use Ygg\Dashboard\DashboardQueryParams;
 
 /**
  * Class DashboardAction
@@ -17,33 +17,6 @@ abstract class DashboardAction extends Action
     public function type(): string
     {
         return 'dashboard';
-    }
-
-    /**
-     * @return array
-     */
-    public function formData(): array
-    {
-        return collect($this->initialData())
-            ->only($this->getDataKeys())
-            ->all();
-    }
-
-    /**
-     * @return array
-     */
-    protected function initialData(): array
-    {
-        return [];
-    }
-
-    /**
-     * @param mixed $ids
-     * @return array
-     */
-    protected function refresh($ids): array
-    {
-        return $this->reload();
     }
 
     /**

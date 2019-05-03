@@ -1,20 +1,20 @@
 <?php
 
-namespace Ygg\Form\Layout;
+namespace Ygg\Layout\Form;
 
 use Closure;
 use Ygg\Layout\Element;
 
 /**
- * Class FieldLayout
- * @package Ygg\Form\Layout
+ * Class FieldRow
+ * @package Ygg\Layout\Form
  */
 class FieldRow implements Element
 {
     /**
      * @var string
      */
-    protected $fieldKey;
+    protected $key;
 
     /**
      * @var int
@@ -29,7 +29,7 @@ class FieldRow implements Element
     /**
      * @var array
      */
-    protected $itens;
+    protected $items;
 
     /**
      * FieldRow constructor.
@@ -38,10 +38,10 @@ class FieldRow implements Element
      */
     public function __construct(string $fieldKey, Closure $callback = null)
     {
-        $this->fieldKey = $fieldKey;
+        $this->key = $fieldKey;
 
         if(strpos($fieldKey, '|')) {
-            [$this->fieldKey, $sizes] = explode('|', $fieldKey);
+            [$this->key, $sizes] = explode('|', $fieldKey);
 
             $this->size = (int)$sizes;
             if(strpos($fieldKey, ',')) {
@@ -52,21 +52,21 @@ class FieldRow implements Element
         }
 
         if($callback) {
-            $itemColumn = new FormLayoutColumn(12);
+            $itemColumn = new FormColumn(12);
             $callback($itemColumn);
-            $this->itens = $itemColumn->toArray()['fields'];
+            $this->items = $itemColumn->toArray()['fields'];
         }
     }
 
     /**
      * @return array
      */
-    function toArray(): array
+    public function toArray(): array
     {
         return [
-            'key' => $this->fieldKey,
+            'key' => $this->key,
             'size' => $this->size,
             'sizeXS' => $this->sizeXS
-        ] + ($this->itens ? ['item' => $this->itens] : []);
+        ] + ($this->items ? ['item' => $this->items] : []);
     }
 }

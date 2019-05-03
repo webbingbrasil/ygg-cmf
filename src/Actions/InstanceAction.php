@@ -23,26 +23,6 @@ abstract class InstanceAction extends Action
     }
 
     /**
-     * @param $instanceId
-     * @return array
-     */
-    public function formData($instanceId): array
-    {
-        return collect($this->initialData($instanceId))
-            ->only($this->getDataKeys())
-            ->all();
-    }
-
-    /**
-     * @param $instanceId
-     * @return array
-     */
-    protected function initialData($instanceId): array
-    {
-        return [];
-    }
-
-    /**
      * @param       $instanceId
      * @param array $data
      * @return array

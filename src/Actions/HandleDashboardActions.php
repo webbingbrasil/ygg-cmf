@@ -1,6 +1,6 @@
 <?php
 
-namespace Ygg\Dashboard;
+namespace Ygg\Actions;
 
 use function is_string;
 
@@ -54,14 +54,18 @@ trait HandleDashboardActions
     protected function appendDashboardActionsToConfig(array &$config): void
     {
         collect($this->dashboardActionHandlers)
-            ->each(function($handler, $actionName) use(&$config) {
-                $formFields = $handler->form();
-                $formLayout = $formFields ? $handler->formLayout() : null;
-                $hasFormInitialData = $formFields
-                    ? is_method_implemented_in_concrete_class($handler, 'initialData')
-                    : false;
+            ->each(function(Action $handler, $actionName) use(&$config) {
+                $hasFormInitialData = false;
+                $formLayout = $formFields = null;
+                if($handler instanceof HasForm) {
+                    $formFields = $handler->form();
+                    $formLayout = $formFields ? $handler->formLayout() : null;
+                    $hasFormInitialData = $formFields
+                        ? is_method_implemented_in_concrete_class($handler, 'initialData')
+                        : false;
+                }
 
-                $config['actions'][$handler->type()][$handler->groupIndex()][] = [
+                $config['actions'][$handler->type()][$handler->getGroupIndex()][] = [
                     'key' => $actionName,
                     'label' => $handler->label(),
                     'description' => $handler->description(),

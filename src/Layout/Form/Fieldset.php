@@ -1,9 +1,13 @@
 <?php
 
-namespace Ygg\Form\Layout;
+namespace Ygg\Layout\Form;
 
 use Ygg\Layout\Element;
 
+/**
+ * Class Fieldset
+ * @package Ygg\Layout\Form
+ */
 class Fieldset implements Element
 {
     use HasFieldRows;
@@ -16,7 +20,7 @@ class Fieldset implements Element
     /**
      * @param string $legend
      */
-    function __construct(string $legend)
+    public function __construct(string $legend)
     {
         $this->legend = $legend;
     }
@@ -24,10 +28,10 @@ class Fieldset implements Element
     /**
      * @return array
      */
-    function toArray(): array
+    public function toArray(): array
     {
         return [
-            "legend" => $this->legend
+            'legend' => $this->legend
         ] + $this->fieldsToArray();
     }
 }

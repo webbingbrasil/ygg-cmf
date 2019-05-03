@@ -20,21 +20,15 @@ abstract class ResourceAction extends Action
     }
 
     /**
+     * @param $ids
      * @return array
      */
-    public function formData(): array
+    protected function refresh($ids): array
     {
-        return collect($this->initialData())
-            ->only($this->getDataKeys())
-            ->all();
-    }
-
-    /**
-     * @return array
-     */
-    protected function initialData(): array
-    {
-        return [];
+        return [
+            'action' => 'refresh',
+            'items' => (array)$ids
+        ];
     }
 
     /**
