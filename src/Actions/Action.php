@@ -45,19 +45,19 @@ abstract class Action
     }
 
     /**
-     * @param $index
-     */
-    public function setGroupIndex($index): void
-    {
-        $this->groupIndex = $index;
-    }
-
-    /**
      * @return int
      */
     public function getGroupIndex(): int
     {
         return $this->groupIndex;
+    }
+
+    /**
+     * @param $index
+     */
+    public function setGroupIndex($index): void
+    {
+        $this->groupIndex = $index;
     }
 
     /**

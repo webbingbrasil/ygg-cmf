@@ -15,7 +15,7 @@ class Row implements Element
     protected $columnClass = Column::class;
 
     /**
-     * @param int $size
+     * @param int          $size
      * @param Closure|null $callback
      * @return $this
      */

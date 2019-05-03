@@ -20,6 +20,13 @@ abstract class ResourceAction extends Action
     }
 
     /**
+     * @param ResourceQueryParams $params
+     * @param array               $data
+     * @return array
+     */
+    abstract public function execute(ResourceQueryParams $params, array $data = []): array;
+
+    /**
      * @param $ids
      * @return array
      */
@@ -30,11 +37,4 @@ abstract class ResourceAction extends Action
             'items' => (array)$ids
         ];
     }
-
-    /**
-     * @param ResourceQueryParams $params
-     * @param array               $data
-     * @return array
-     */
-    abstract public function execute(ResourceQueryParams $params, array $data = []): array;
 }

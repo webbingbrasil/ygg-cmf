@@ -2,8 +2,8 @@
 
 namespace Ygg\Exceptions\Dashboard;
 
-use Ygg\Exceptions\YggException;
 use Illuminate\Contracts\Support\MessageBag;
+use Ygg\Exceptions\YggException;
 
 /**
  * Class WidgetValidationException
@@ -18,6 +18,6 @@ class WidgetValidationException extends YggException
      */
     public function __construct(MessageBag $validationErrors)
     {
-        parent::__construct('Invalid widget attributes : ' . json_encode($validationErrors->toArray()));
+        parent::__construct('Invalid widget attributes : '.json_encode($validationErrors->toArray()));
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Ygg\Actions;
 
-use function is_string;
 use Illuminate\Support\Collection;
+use function is_string;
 
 /**
  * Trait HandleActions
@@ -30,6 +30,24 @@ trait HandleActions
      * @var int
      */
     protected $resourceActionCurrentGroupNumber = 0;
+
+    /**
+     * @param string $commandKey
+     * @return ResourceAction|null
+     */
+    public function resourceActionHandler(string $commandKey): ?ResourceAction
+    {
+        return $this->resourceActionHandlers[$commandKey] ?? null;
+    }
+
+    /**
+     * @param string $commandKey
+     * @return InstanceAction|null
+     */
+    public function instanceActionHandler(string $commandKey): ?InstanceAction
+    {
+        return $this->instanceActionHandlers[$commandKey] ?? null;
+    }
 
     /**
      * @param string $commandName
@@ -94,10 +112,10 @@ trait HandleActions
     {
         collect($this->resourceActionHandlers)
             ->merge(collect($this->instanceActionHandlers))
-            ->each(function(Action $handler, $commandName) use(&$config) {
+            ->each(function (Action $handler, $commandName) use (&$config) {
                 $hasFormInitialData = false;
                 $formLayout = $formFields = null;
-                if($handler instanceof HasForm) {
+                if ($handler instanceof HasForm) {
                     $formFields = $handler->form();
                     $formLayout = $formFields ? $handler->formLayout() : null;
                     $hasFormInitialData = $formFields
@@ -128,40 +146,20 @@ trait HandleActions
     {
         collect($this->instanceActionHandlers)
             // Take all authorized instance commands...
-            ->filter(function($instanceActionHandler) {
+            ->filter(function ($instanceActionHandler) {
                 return $instanceActionHandler->authorize();
             })
-
             // ... and Resource State if present...
-            ->when($this->resourceStateHandler, function(Collection $collection) {
+            ->when($this->resourceStateHandler, function (Collection $collection) {
                 return $collection->push($this->resourceStateHandler);
             })
-
             // ... and for each of them, set authorization for every $item
-            ->each(function($commandHandler) use($items) {
+            ->each(function ($commandHandler) use ($items) {
                 foreach ($items as $item) {
                     $commandHandler->checkAndStoreAuthorizationFor(
                         $item[$this->instanceIdAttribute]
                     );
                 }
             });
-    }
-
-    /**
-     * @param string $commandKey
-     * @return ResourceAction|null
-     */
-    public function resourceActionHandler(string $commandKey): ?ResourceAction
-    {
-        return $this->resourceActionHandlers[$commandKey] ?? null;
-    }
-
-    /**
-     * @param string $commandKey
-     * @return InstanceAction|null
-     */
-    public function instanceActionHandler(string $commandKey): ?InstanceAction
-    {
-        return $this->instanceActionHandlers[$commandKey] ?? null;
     }
 }

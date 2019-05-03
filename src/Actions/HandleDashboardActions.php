@@ -11,14 +11,23 @@ use function is_string;
 trait HandleDashboardActions
 {
     /**
-     * @var array 
+     * @var array
      */
     protected $dashboardActionHandlers = [];
 
     /**
-     * @var int 
+     * @var int
      */
     protected $dashboardActionCurrentGroupNumber = 0;
+
+    /**
+     * @param string $actionKey
+     * @return DashboardAction|null
+     */
+    public function dashboardActionHandler(string $actionKey): ?DashboardAction
+    {
+        return $this->dashboardActionHandlers[$actionKey] ?? null;
+    }
 
     /**
      * @param string $actionName
@@ -54,10 +63,10 @@ trait HandleDashboardActions
     protected function appendDashboardActionsToConfig(array &$config): void
     {
         collect($this->dashboardActionHandlers)
-            ->each(function(Action $handler, $actionName) use(&$config) {
+            ->each(function (Action $handler, $actionName) use (&$config) {
                 $hasFormInitialData = false;
                 $formLayout = $formFields = null;
-                if($handler instanceof HasForm) {
+                if ($handler instanceof HasForm) {
                     $formFields = $handler->form();
                     $formLayout = $formFields ? $handler->formLayout() : null;
                     $hasFormInitialData = $formFields
@@ -79,14 +88,5 @@ trait HandleDashboardActions
                     'authorization' => $handler->getGlobalAuthorization()
                 ];
             });
-    }
-
-    /**
-     * @param string $actionKey
-     * @return DashboardAction|null
-     */
-    public function dashboardActionHandler(string $actionKey): ?DashboardAction
-    {
-        return $this->dashboardActionHandlers[$actionKey] ?? null;
     }
 }

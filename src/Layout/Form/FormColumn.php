@@ -14,7 +14,7 @@ class FormColumn extends Column
     use HasFieldRows;
 
     /**
-     * @param string        $legend
+     * @param string       $legend
      * @param Closure|null $callback
      * @return $this
      */
@@ -30,8 +30,8 @@ class FormColumn extends Column
     public function toArray(): array
     {
         return [
-            'size' => $this->size,
-            'rows' => $this->elements
-        ] + $this->fieldsToArray();
+                'size' => $this->size,
+                'rows' => $this->elements
+            ] + $this->fieldsToArray();
     }
 }

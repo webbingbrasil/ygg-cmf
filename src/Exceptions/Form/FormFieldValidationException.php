@@ -2,8 +2,8 @@
 
 namespace Ygg\Exceptions\Form;
 
-use Ygg\Exceptions\YggException;
 use Illuminate\Support\MessageBag;
+use Ygg\Exceptions\YggException;
 
 /**
  * Class FormFieldValidationException
@@ -17,6 +17,6 @@ class FormFieldValidationException extends YggException
      */
     public function __construct(MessageBag $validationErrors)
     {
-        parent::__construct('Invalid form field attributes : ' . $validationErrors->toJson());
+        parent::__construct('Invalid form field attributes : '.$validationErrors->toJson());
     }
 }

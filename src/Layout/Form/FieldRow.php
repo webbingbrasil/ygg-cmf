@@ -40,18 +40,18 @@ class FieldRow implements Element
     {
         $this->key = $fieldKey;
 
-        if(strpos($fieldKey, '|')) {
+        if (strpos($fieldKey, '|')) {
             [$this->key, $sizes] = explode('|', $fieldKey);
 
             $this->size = (int)$sizes;
-            if(strpos($fieldKey, ',')) {
-                [$this->size, $this->sizeXS] = collect(explode(',', $sizes))->map(function($size) {
+            if (strpos($fieldKey, ',')) {
+                [$this->size, $this->sizeXS] = collect(explode(',', $sizes))->map(function ($size) {
                     return (int)$size;
                 });
             }
         }
 
-        if($callback) {
+        if ($callback) {
             $itemColumn = new FormColumn(12);
             $callback($itemColumn);
             $this->items = $itemColumn->toArray()['fields'];
@@ -64,9 +64,9 @@ class FieldRow implements Element
     public function toArray(): array
     {
         return [
-            'key' => $this->key,
-            'size' => $this->size,
-            'sizeXS' => $this->sizeXS
-        ] + ($this->items ? ['item' => $this->items] : []);
+                'key' => $this->key,
+                'size' => $this->size,
+                'sizeXS' => $this->sizeXS
+            ] + ($this->items ? ['item' => $this->items] : []);
     }
 }

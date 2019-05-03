@@ -31,7 +31,7 @@ class Fieldset implements Element
     public function toArray(): array
     {
         return [
-            'legend' => $this->legend
-        ] + $this->fieldsToArray();
+                'legend' => $this->legend
+            ] + $this->fieldsToArray();
     }
 }

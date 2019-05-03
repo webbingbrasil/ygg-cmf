@@ -25,11 +25,11 @@ trait HasFiltersInQuery
     public function filterFor(string $filterName): ?array
     {
         $forcedFilterName = '/forced/'.$filterName;
-        if(isset($this->filters[$forcedFilterName])) {
+        if (isset($this->filters[$forcedFilterName])) {
             return $this->filterFor($forcedFilterName);
         }
 
-        if(!isset($this->filters[$filterName])) {
+        if (!isset($this->filters[$filterName])) {
             return null;
         }
 
@@ -44,7 +44,7 @@ trait HasFiltersInQuery
      */
     public function setDefaultFilters($filters): self
     {
-        collect((array) $filters)->each(function($value, $filter) {
+        collect((array)$filters)->each(function ($value, $filter) {
             $this->setFilterValue($filter, $value);
         });
 
@@ -52,18 +52,20 @@ trait HasFiltersInQuery
     }
 
     /**
-     * @param array|null $query
-     * @return void
+     * @param string $filter
+     * @param mixed  $value
      */
-    protected function fillFilterWithRequest(array $query = null): void
+    protected function setFilterValue(string $filter, $value): void
     {
-        collect($query)
-            ->filter(function($value, $name) {
-                return Str::startsWith($name, 'filter_');
+        if (is_array($value)) {
+            // Force all filter values to be string, to be consistent with
+            // all use cases (filter in ResourceList or in Command)
+            $value = empty($value) ? null : implode(',', $value);
+        }
 
-            })->each(function($value, $name) {
-                $this->setFilterValue(substr($name, strlen('filter_')), $value);
-            });
+        $this->filters[$filter] = $value;
+
+        event("filter-{$filter}-was-set", [$value, $this]);
     }
 
     /**
@@ -77,19 +79,17 @@ trait HasFiltersInQuery
     }
 
     /**
-     * @param string $filter
-     * @param mixed $value
+     * @param array|null $query
+     * @return void
      */
-    protected function setFilterValue(string $filter, $value): void
+    protected function fillFilterWithRequest(array $query = null): void
     {
-        if(is_array($value)) {
-            // Force all filter values to be string, to be consistent with
-            // all use cases (filter in ResourceList or in Command)
-            $value = empty($value) ? null : implode(',', $value);
-        }
+        collect($query)
+            ->filter(function ($value, $name) {
+                return Str::startsWith($name, 'filter_');
 
-        $this->filters[$filter] = $value;
-
-        event("filter-{$filter}-was-set", [$value, $this]);
+            })->each(function ($value, $name) {
+                $this->setFilterValue(substr($name, strlen('filter_')), $value);
+            });
     }
 }

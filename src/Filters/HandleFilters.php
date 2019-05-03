@@ -33,8 +33,8 @@ trait HandleFilters
             ? $filterHandler
             : app($filterHandler);
 
-        if($callback) {
-            Event::listen('filter-'.$filterName.'-was-set', function ($value, $params) use($callback) {
+        if ($callback) {
+            Event::listen('filter-'.$filterName.'-was-set', function ($value, $params) use ($callback) {
                 $callback($value, $params);
             });
         }
@@ -48,7 +48,7 @@ trait HandleFilters
      */
     protected function appendFiltersToConfig(array &$config): void
     {
-        foreach($this->filterHandlers as $filterName => $handler) {
+        foreach ($this->filterHandlers as $filterName => $handler) {
             $multiple = $handler instanceof ListMultipleFilter;
             $required = !$multiple && $handler instanceof ListRequiredFilter;
 
@@ -68,12 +68,58 @@ trait HandleFilters
     }
 
     /**
+     * @param $handler
+     * @param $attribute
+     * @return array|SessionManager|Store|int|mixed|string|null
+     */
+    protected function getFilterDefaultOption(ListRequiredFilter $handler, $attribute)
+    {
+        if ($this->isGlobalFilter($handler)) {
+            return session('_ygg_retained_global_filter_'.$attribute) ?: $handler->defaultOption();
+        }
+
+        if ($this->isRetainedFilter($handler, $attribute, true)) {
+            $sessionValue = session('_ygg_retained_filter_'.$attribute);
+
+            return $handler instanceof ListMultipleFilter
+                ? explode(',', $sessionValue)
+                : $sessionValue;
+        }
+
+        return $handler instanceof ListRequiredFilter
+            ? $handler->defaultOption()
+            : null;
+    }
+
+    /**
+     * @param $handler
+     * @return bool
+     */
+    protected function isGlobalFilter($handler): bool
+    {
+        return $handler instanceof GlobalRequiredFilter;
+    }
+
+    /**
+     * @param      $handler
+     * @param      $attribute
+     * @param bool $onlyValued
+     * @return bool
+     */
+    protected function isRetainedFilter($handler, $attribute, $onlyValued = false): bool
+    {
+        return method_exists($handler, 'retainValueInSession')
+            && $handler->retainValueInSession()
+            && (!$onlyValued || session()->has('_ygg_retained_filter_'.$attribute));
+    }
+
+    /**
      * @param ListFilter $handler
      * @return array
      */
     protected function formatFilterValues(ListFilter $handler): array
     {
-        if(!method_exists($handler, 'template')) {
+        if (!method_exists($handler, 'template')) {
             return collect($handler->options())->map(function ($label, $id) {
                 return compact('id', 'label');
             })->values()->all();
@@ -88,7 +134,7 @@ trait HandleFilters
      */
     protected function formatFilterTemplate(ListFilter $handler): string
     {
-        if(($template = $handler->template()) instanceof View) {
+        if (($template = $handler->template()) instanceof View) {
             return $template->render();
         }
 
@@ -101,20 +147,17 @@ trait HandleFilters
     protected function getFilterDefaultOptions(): array
     {
         return collect($this->filterHandlers)
-
             // Only filters which aren't in the request
-            ->filter(function($handler, $attribute) {
+            ->filter(function ($handler, $attribute) {
                 return !request()->has('filter_'.$attribute);
             })
-
             // Only required filters or retained filters with value saved in session
-            ->filter(function(ListFilter $handler, $attribute) {
+            ->filter(function (ListFilter $handler, $attribute) {
                 return $handler instanceof ListRequiredFilter
                     || $this->isRetainedFilter($handler, $attribute, true);
             })
-
-            ->map(function(ListFilter $handler, $attribute) {
-                if($this->isRetainedFilter($handler, $attribute, true)) {
+            ->map(function (ListFilter $handler, $attribute) {
+                if ($this->isRetainedFilter($handler, $attribute, true)) {
                     return [
                         'name' => $attribute,
                         'value' => session('_ygg_retained_filter_'.$attribute)
@@ -135,18 +178,18 @@ trait HandleFilters
     {
         collect($this->filterHandlers)
             // Only filters sent which are declared 'retained'
-            ->filter(function($handler, $attribute) {
+            ->filter(function ($handler, $attribute) {
                 return request()->has('filter_'.$attribute)
                     && $this->isRetainedFilter($handler, $attribute);
             })
-            ->each(function($handler, $attribute) {
+            ->each(function ($handler, $attribute) {
                 // Array case: we store a coma separated string
                 // (to be consistent and only store strings on filter session)
                 $value = is_array(request()->get('filter_'.$attribute))
                     ? implode(',', request()->get('filter_'.$attribute))
                     : request()->get('filter_'.$attribute);
 
-                if(strlen(trim($value)) === 0) {
+                if (strlen(trim($value)) === 0) {
                     // No value, we have to unset the retained value
                     session()->forget('_ygg_retained_filter_'.$attribute);
 
@@ -159,51 +202,5 @@ trait HandleFilters
             });
 
         session()->save();
-    }
-
-    /**
-     * @param $handler
-     * @param $attribute
-     * @param bool $onlyValued
-     * @return bool
-     */
-    protected function isRetainedFilter($handler, $attribute, $onlyValued = false): bool
-    {
-        return method_exists($handler, 'retainValueInSession')
-            && $handler->retainValueInSession()
-            && (!$onlyValued || session()->has('_ygg_retained_filter_'.$attribute));
-    }
-
-    /**
-     * @param $handler
-     * @return bool
-     */
-    protected function isGlobalFilter($handler): bool
-    {
-        return $handler instanceof GlobalRequiredFilter;
-    }
-
-    /**
-     * @param $handler
-     * @param $attribute
-     * @return array|SessionManager|Store|int|mixed|string|null
-     */
-    protected function getFilterDefaultOption(ListRequiredFilter $handler, $attribute)
-    {
-        if($this->isGlobalFilter($handler)) {
-            return session('_ygg_retained_global_filter_'.$attribute) ?: $handler->defaultOption();
-        }
-
-        if($this->isRetainedFilter($handler, $attribute, true)) {
-            $sessionValue = session('_ygg_retained_filter_'.$attribute);
-
-            return $handler instanceof ListMultipleFilter
-                ? explode(',', $sessionValue)
-                : $sessionValue;
-        }
-
-        return $handler instanceof ListRequiredFilter
-            ? $handler->defaultOption()
-            : null;
     }
 }
