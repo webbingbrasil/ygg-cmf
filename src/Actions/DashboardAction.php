@@ -1,13 +1,12 @@
 <?php
 
-namespace Ygg\Dashboard\Commands;
+namespace Ygg\Dashboard;
 
-use Ygg\Dashboard\DashboardQueryParams;
 use Ygg\Actions\Action;
 
 /**
  * Class DashboardAction
- * @package Ygg\Dashboard\Commands
+ * @package Ygg\Dashboard
  */
 abstract class DashboardAction extends Action
 {
