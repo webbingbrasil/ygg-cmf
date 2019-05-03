@@ -20,8 +20,8 @@ class HasOneRelationUpdater
      */
     public function update(Model $instance, string $attribute, $value): void
     {
+        // check if is updating a relation attribute (ex: role:title)
         if (strpos($attribute, ':') !== false) {
-            // This is a relation attribute update case (eg: mother:name)
             [$attribute, $subAttribute] = explode(':', $attribute);
 
             if ($instance->$attribute) {

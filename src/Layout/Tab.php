@@ -26,12 +26,25 @@ class Tab implements Element
     }
 
     /**
+     * @var string
+     */
+    protected $rowColumnClass = Column::class;
+
+    /**
+     * @param string $rowColumnClass
+     */
+    public function setRowColumnClass(string $rowColumnClass): void
+    {
+        $this->rowColumnClass = $rowColumnClass;
+    }
+
+    /**
      * @param Closure $callback
      * @return $this
      */
     public function addRow(Closure $callback): self
     {
-        $element = new Row();
+        $element = (new Row())->useColumnClass($this->rowColumnClass);
         return $this->addElement($element, $callback);
     }
 
@@ -41,6 +54,7 @@ class Tab implements Element
     public function toArray(): array
     {
         return [
+            'title' => $this->title,
             'rows' => $this->elements
         ];
     }

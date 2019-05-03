@@ -25,7 +25,6 @@ class BelongsToManyRelationUpdater
         $collection = collect($value);
         $keyName = explode('.', $instance->$attribute()->getRelated()->getQualifiedKeyName())[1];
 
-        // First sync all existing related items (ie: those with an id).
         $instance->$attribute()->sync(
             $collection
                 ->filter(function ($item) use ($keyName) {
@@ -35,7 +34,6 @@ class BelongsToManyRelationUpdater
                 ->all()
         );
 
-        // Then create all non-existing related items
         $collection
             ->filter(function ($item) use ($keyName) {
                 return $item[$keyName] === null;

@@ -18,9 +18,9 @@ class BelongsToRelationUpdater
      */
     public function update(Model $instance, string $attribute, $value): void
     {
+        // check if is updating a relation attribute (ex: role:title)
         if (strpos($attribute, ':') !== false) {
-            // This is a relation attribute update case (eg: mother:name)
-            list($attribute, $subAttribute) = explode(':', $attribute);
+            [$attribute, $subAttribute] = explode(':', $attribute);
 
             if ($instance->$attribute) {
                 $instance->$attribute()->update([

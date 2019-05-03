@@ -9,5 +9,6 @@ namespace Ygg\Layout;
  */
 interface Layout
 {
-
+    public function setRowColumnClass(string $rowColumnClass): void;
+    public function toArray(): array;
 }
