@@ -1,12 +1,12 @@
 <?php
 
-namespace Ygg\Form\Fields\Formatters;
+namespace Ygg\Fields\Formatters;
 
-use Ygg\Form\Fields\Field;
+use Ygg\Fields\AbstractField;
 
 /**
  * Class FieldFormatter
- * @package Ygg\Form\Fields\Formatters
+ * @package Ygg\Fields\Formatters
  */
 abstract class FieldFormatter
 {
@@ -28,17 +28,17 @@ abstract class FieldFormatter
     }
 
     /**
-     * @param Field     $field
+     * @param AbstractField $field
      * @param           $value
      * @return mixed
      */
-    abstract public function toFront(Field $field, $value);
+    abstract public function toFront(AbstractField $field, $value);
 
     /**
-     * @param Field     $field
-     * @param string    $attribute
+     * @param AbstractField $field
+     * @param string        $attribute
      * @param           $value
      * @return mixed
      */
-    abstract public function fromFront(Field $field, string $attribute, $value);
+    abstract public function fromFront(AbstractField $field, string $attribute, $value);
 }

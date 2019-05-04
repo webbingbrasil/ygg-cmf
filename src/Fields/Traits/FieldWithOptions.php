@@ -1,13 +1,13 @@
 <?php
 
-namespace Ygg\Form\Fields\Traits;
+namespace Ygg\Fields\Traits;
 
 use function count;
 use Illuminate\Support\Collection;
 
 /**
  * Trait FieldWithOptions
- * @package Ygg\Form\Fields\Traits
+ * @package Ygg\Fields\Traits
  */
 trait FieldWithOptions
 {

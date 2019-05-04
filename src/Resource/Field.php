@@ -2,11 +2,13 @@
 
 namespace Ygg\Resource;
 
+use Ygg\Fields\Field as FieldInterface;
+
 /**
- * Class ResourceDataContainer
+ * Class Field
  * @package Ygg\Resource
  */
-class ResourceDataContainer
+class Field implements FieldInterface
 {
 
     /**
@@ -31,7 +33,7 @@ class ResourceDataContainer
 
     /**
      * @param string $key
-     * @return ResourceDataContainer
+     * @return Field
      */
     public static function make(string $key): self
     {
@@ -43,7 +45,7 @@ class ResourceDataContainer
 
     /**
      * @param string $label
-     * @return ResourceDataContainer
+     * @return Field
      */
     public function setLabel(string $label): self
     {
@@ -54,7 +56,7 @@ class ResourceDataContainer
 
     /**
      * @param bool $sortable
-     * @return ResourceDataContainer
+     * @return Field
      */
     public function setSortable(bool $sortable = true): self
     {
@@ -65,7 +67,7 @@ class ResourceDataContainer
 
     /**
      * @param bool $html
-     * @return ResourceDataContainer
+     * @return Field
      */
     public function setHtml(bool $html = true): self
     {

@@ -4,7 +4,9 @@ namespace Ygg\Form;
 
 use function count;
 use function get_class;
+use function in_array;
 use stdClass;
+use Ygg\Exceptions\Form\FieldFormattingMustBeDelayedException;
 use Ygg\Exceptions\Form\FormUpdateException;
 use Ygg\Layout\ContainerLayout;
 use Ygg\Layout\Form\FormColumn;
@@ -35,6 +37,57 @@ abstract class Form
      * @var bool
      */
     protected $layoutBuilt = false;
+
+    /**
+     * Applies Field Formatters on $data.
+     *
+     * @param array       $data
+     * @param string|null $instanceId
+     * @param bool        $handleDelayedData
+     * @return array
+     */
+    public function formatRequestData(array $data, $instanceId = null, bool $handleDelayedData = false): array
+    {
+        $delayedData = collect([]);
+
+        $formattedData = collect($data)->filter(function ($value, $key) {
+            // Filter only configured fields
+            return in_array($key, $this->getFieldKeys(), false);
+
+        })->map(function ($value, $key) use ($handleDelayedData, $delayedData, $instanceId) {
+            if (!$field = $this->findFieldByKey($key)) {
+                return $value;
+            }
+
+            try {
+                // Apply formatter based on field configuration
+                return $field->formatter()
+                    ->setInstanceId($instanceId)
+                    ->fromFront($field, $key, $value);
+
+            } catch (FieldFormattingMustBeDelayedException $exception) {
+                // The formatter needs to be executed in a second pass. We delay it.
+                if ($handleDelayedData) {
+                    $delayedData[$key] = $value;
+                    return null;
+                }
+
+                throw $exception;
+            }
+
+        });
+
+        if ($handleDelayedData) {
+            return [
+                $formattedData->filter(function ($value, $key) use ($delayedData) {
+                    return !$delayedData->has($key);
+                })->all(),
+                $delayedData->all()
+            ];
+        }
+
+        return $formattedData->all();
+    }
 
     /**
      * @return array
@@ -90,7 +143,7 @@ abstract class Form
     {
         return collect($this->find($id))
             // Filter model attributes on actual form fields
-            ->only($this->getDataKeys())
+            ->only($this->getFieldKeys())
             ->all();
     }
 
@@ -111,7 +164,7 @@ abstract class Form
     {
         $data = collect($this->create())
             // Filter model attributes on actual form fields
-            ->only($this->getDataKeys())
+            ->only($this->getFieldKeys())
             ->all();
 
         return count($data) ? $data : null;
@@ -124,7 +177,7 @@ abstract class Form
      */
     public function create(): array
     {
-        $attributes = collect($this->getDataKeys())
+        $attributes = collect($this->getFieldKeys())
             ->flip()
             ->map(function () {
                 return null;
@@ -154,7 +207,7 @@ abstract class Form
      */
     public function hasDataLocalizations(): bool
     {
-        return collect($this->fields())
+        return collect($this->getFields())
                 ->filter(function ($field) {
                     return $field['localized'] ?? false;
                 })

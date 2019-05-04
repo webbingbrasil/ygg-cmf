@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use Ygg\Actions\HandleActions;
 use Ygg\Actions\ReorderHandler;
 use Ygg\Filters\HandleFilters;
+use Ygg\Form\HandleFields;
 use Ygg\Layout\Resource\ResourceColumn;
 use Ygg\Resource\Traits\HandleResourceState;
 use Ygg\Traits\Transformers\WithTransformers;
@@ -17,22 +18,12 @@ use Ygg\Traits\Transformers\WithTransformers;
  */
 abstract class Resource
 {
-    use HandleFilters, HandleResourceState, HandleActions, WithTransformers;
-
-    /**
-     * @var array
-     */
-    protected $containers = [];
+    use HandleFilters, HandleFields, HandleResourceState, HandleActions, WithTransformers;
 
     /**
      * @var array
      */
     protected $columns = [];
-
-    /**
-     * @var bool
-     */
-    protected $listBuilt = false;
 
     /**
      * @var bool
@@ -245,7 +236,7 @@ abstract class Resource
      * @param array|Collection|null $items
      * @return array
      */
-    protected function data($items = null): array
+    protected function dataList($items = null): array
     {
         $this->putRetainedFilterValuesInSession();
 
@@ -266,7 +257,7 @@ abstract class Resource
 
         $this->addInstanceActionsAuthorizationsToConfigForItems($items);
 
-        $keys = $this->getDataKeys();
+        $keys = $this->getFieldKeys();
 
         return [
                 'items' =>
@@ -292,61 +283,12 @@ abstract class Resource
     abstract public function getListData(ResourceQueryParams $params): array;
 
     /**
-     * @return array
-     */
-    protected function getDataKeys(): array
-    {
-        return collect($this->dataContainers())
-            ->pluck('key')
-            ->all();
-    }
-
-    /**
-     * @return array
-     */
-    public function dataContainers(): array
-    {
-        $this->checkListIsBuilt();
-
-        return collect($this->containers)->map(function (ResourceDataContainer $container) {
-            return $container->toArray();
-        })->keyBy('key')->all();
-    }
-
-    private function checkListIsBuilt(): void
-    {
-        if (!$this->listBuilt) {
-            $this->buildListDataContainers();
-            $this->listBuilt = true;
-        }
-    }
-
-    /**
-     * Build list containers using ->addDataContainer()
-     *
-     * @return void
-     */
-    abstract public function buildListDataContainers(): void;
-
-    /**
      * @param string $attribute
      * @return $this
      */
     protected function setMultiformAttribute(string $attribute): self
     {
         $this->multiformAttribute = $attribute;
-
-        return $this;
-    }
-
-    /**
-     * @param ResourceDataContainer $container
-     * @return $this
-     */
-    protected function addDataContainer(ResourceDataContainer $container): self
-    {
-        $this->containers[] = $container;
-        $this->listBuilt = false;
 
         return $this;
     }
@@ -378,6 +320,18 @@ abstract class Resource
         $column = new ResourceColumn($label, $size);
         $column->hideOnXs();
         $this->columns[] = $column;
+
+        return $this;
+    }
+
+    /**
+     * @param Field $field
+     * @return $this
+     */
+    protected function addField(Field $field): self
+    {
+        $this->fields[] = $field;
+        $this->fieldsBuilt = false;
 
         return $this;
     }

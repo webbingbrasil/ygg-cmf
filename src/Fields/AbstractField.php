@@ -1,17 +1,17 @@
 <?php
 
-namespace Ygg\Form\Fields;
+namespace Ygg\Fields;
 
 use function count;
 use Illuminate\Support\Facades\Validator;
 use Ygg\Exceptions\Form\FieldValidationException;
-use Ygg\Form\Fields\Formatters\FieldFormatter;
+use Ygg\Fields\Formatters\FieldFormatter;
 
 /**
- * Class FormField
- * @package Ygg\Form\Fields
+ * Class AbstractField
+ * @package Ygg\Fields
  */
-abstract class Field
+abstract class AbstractField implements Field
 {
     /**
      * @var string

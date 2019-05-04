@@ -5,10 +5,10 @@ namespace Ygg\Form\Eloquent;
 use function count;
 use function in_array;
 use Illuminate\Database\Eloquent\Model;
-use Ygg\Form\Fields\ListField;
+use Ygg\Fields\ListAbstractField;
 
 /**
- * Trait WithYggFormEloquentUpdater
+ * Trait WithFormEloquentUpdater
  * @package Ygg\Form\Eloquent
  */
 trait WithFormEloquentUpdater
@@ -62,7 +62,7 @@ trait WithFormEloquentUpdater
     {
         return collect($this->fields)
             ->filter(function ($field) {
-                return $field instanceof ListField
+                return $field instanceof ListAbstractField
                     && $field->isSortable();
 
             })->map(function ($listField) {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Ygg\Form\Fields\Traits;
+namespace Ygg\Fields\Traits;
 
 /**
  * Trait FieldWithPlaceholder
- * @package Ygg\Form\Fields\Traits
+ * @package Ygg\Fields\Traits
  */
 trait FieldWithPlaceholder
 {

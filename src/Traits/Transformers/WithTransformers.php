@@ -123,7 +123,7 @@ trait WithTransformers
             // Merge model attribute with form fields to be sure we have
             // all attributes which the front code needed.
             $attributes = array_merge(
-                collect($this->getDataKeys())->flip()->map(function () {
+                collect($this->getFieldKeys())->flip()->map(function () {
                     return null;
                 })->all(), $attributes);
 
@@ -169,7 +169,7 @@ trait WithTransformers
      */
     protected function handleAutoRelatedAttributes($attributes, $model)
     {
-        collect($this->getDataKeys())
+        collect($this->getFieldKeys())
             ->filter(function ($key) {
                 return strpos($key, ':') !== false;
 

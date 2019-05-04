@@ -1,10 +1,10 @@
 <?php
 
-namespace Ygg\Form\Fields\Traits;
+namespace Ygg\Fields\Traits;
 
 /**
  * Trait FieldWithUpload
- * @package Ygg\Form\Fields\Traits
+ * @package Ygg\Fields\Traits
  */
 trait FieldWithUpload
 {

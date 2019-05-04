@@ -1,20 +1,20 @@
 <?php
 
-namespace Ygg\Form\Fields;
+namespace Ygg\Fields;
 
 use Illuminate\Support\Collection;
 use Ygg\Exceptions\Form\FieldValidationException;
-use Ygg\Form\Fields\Formatters\AutocompleteFormatter;
-use Ygg\Form\Fields\Traits\FieldWithDataLocalization;
-use Ygg\Form\Fields\Traits\FieldWithOptions;
-use Ygg\Form\Fields\Traits\FieldWithPlaceholder;
-use Ygg\Form\Fields\Traits\FieldWithTemplates;
+use Ygg\Fields\Formatters\AutocompleteFormatter;
+use Ygg\Fields\Traits\FieldWithDataLocalization;
+use Ygg\Fields\Traits\FieldWithOptions;
+use Ygg\Fields\Traits\FieldWithPlaceholder;
+use Ygg\Fields\Traits\FieldWithTemplates;
 
 /**
  * Class AutocompleteField
- * @package Ygg\Form\Fields
+ * @package Ygg\Fields
  */
-class AutocompleteField extends Field
+class AutocompleteField extends AbstractField
 {
     use FieldWithPlaceholder, FieldWithTemplates,
         FieldWithOptions, FieldWithDataLocalization;

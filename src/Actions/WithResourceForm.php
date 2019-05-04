@@ -17,7 +17,7 @@ trait WithResourceForm
     public function formData($instanceId): array
     {
         return collect($this->initialData($instanceId))
-            ->only($this->getDataKeys())
+            ->only($this->getFieldKeys())
             ->all();
     }
 

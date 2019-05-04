@@ -22,7 +22,7 @@ trait WithForm
      */
     public function form(): array
     {
-        return $this->fields();
+        return $this->getFields();
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace Ygg\Widgets;
 
 use Ygg\Exceptions\Dashboard\WidgetValidationException;
-use Ygg\Form\Fields\HtmlField;
+use Ygg\Fields\HtmlAbstractField;
 
 /**
  * Class PanelWidget
@@ -13,7 +13,7 @@ class PanelWidget extends Widget
 {
 
     /**
-     * @var HtmlField
+     * @var HtmlAbstractField
      */
     protected $htmlFormField;
 
@@ -24,7 +24,7 @@ class PanelWidget extends Widget
     public static function make(string $key): self
     {
         $widget = new static($key, 'panel');
-        $widget->htmlFormField = HtmlField::make('panel');
+        $widget->htmlFormField = HtmlAbstractField::make('panel');
 
         return $widget;
     }
