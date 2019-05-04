@@ -2,7 +2,7 @@
 
 namespace Ygg\Actions;
 
-use Ygg\Form\HandleFields;
+use Ygg\Resource\HandleFields;
 use Ygg\Layout\Form\FormColumn;
 
 /**
@@ -12,10 +12,6 @@ use Ygg\Layout\Form\FormColumn;
 trait WithForm
 {
     use HandleFields;
-
-    public function buildFormFields(): void
-    {
-    }
 
     /**
      * @return array

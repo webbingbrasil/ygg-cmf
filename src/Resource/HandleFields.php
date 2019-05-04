@@ -1,6 +1,6 @@
 <?php
 
-namespace Ygg\Form;
+namespace Ygg\Resource;
 
 use Ygg\Fields\AbstractField;
 use Ygg\Fields\Field as FieldInterface;

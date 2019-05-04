@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use Ygg\Actions\HandleActions;
 use Ygg\Actions\ReorderHandler;
 use Ygg\Filters\HandleFilters;
-use Ygg\Form\HandleFields;
+use Ygg\Resource\HandleFields;
 use Ygg\Layout\Resource\ResourceColumn;
 use Ygg\Resource\Traits\HandleResourceState;
 use Ygg\Traits\Transformers\WithTransformers;
