@@ -10,12 +10,10 @@ interface AttributeTransformer
 {
 
     /**
-     * Transform a model attribute to array (json-able).
-     *
-     * @param        $value
-     * @param        $instance
+     * @param mixed  $value
+     * @param mixed  $instance
      * @param string $attribute
      * @return mixed
      */
-    public function apply($value, $instance = null, $attribute = null);
+    public function apply($value, $instance = null, string $attribute = null);
 }

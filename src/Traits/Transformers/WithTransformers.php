@@ -54,7 +54,7 @@ trait WithTransformers
                 $this->closure = $closure;
             }
 
-            public function apply($value, $instance = null, $attribute = null)
+            public function apply($value, $instance = null, string $attribute = null)
             {
                 return call_user_func($this->closure, $value, $instance, $attribute);
             }
