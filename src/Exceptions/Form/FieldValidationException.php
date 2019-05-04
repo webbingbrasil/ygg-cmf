@@ -9,7 +9,7 @@ use Ygg\Exceptions\YggException;
  * Class FormFieldValidationException
  * @package Ygg\Exceptions\Form
  */
-class FormFieldValidationException extends YggException
+class FieldValidationException extends YggException
 {
 
     /**

@@ -3,6 +3,7 @@
 namespace Ygg\Form\Fields\Traits;
 
 use function count;
+use Illuminate\Support\Collection;
 
 /**
  * Trait FieldWithOptions
@@ -12,7 +13,7 @@ trait FieldWithOptions
 {
 
     /**
-     * @param $options
+     * @param mixed $options
      * @return array
      */
     protected static function formatOptions($options): array

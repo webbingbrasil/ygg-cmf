@@ -4,7 +4,7 @@ namespace Ygg\Form\Fields;
 
 use function count;
 use Illuminate\Support\Facades\Validator;
-use Ygg\Exceptions\Form\FormFieldValidationException;
+use Ygg\Exceptions\Form\FieldValidationException;
 use Ygg\Form\Fields\Formatters\FieldFormatter;
 
 /**
@@ -200,7 +200,7 @@ abstract class Field
     /**
      * @param array $childArray
      * @return array
-     * @throws FormFieldValidationException
+     * @throws FieldValidationException
      */
     protected function buildArray(array $childArray): array
     {
@@ -239,7 +239,7 @@ abstract class Field
 
     /**
      * @param array $properties
-     * @throws FormFieldValidationException
+     * @throws FieldValidationException
      */
     protected function validate(array $properties): void
     {
@@ -249,7 +249,7 @@ abstract class Field
             ] + $this->validationRules());
 
         if ($validator->fails()) {
-            throw new FormFieldValidationException($validator->errors());
+            throw new FieldValidationException($validator->errors());
         }
     }
 
