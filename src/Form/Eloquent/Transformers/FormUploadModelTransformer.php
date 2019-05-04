@@ -2,11 +2,11 @@
 
 namespace Ygg\Form\Eloquent\Transformers;
 
-use function count;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Arr;
 use Ygg\Traits\Transformers\AttributeTransformer;
+use function count;
 
 /**
  * Class FormUploadModelTransformer
@@ -18,12 +18,12 @@ class FormUploadModelTransformer implements AttributeTransformer
     /**
      * Transform a model attribute to array (json-able).
      *
-     * @param        $value
+     * @param mixed  $value
      * @param Model  $instance
      * @param string $attribute
      * @return mixed
      */
-    public function apply($value, $instance = null, $attribute = null)
+    public function apply($value, $instance = null, string $attribute = null)
     {
         if (!$instance->$attribute) {
             return null;
@@ -40,7 +40,7 @@ class FormUploadModelTransformer implements AttributeTransformer
                         'file' => count($file) ? $file : null,
                     ] + Arr::except($array, ['name', 'thumbnail', 'size']);
             })->all();
-        };
+        }
 
         return $this->transformUpload($instance->$attribute);
     }
