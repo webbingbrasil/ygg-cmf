@@ -3,7 +3,7 @@
 namespace Ygg\Form;
 
 use function in_array;
-use Ygg\Exceptions\Form\FormFieldFormattingMustBeDelayedException;
+use Ygg\Exceptions\Form\FieldFormattingMustBeDelayedException;
 use Ygg\Form\Fields\Field;
 
 /**
@@ -49,7 +49,7 @@ trait HandleFields
                     ->setInstanceId($instanceId)
                     ->fromFront($field, $key, $value);
 
-            } catch (FormFieldFormattingMustBeDelayedException $exception) {
+            } catch (FieldFormattingMustBeDelayedException $exception) {
                 // The formatter needs to be executed in a second pass. We delay it.
                 if ($handleDelayedData) {
                     $delayedData[$key] = $value;

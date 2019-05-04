@@ -6,7 +6,7 @@ use Illuminate\Support\MessageBag;
 use Ygg\Exceptions\YggException;
 
 /**
- * Class FormFieldValidationException
+ * Class FieldValidationException
  * @package Ygg\Exceptions\Form
  */
 class FieldValidationException extends YggException
