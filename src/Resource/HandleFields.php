@@ -34,8 +34,6 @@ trait HandleFields
     }
 
     /**
-     * Get the YggFormField array representation.
-     *
      * @return array
      */
     public function getFields(): array
@@ -56,8 +54,6 @@ trait HandleFields
     }
 
     /**
-     * Find a field by its key.
-     *
      * @param string $key
      * @return FieldInterface
      */

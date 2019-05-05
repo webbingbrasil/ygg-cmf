@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator as LengthAwarePaginatorContract;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Ygg\Actions\Action;
-use Ygg\Form\Form;
+use Ygg\Form\AbstractForm;
 use function call_user_func;
 use function is_object;
 
@@ -69,7 +69,7 @@ trait WithTransformers
      */
     public function transform($models)
     {
-        if ($this instanceof Form || $this instanceof Action) {
+        if ($this instanceof AbstractForm || $this instanceof Action) {
             // It's a Form (full resource or from a Command), there's only one model.
             // We must add Form Field Formatters in the process
             return $this->applyFormatters(
