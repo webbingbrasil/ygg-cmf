@@ -64,7 +64,7 @@ class ResourceQueryParams
      * @param string $defaultSortedDir
      * @return $this
      */
-    public function setDefaultSort(string $defaultSortedBy, string $defaultSortedDir): self
+    public function setDefaultSort(string $defaultSortedBy = null, string $defaultSortedDir = 'asc'): self
     {
         $this->sortedBy = $defaultSortedBy;
         $this->sortedDir = $defaultSortedDir;
@@ -102,17 +102,17 @@ class ResourceQueryParams
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function sortedBy(): string
+    public function sortedBy(): ?string
     {
         return $this->sortedBy;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function sortedDir(): string
+    public function sortedDir(): ?string
     {
         return $this->sortedDir;
     }

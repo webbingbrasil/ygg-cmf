@@ -22,6 +22,7 @@ class ResourceListController extends ApiController
         ygg_check_ability('resource', $resourceKey);
 
         $list = $this->getListInstance($resourceKey);
+        $list->config();
 
         return response()->json([
             'fields' => $list->getFields(),

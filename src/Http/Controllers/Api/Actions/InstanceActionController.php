@@ -31,7 +31,7 @@ class InstanceActionController extends ApiController
     public function show(string $resourceKey, string $actionKey, $instanceId): JsonResponse
     {
         $list = $this->getListInstance($resourceKey);
-        $list->buildListConfig();
+        $list->config();
         $action = $this->getActionHandler($list, $actionKey, $instanceId);
 
         return response()->json([
@@ -76,7 +76,7 @@ class InstanceActionController extends ApiController
     public function update(string $resourceKey, string $actionKey, $instanceId): JsonResponse
     {
         $list = $this->getListInstance($resourceKey);
-        $list->buildListConfig();
+        $list->config();
 
         $action = $this->getActionHandler($list, $actionKey, $instanceId);
 

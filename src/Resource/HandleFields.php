@@ -101,7 +101,7 @@ trait HandleFields
     private function buildFields(): void
     {
         if (!$this->fieldsBuilt) {
-            $this->buildFormFields();
+            $this->fields();
             $this->fieldsBuilt = true;
         }
     }

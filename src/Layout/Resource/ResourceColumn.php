@@ -37,8 +37,8 @@ class ResourceColumn implements Element
      */
     public function __construct(string $key, int $size, $sizeXS = null)
     {
-        parent::__construct($size);
         $this->key = $key;
+        $this->size = $size;
         $this->sizeXS = $sizeXS ?: $size;
     }
 

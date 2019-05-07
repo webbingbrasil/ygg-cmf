@@ -8,6 +8,7 @@ return [
             'strategy' => 'raw',
         ],
     ],
+    'resources' => [],
     'menu' => [],
     'global_filters' => [],
     'auth' => [

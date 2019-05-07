@@ -39,7 +39,7 @@ interface Resource
      *
      * @return void
      */
-    public function buildListConfig(): void;
+    public function config(): void;
     /**
      * @return ResourceState
      */

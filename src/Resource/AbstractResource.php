@@ -28,10 +28,6 @@ abstract class AbstractResource implements Resource
      * @var bool
      */
     protected $layoutBuilt = false;
-    /**
-     * @var bool
-     */
-    protected $configBuilt = false;
 
     /**
      * @var string
@@ -76,7 +72,7 @@ abstract class AbstractResource implements Resource
     /**
      * @var string
      */
-    protected $defaultSortDir;
+    protected $defaultSortDir = 'asc';
 
     /**
      * @return array
@@ -84,7 +80,7 @@ abstract class AbstractResource implements Resource
     public function getLayout(): array
     {
         if (!$this->layoutBuilt) {
-            $this->buildListLayout();
+            $this->layout();
             $this->layoutBuilt = true;
         }
 
@@ -98,18 +94,13 @@ abstract class AbstractResource implements Resource
      *
      * @return void
      */
-    abstract public function buildListLayout(): void;
+    abstract public function layout(): void;
 
     /**
      * @return array
      */
     public function getConfig(): array
     {
-        if (!$this->configBuilt) {
-            $this->buildListConfig();
-            $this->configBuilt = true;
-        }
-
         $config = [
             'instanceIdAttribute' => $this->instanceIdAttribute,
             'multiformAttribute' => $this->multiformAttribute,
@@ -228,11 +219,6 @@ abstract class AbstractResource implements Resource
      */
     public function reorder(array $ids): void
     {
-        if (!$this->configBuilt) {
-            $this->buildListConfig();
-            $this->configBuilt = true;
-        }
-
         if($this->reorderHandler instanceof ReorderHandler){
             $this->reorderHandler->reorder($ids);
         }
@@ -243,7 +229,7 @@ abstract class AbstractResource implements Resource
      *
      * @return void
      */
-    abstract public function buildListConfig(): void;
+    abstract public function config(): void;
 
     /**
      * @param array|Collection|null $items
@@ -254,7 +240,7 @@ abstract class AbstractResource implements Resource
         $this->putRetainedFilterValuesInSession();
 
         $page = null;
-        $items = $items ?: $this->getListData(
+        $items = $items ?: $this->data(
             ResourceQueryParams::create()
                 ->setDefaultSort($this->defaultSort, $this->defaultSortDir)
                 ->fillWithRequest()
@@ -293,7 +279,7 @@ abstract class AbstractResource implements Resource
      * @param ResourceQueryParams $params
      * @return array
      */
-    abstract public function getListData(ResourceQueryParams $params): array;
+    abstract public function data(ResourceQueryParams $params): array;
 
     /**
      * @param string $attribute

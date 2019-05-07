@@ -222,11 +222,4 @@ abstract class AbstractForm implements Form
      * @param $id
      */
     abstract public function deleteResourceById($id): void;
-
-    /**
-     * Build form fields using ->addField()
-     *
-     * @return void
-     */
-    abstract protected function buildFormFields(): void;
 }

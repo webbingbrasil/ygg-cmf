@@ -27,7 +27,7 @@ class ResourceStateController extends ApiController
     public function update(string $resourceKey, $instanceId): JsonResponse
     {
         $list = $this->getListInstance($resourceKey);
-        $list->buildListConfig();
+        $list->config();
 
         if (!$list->resourceStateHandler()->authorize()
             || !$list->resourceStateHandler()->authorizeFor($instanceId)) {

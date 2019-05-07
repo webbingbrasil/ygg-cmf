@@ -27,7 +27,7 @@ class ResourceActionController extends ApiController
     public function show($resourceKey, $actionKey): JsonResponse
     {
         $list = $this->getListInstance($resourceKey);
-        $list->buildListConfig();
+        $list->config();
         $action = $this->getActionHandler($list, $actionKey);
         $formData = [];
 
@@ -73,7 +73,7 @@ class ResourceActionController extends ApiController
     public function update(string $resourceKey, string $actionKey): JsonResponse
     {
         $list = $this->getListInstance($resourceKey);
-        $list->buildListConfig();
+        $list->config();
         $action = $this->getActionHandler($list, $actionKey);
 
         $formatedData = [];
