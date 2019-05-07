@@ -5,7 +5,8 @@ namespace Ygg\Resource;
 
 
 use Illuminate\Support\Collection;
-use Ygg\Actions\ReorderHandler;
+use Ygg\Actions\ResourceAction;
+use Ygg\Actions\ResourceState;
 
 interface Resource
 {
@@ -27,5 +28,21 @@ interface Resource
      */
     public function getConfig(): array;
     public function reorder(array $ids): void;
+    /**
+     * @param string $commandKey
+     * @return ResourceAction|null
+     */
+    public function resourceActionHandler(string $commandKey): ?ResourceAction;
+
+    /**
+     * Build list config
+     *
+     * @return void
+     */
+    public function buildListConfig(): void;
+    /**
+     * @return ResourceState
+     */
+    public function resourceStateHandler(): ResourceState;
 
 }

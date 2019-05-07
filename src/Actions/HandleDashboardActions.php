@@ -24,7 +24,7 @@ trait HandleDashboardActions
      * @param string $actionKey
      * @return DashboardAction|null
      */
-    public function dashboardActionHandler(string $actionKey): ?DashboardAction
+    public function getDashboardActionHandler(string $actionKey): ?DashboardAction
     {
         return $this->dashboardActionHandlers[$actionKey] ?? null;
     }
@@ -66,7 +66,7 @@ trait HandleDashboardActions
             ->each(function (Action $handler, $actionName) use (&$config) {
                 $hasFormInitialData = false;
                 $formLayout = $formFields = null;
-                if ($handler instanceof HasForm) {
+                if ($handler instanceof ActionForm) {
                     $formFields = $handler->form();
                     $formLayout = $formFields ? $handler->formLayout() : null;
                     $hasFormInitialData = $formFields

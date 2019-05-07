@@ -115,7 +115,7 @@ trait HandleActions
             ->each(function (Action $handler, $commandName) use (&$config) {
                 $hasFormInitialData = false;
                 $formLayout = $formFields = null;
-                if ($handler instanceof HasForm) {
+                if ($handler instanceof ActionForm) {
                     $formFields = $handler->form();
                     $formLayout = $formFields ? $handler->formLayout() : null;
                     $hasFormInitialData = $formFields

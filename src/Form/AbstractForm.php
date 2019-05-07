@@ -4,9 +4,7 @@ namespace Ygg\Form;
 
 use function count;
 use function get_class;
-use function in_array;
 use stdClass;
-use Ygg\Exceptions\Form\FieldFormattingMustBeDelayedException;
 use Ygg\Exceptions\Form\FormUpdateException;
 use Ygg\Layout\ContainerLayout;
 use Ygg\Layout\Form\FormColumn;
@@ -38,57 +36,6 @@ abstract class AbstractForm implements Form
      * @var bool
      */
     protected $layoutBuilt = false;
-
-    /**
-     * Applies Field Formatters on $data.
-     *
-     * @param array       $data
-     * @param string|null $instanceId
-     * @param bool        $handleDelayedData
-     * @return array
-     */
-    private function formatRequestData(array $data, $instanceId = null, bool $handleDelayedData = false): array
-    {
-        $delayedData = collect([]);
-
-        $formattedData = collect($data)->filter(function ($value, $key) {
-            // Filter only configured fields
-            return in_array($key, $this->getFieldKeys(), false);
-
-        })->map(function ($value, $key) use ($handleDelayedData, $delayedData, $instanceId) {
-            if (!$field = $this->findFieldByKey($key)) {
-                return $value;
-            }
-
-            try {
-                // Apply formatter based on field configuration
-                return $field->formatter()
-                    ->setInstanceId($instanceId)
-                    ->fromFront($field, $key, $value);
-
-            } catch (FieldFormattingMustBeDelayedException $exception) {
-                // The formatter needs to be executed in a second pass. We delay it.
-                if ($handleDelayedData) {
-                    $delayedData[$key] = $value;
-                    return null;
-                }
-
-                throw $exception;
-            }
-
-        });
-
-        if ($handleDelayedData) {
-            return [
-                $formattedData->filter(function ($value, $key) use ($delayedData) {
-                    return !$delayedData->has($key);
-                })->all(),
-                $delayedData->all()
-            ];
-        }
-
-        return $formattedData->all();
-    }
 
     /**
      * @return array

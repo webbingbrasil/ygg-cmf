@@ -48,4 +48,24 @@ trait WithForm
     public function buildFormLayout(FormColumn $column): void
     {
     }
+
+    /**
+     * @param mixed $instanceId
+     * @return array
+     */
+    public function formData($instanceId = null): array
+    {
+        return collect($this->initialData($instanceId))
+            ->only($this->getFieldKeys())
+            ->all();
+    }
+
+    /**
+     * @param mixed $instanceId
+     * @return array
+     */
+    protected function initialData($instanceId = null): array
+    {
+        return [];
+    }
 }
