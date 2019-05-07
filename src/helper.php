@@ -7,7 +7,7 @@ use Ygg\Exceptions\Auth\AuthorizationException;
  */
 function ygg_title()
 {
-    return config('ygg.name', 'Ygg');
+    return config('ygg.name', config('app.name', 'Ygg'));
 }
 
 /**
@@ -15,7 +15,7 @@ function ygg_title()
  */
 function ygg_version()
 {
-    return 1.0;
+    return '1.0.0';
 }
 
 /**
@@ -24,6 +24,46 @@ function ygg_version()
 function ygg_admin_base_url()
 {
     return config('ygg.admin_base_url', 'admin');
+}
+
+/**
+ * @param array $yggMenu
+ * @param string|null $entityKey
+ * @return string
+ */
+function ygg_page_title($yggMenu, $entityKey)
+{
+    $title = '';
+
+    if(request()->is(ygg_admin_base_url() . '/login')) {
+        $title = trans('ygg::login.login_page_title');
+
+    } elseif ($yggMenu) {
+        $menuItems = collect($yggMenu->menuItems);
+
+        // Handle MultiForms
+        $entityKey = explode(':', $entityKey)[0];
+
+        $label = $menuItems
+                ->where('type', 'entity')
+                ->firstWhere('key', $entityKey)
+                ->label ?? "";
+
+        if(!$label) {
+            $label = $menuItems
+                    ->where('type', 'category')
+                    ->pluck('entities')
+                    ->flatten()
+                    ->firstWhere('key', $entityKey)
+                    ->label ?? '';
+        }
+
+        $title = $yggMenu->name . ($label ? ', ' . $label : '');
+    }
+
+    return config('ygg.display_ygg_version_in_title', true)
+        ? "$title | Ygg " . ygg_version()
+        : $title;
 }
 
 /**
