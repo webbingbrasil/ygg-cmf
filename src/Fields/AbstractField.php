@@ -225,7 +225,7 @@ abstract class AbstractField implements Field
     /**
      * @return array|null
      */
-    private function buildConditionalDisplayArray(): array
+    private function buildConditionalDisplayArray(): ?array
     {
         if (!count($this->conditionalDisplayFields)) {
             return null;

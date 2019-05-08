@@ -2,14 +2,17 @@
 
 namespace Ygg\Form;
 
+use Closure;
 use function count;
 use function get_class;
 use stdClass;
 use Ygg\Exceptions\Form\FormUpdateException;
-use Ygg\Layout\ContainerLayout;
-use Ygg\Layout\Form\FormColumn;
+use Ygg\Layout\Element;
+use Ygg\Layout\Form\FieldRow;
+use Ygg\Layout\Form\FormRow;
 use Ygg\Layout\Layout;
-use Ygg\Layout\TabbedLayout;
+use Ygg\Layout\Form\Tab;
+use Ygg\Layout\WithElements;
 use Ygg\Resource\HandleFields;
 use Ygg\Traits\Transformers\WithTransformers;
 use Ygg\Utils\Notification;
@@ -20,22 +23,12 @@ use Ygg\Utils\Notification;
  */
 abstract class AbstractForm implements Form
 {
-    use WithTransformers, HandleFields;
-
-    /**
-     * @var array
-     */
-    protected $tabs = [];
-
-    /**
-     * @var Layout
-     */
-    protected $formLayout;
+    use WithTransformers, HandleFields, WithElements;
 
     /**
      * @var bool
      */
-    protected $layoutBuilt = false;
+    private $layoutBuilt = false;
 
     /**
      * @return array
@@ -43,15 +36,16 @@ abstract class AbstractForm implements Form
     public function getLayout(): array
     {
         if (!$this->layoutBuilt) {
-            $this->buildFormLayout();
+            $this->layout();
             $this->layoutBuilt = true;
         }
 
-        if($this->formLayout) {
-            return $this->formLayout->toArray();
-        }
-
-        return [];
+        return [
+            'tabbed' => count($this->elements) > 1,
+            'tabs' => collect($this->elements)->map(function (Element $element) {
+                return $element->toArray();
+            })->all()
+        ];
     }
 
     /**
@@ -59,26 +53,43 @@ abstract class AbstractForm implements Form
      *
      * @return void
      */
-    abstract protected function buildFormLayout(): void;
+    abstract protected function layout(): void;
 
     /**
-     * @return Layout|TabbedLayout
+     * @param string        $label
+     * @param Closure|null $callback
+     * @return $this
      */
-    protected function withTabbedLayout(): TabbedLayout
+    protected function addTab(string $label, Closure $callback = null): self
     {
-        $this->formLayout = new TabbedLayout();
-        $this->formLayout->setRowColumnClass(FormColumn::class);
-        return $this->formLayout;
+        $this->layoutBuilt = false;
+        $this->addElement(new Tab($label), $callback);
+
+        return $this;
     }
 
     /**
-     * @return Layout|ContainerLayout
+     * @return Tab
      */
-    protected function withContainerLayout(): ContainerLayout
+    private function getDefaultTab(): Tab
     {
-        $this->formLayout = new ContainerLayout();
-        $this->formLayout->setRowColumnClass(FormColumn::class);
-        return $this->formLayout;
+        if(count($this->elements) === 0) {
+            $this->addTab('');
+        }
+
+        return $this->elements[0];
+    }
+
+    /**
+     * @param int          $size
+     * @param Closure|null $callback
+     * @return $this
+     */
+    protected function addColumn(int $size = 12, Closure $callback = null): self
+    {
+        $this->layoutBuilt = false;
+        $this->getDefaultTab()->addColumn($size, $callback);
+        return $this;
     }
 
     /**

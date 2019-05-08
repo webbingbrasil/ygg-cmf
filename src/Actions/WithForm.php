@@ -3,7 +3,7 @@
 namespace Ygg\Actions;
 
 use Ygg\Resource\HandleFields;
-use Ygg\Layout\Form\FormColumn;
+use Ygg\Layout\Form\FormRow;
 
 /**
  * Trait HasForm
@@ -30,7 +30,7 @@ trait WithForm
             return null;
         }
 
-        $column = new FormColumn(12);
+        $column = new FormRow(12);
         $this->buildFormLayout($column);
 
         if (empty($column->fieldsToArray()['fields'])) {
@@ -43,9 +43,9 @@ trait WithForm
     }
 
     /**
-     * @param FormColumn $column
+     * @param FormRow $column
      */
-    public function buildFormLayout(FormColumn $column): void
+    public function buildFormLayout(FormRow $column): void
     {
     }
 

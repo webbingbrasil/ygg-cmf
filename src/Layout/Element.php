@@ -2,11 +2,13 @@
 
 namespace Ygg\Layout;
 
+use Illuminate\Contracts\Support\Arrayable;
+
 /**
  * Interface Element
  * @package Ygg\Layout
  */
-interface Element
+interface Element extends Arrayable
 {
 
     /**

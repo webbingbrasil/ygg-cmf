@@ -52,7 +52,7 @@ class FieldRow implements Element
         }
 
         if ($callback) {
-            $itemColumn = new FormColumn(12);
+            $itemColumn = new FormRow();
             $callback($itemColumn);
             $this->items = $itemColumn->toArray()['fields'];
         }

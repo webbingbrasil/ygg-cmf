@@ -18,7 +18,7 @@ class Validator extends BaseValidator
     /**
      * @return bool
      */
-    public function passes(): void
+    public function passes(): bool
     {
         $result = parent::passes();
 

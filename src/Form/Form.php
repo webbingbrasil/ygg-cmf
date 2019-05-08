@@ -51,9 +51,10 @@ interface Form
      * @param $id
      */
     public function deleteResourceById($id): void;
+
     /**
      * @param string $key
-     * @return FieldInterface
+     * @return FieldInterface|null
      */
-    public function findFieldByKey(string $key): FieldInterface;
+    public function findFieldByKey(string $key): ?FieldInterface;
 }

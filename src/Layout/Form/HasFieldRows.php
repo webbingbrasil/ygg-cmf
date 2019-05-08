@@ -3,6 +3,7 @@
 namespace Ygg\Layout\Form;
 
 use Closure;
+use Ygg\Layout\WithElements;
 
 /**
  * Trait HasFieldRows
@@ -10,10 +11,7 @@ use Closure;
  */
 trait HasFieldRows
 {
-    /**
-     * @var array|FieldRow[]
-     */
-    private $fieldRows = [];
+    use WithElements;
 
     /**
      * @param string       $fieldKey
@@ -34,7 +32,7 @@ trait HasFieldRows
      */
     private function addFields(array $fields): void
     {
-        $this->fieldRows[] = $fields;
+        $this->elements[] = $fields;
     }
 
     /**
@@ -56,7 +54,7 @@ trait HasFieldRows
     protected function fieldsToArray(): array
     {
         return [
-            'fields' => collect($this->fieldRows)->map(function (FieldRow $row) {
+            'fields' => collect($this->elements)->map(function (array $row) {
                 return collect($row)->map(function (FieldRow $field) {
                     return $field->toArray();
                 })->all();

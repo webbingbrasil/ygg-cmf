@@ -108,9 +108,9 @@ trait HandleFields
 
     /**
      * @param string $key
-     * @return FieldInterface
+     * @return FieldInterface|null
      */
-    public function findFieldByKey(string $key): FieldInterface
+    public function findFieldByKey(string $key): ?FieldInterface
     {
         $this->buildFields();
 

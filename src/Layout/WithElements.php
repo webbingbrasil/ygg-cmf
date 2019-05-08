@@ -1,27 +1,31 @@
 <?php
 
-
 namespace Ygg\Layout;
-
 
 use Closure;
 
+/**
+ * Trait WithElements
+ * @package Ygg\Layout
+ */
 trait WithElements
 {
 
     /**
      * @var array
      */
-    protected $elements;
+    private $elements;
 
     /**
      * @param Element $element
-     * @param Closure $callback
+     * @param Closure|null $callback
      * @return $this
      */
-    protected function addElement(Element $element, Closure $callback): self
+    private function addElement(Element $element, Closure $callback = null): self
     {
-        $callback($element);
+        if($callback) {
+            $callback($element);
+        }
         $this->elements[] = $element;
 
         return $this;
