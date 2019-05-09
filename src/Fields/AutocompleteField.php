@@ -65,11 +65,9 @@ class AutocompleteField extends AbstractField
      * @param string $key
      * @return static
      */
-    public static function make(string $key)
+    public static function make(string $key): self
     {
-        $instance = new static($key, static::FIELD_TYPE, new AutocompleteFormatter());
-
-        return $instance;
+        return new static($key, static::FIELD_TYPE, new AutocompleteFormatter());
     }
 
     /**
