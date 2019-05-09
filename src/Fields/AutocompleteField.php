@@ -24,7 +24,7 @@ class AutocompleteField extends AbstractField
     /**
      * @var string
      */
-    protected $mode;
+    protected $mode = 'remote';
 
     /**
      * @var Collection|array
@@ -63,13 +63,11 @@ class AutocompleteField extends AbstractField
 
     /**
      * @param string $key
-     * @param string $mode "local" or "remote"
      * @return static
      */
-    public static function make(string $key, string $mode)
+    public static function make(string $key)
     {
         $instance = new static($key, static::FIELD_TYPE, new AutocompleteFormatter());
-        $instance->mode = $mode;
 
         return $instance;
     }
@@ -81,6 +79,7 @@ class AutocompleteField extends AbstractField
     public function setLocalValues($localValues): self
     {
         $this->localValues = static::formatOptions($localValues);
+        $this->mode = 'local';
 
         return $this;
     }
@@ -103,6 +102,7 @@ class AutocompleteField extends AbstractField
     public function setRemoteEndpoint(string $remoteEndpoint): self
     {
         $this->remoteEndpoint = $remoteEndpoint;
+        $this->mode = 'remote';
 
         return $this;
     }
