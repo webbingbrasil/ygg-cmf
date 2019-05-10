@@ -30,12 +30,22 @@ class SelectField extends AbstractField
     /**
      * @var bool
      */
-    protected $clearable = false;
+    protected $clearable = true;
 
     /**
      * @var int
      */
     protected $maxSelected;
+
+    /**
+     * @var boolean
+     */
+    protected $highlighting = true;
+
+    /**
+     * @var boolean
+     */
+    protected $searchable = false;
 
     /**
      * @var string
@@ -108,6 +118,46 @@ class SelectField extends AbstractField
     public function notClearable(): self
     {
         $this->clearable = false;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function withHighlight(): self
+    {
+        $this->highlighting = true;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function withoutHighlight(): self
+    {
+        $this->highlighting = false;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function withSearchable(): self
+    {
+        $this->searchable = true;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function withoutSearchable(): self
+    {
+        $this->searchable = false;
 
         return $this;
     }
@@ -213,7 +263,9 @@ class SelectField extends AbstractField
             'display' => $this->display,
             'inline' => $this->inline,
             'maxSelected' => $this->maxSelected,
-            'localized' => $this->localized
+            'localized' => $this->localized,
+            'highlighting' => $this->highlighting,
+            'searchable' => $this->searchable
         ]);
     }
 
@@ -228,7 +280,9 @@ class SelectField extends AbstractField
             'inline' => 'boolean',
             'clearable' => 'boolean',
             'display' => 'required|in:list,dropdown',
-            'maxSelected' => 'int'
+            'maxSelected' => 'int',
+            'highlighting' => 'boolean',
+            'searchable' => 'boolean'
         ];
     }
 }
