@@ -5,6 +5,7 @@ namespace Ygg\Traits\Transformers;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator as LengthAwarePaginatorContract;
 use Illuminate\Pagination\LengthAwarePaginator;
+use stdClass;
 use Ygg\Actions\Action;
 use Ygg\Form\AbstractForm;
 use function call_user_func;
@@ -117,7 +118,7 @@ trait WithTransformers
      */
     protected function applyTransformers($model, bool $forceFullObject = true): array
     {
-        $attributes = (array)$model;
+        $attributes = method_exists($model, 'toArray') ? $model->toArray() : (array) $model;
 
         if ($forceFullObject) {
             // Merge model attribute with form fields to be sure we have
