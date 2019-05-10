@@ -29,7 +29,7 @@ abstract class FieldFormatter
 
     /**
      * @param AbstractField $field
-     * @param           $value
+     * @param mixed         $value
      * @return mixed
      */
     abstract public function toFront(AbstractField $field, $value);
@@ -37,7 +37,7 @@ abstract class FieldFormatter
     /**
      * @param AbstractField $field
      * @param string        $attribute
-     * @param           $value
+     * @param mixed         $value
      * @return mixed
      */
     abstract public function fromFront(AbstractField $field, string $attribute, $value);

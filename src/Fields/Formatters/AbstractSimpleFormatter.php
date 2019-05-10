@@ -3,25 +3,22 @@
 namespace Ygg\Fields\Formatters;
 
 use Ygg\Fields\AbstractField;
-use function is_array;
 
 /**
- * Class AutocompleteFormatter
+ * Class AbstractSimpleFormatter
  * @package Ygg\Fields\Formatters
  */
-class AutocompleteFormatter extends FieldFormatter
+abstract class AbstractSimpleFormatter extends FieldFormatter
 {
 
     /**
      * @param AbstractField $field
      * @param mixed         $value
-     * @return array
+     * @return mixed
      */
-    public function toFront(AbstractField $field, $value): array
+    public function toFront(AbstractField $field, $value)
     {
-        return $value === null || is_array($value)
-            ? $value
-            : [$field->itemIdAttribute() => $value];
+        return $value;
     }
 
     /**
@@ -32,8 +29,6 @@ class AutocompleteFormatter extends FieldFormatter
      */
     public function fromFront(AbstractField $field, string $attribute, $value)
     {
-        return $value === null || is_array($value)
-            ? $value[$field->itemIdAttribute()]
-            : $value;
+        return $value;
     }
 }
