@@ -37,6 +37,10 @@ class YggServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang/back', 'ygg');
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang/front', 'ygg-front');
 
+        $this->publishes([
+            __DIR__.'/../resources/assets/dist' => public_path('vendor/ygg')
+        ], 'assets');
+
         $this->registerPolicies();
 
         view()->composer(
@@ -62,7 +66,7 @@ class YggServiceProvider extends ServiceProvider
             AuthorizationManager::class, AuthorizationManager::class
         );
 
-        // Override Laravel's Gate to handle Sharp's ability to define a custom Guard
+        // Override Laravel's Gate to handle Ygg ability to define a custom Guard
         $this->app->singleton(GateContract::class, function ($app) {
             return new \Illuminate\Auth\Access\Gate($app, function () use ($app) {
                 return request()->is('ygg') || request()->is('ygg/*')
