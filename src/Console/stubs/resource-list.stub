@@ -1,0 +1,59 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyFullModelClass;
+use Ygg\Resource\AbstractResource;
+use Ygg\Resource\Field;
+use Ygg\Resource\ResourceQueryParams;
+
+class DummyClass extends AbstractResource
+{
+    /**
+     * Build list fields using ->addField()
+     *
+     * @return void
+     */
+    public function fields(): void
+    {
+        $this->addField(
+            Field::make('name')
+                ->setLabel('Name')
+                ->setSortable()
+        );
+    }
+
+    /**
+     * Build list config
+     *
+     * @return void
+     */
+    public function config(): void
+    {
+        $this->setInstanceIdAttribute('id')
+            ->setDefaultSort('name', 'asc')
+            ->withSearch()
+            ->withPagination();
+    }
+
+    /**
+     * Build list layout
+     *
+     * @return void
+     */
+    public function layout(): void
+    {
+        $this->addColumn('name', 2);
+    }
+
+    /**
+     * Get data for list
+     *
+     * @param ResourceQueryParams $params
+     * @return array
+     */
+    public function data(ResourceQueryParams $params): array
+    {
+        return $this->transform(DummyModelClass::orderBy($params->sortedBy(), $params->sortedDir())->get());
+    }
+}

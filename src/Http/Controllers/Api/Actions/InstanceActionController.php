@@ -3,6 +3,7 @@
 namespace Ygg\Http\Controllers\Api\Actions;
 
 use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Ygg\Actions\ActionForm;
 use Ygg\Actions\InstanceAction;
 use Ygg\Exceptions\Actions\InvalidActionException;
@@ -50,7 +51,7 @@ class InstanceActionController extends ApiController
     protected function getActionHandler(ResourceInterface $list, string $actionKey, $instanceId)
     {
         /** @var InstanceAction $action */
-        $action = $list->resourceActionHandler($actionKey);
+        $action = $list->instanceActionHandler($actionKey);
 
         if($action === null || $action instanceof InstanceAction === false) {
             throw new InvalidActionException('Action requested is not valid');
@@ -68,12 +69,12 @@ class InstanceActionController extends ApiController
      * @param string $resourceKey
      * @param string $actionKey
      * @param mixed  $instanceId
-     * @return JsonResponse
+     * @return Response
      * @throws AuthorizationException
      * @throws InvalidActionException
      * @throws InvalidResourceKeyException
      */
-    public function update(string $resourceKey, string $actionKey, $instanceId): JsonResponse
+    public function update(string $resourceKey, string $actionKey, $instanceId): Response
     {
         $list = $this->getListInstance($resourceKey);
         $list->config();

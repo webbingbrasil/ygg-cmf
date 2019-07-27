@@ -98,6 +98,24 @@ Route::group([
         ->name('ygg.login.post')
         ->uses('LoginController@store');
 
+
+    Route::get('recovery-password')
+        ->name('ygg.password.request')
+        ->uses('RecoveryPasswordController@recoveryRequest');
+
+    Route::post('recovery-password/email')
+        ->name('ygg.password.email')
+        ->uses('RecoveryPasswordController@sendResetLinkEmail');
+
+    Route::get('recovery-password/reset/{token}')
+        ->name('ygg.password.reset')
+        ->uses('ResetPasswordController@resetForm');
+
+    Route::post('recovery-password/reset')
+        ->name('ygg.password.update')
+        ->uses('ResetPasswordController@reset');
+
+
     Route::get('/')
         ->name('ygg.home')
         ->uses('HomeController@index');

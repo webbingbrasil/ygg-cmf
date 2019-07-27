@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Notifications;
+namespace Ygg\Notifications;
 
 use Illuminate\Auth\Notifications\ResetPassword as BaseResetPassword;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -21,7 +21,7 @@ class ResetPassword extends BaseResetPassword
             return call_user_func(static::$toMailCallback, $notifiable, $this->token);
         }
 
-        $url = rtrim(config('auth.passwords.users.url', url('/')), '/').'/'.$this->token;
+        $url = route('ygg.password.reset', ['token' => $this->token]);
 
         return (new MailMessage)
             ->subject(Lang::getFromJson('Reset Password Notification'))

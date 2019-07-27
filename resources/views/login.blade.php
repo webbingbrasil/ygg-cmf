@@ -47,8 +47,8 @@
                                     </button>
                                 </div>
                             </div>
+                            <a href="{{ route('ygg.password.request') }}" style="text-align:center">@lang('ygg::login.recovery-password-link')</a>
                         </div>
-
                     </div>
                 </div>
             </form>

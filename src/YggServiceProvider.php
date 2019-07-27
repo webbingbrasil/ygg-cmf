@@ -3,9 +3,14 @@
 namespace Ygg;
 
 use Ygg\Auth\AuthorizationManager;
-use Ygg\Form\Eloquent\Uploads\Migration\CreateUploadsMigration;
+use Ygg\Console\InstanceActionMakeCommand;
+use Ygg\Console\ListActionMakeCommand;
+use Ygg\Console\MediaMigrationMakeCommand;
 use Ygg\Composers\AssetViewComposer;
 use Ygg\Composers\MenuViewComposer;
+use Ygg\Console\ListMakeCommand;
+use Ygg\Console\PolicyMakeCommand;
+use Ygg\Console\StateMakeCommand;
 use Ygg\Http\Middleware\Api\AddContext;
 use Ygg\Http\Middleware\Api\AppendFormAuthorizations;
 use Ygg\Http\Middleware\Api\AppendListAuthorizations;
@@ -76,7 +81,12 @@ class YggServiceProvider extends ServiceProvider
         });
 
         $this->commands([
-            CreateUploadsMigration::class,
+            MediaMigrationMakeCommand::class,
+            ListMakeCommand::class,
+            ListActionMakeCommand::class,
+            StateMakeCommand::class,
+            PolicyMakeCommand::class,
+            InstanceActionMakeCommand::class
         ]);
     }
 

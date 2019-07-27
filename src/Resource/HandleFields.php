@@ -139,7 +139,7 @@ trait HandleFields
     }
 
     /**
-     * Build list containers using ->addField()
+     * Build list fields using ->addField()
      *
      * @return void
      */

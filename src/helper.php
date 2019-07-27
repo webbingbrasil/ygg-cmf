@@ -33,7 +33,7 @@ function ygg_admin_base_url()
  */
 function ygg_page_title($yggMenu, $entityKey)
 {
-    $title = '';
+    $title = 'Admin';
 
     if(request()->is(ygg_admin_base_url() . '/login')) {
         $title = trans('ygg::login.login_page_title');

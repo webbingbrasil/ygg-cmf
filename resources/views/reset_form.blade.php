@@ -4,8 +4,10 @@
 
     <div id="ygg-app" class="login">
         <div class="container">
-            <form method="POST" action="{{ route('ygg.password.email') }}">
+            <form method="POST" action="{{ route('ygg.password.update') }}">
                 {{ csrf_field() }}
+
+                <input type="hidden" name="token" value="{{ $token }}">
                 <div class="row justify-content-center">
                     <div class="col-sm-9 col-md-6 col-lg-5 col-xl-4">
 
@@ -16,7 +18,7 @@
                             <div role="alert" class="YggNotification YggNotification--error">
                                 <div class="YggNotification__details">
                                     <div class="YggNotification__text-wrapper">
-                                        <p class="YggNotification__subtitle">@lang('ygg::auth.invalid_email')</p>
+                                        <p class="YggNotification__subtitle">{{ $errors->first() }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -37,8 +39,14 @@
                                     <div class="YggForm__form-item YggForm__form-item--row">
                                         <input type="text" name="email" id="email" class="YggText" value="{{ old('email') }}" placeholder="@lang('ygg::login.email_field')">
                                     </div>
+                                    <div class="YggForm__form-item YggForm__form-item--row">
+                                        <input type="password" name="password" id="password" class="YggText" value="{{ old('password') }}" placeholder="@lang('ygg::login.password_field')">
+                                    </div>
+                                    <div class="YggForm__form-item YggForm__form-item--row">
+                                        <input type="password" name="password_confirmation" id="password_confirmation" class="YggText" value="{{ old('password-confirm') }}" placeholder="@lang('ygg::login.password_confirmation_field')">
+                                    </div>
                                     <button type="submit" id="submit" class="YggButton YggButton--primary">
-                                        @lang('ygg::login.send_reset_link_button')
+                                        @lang('ygg::login.reset_password_button')
                                     </button>
                                 </div>
                             </div>

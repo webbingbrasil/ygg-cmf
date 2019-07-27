@@ -123,7 +123,7 @@ trait HandleActions
                         : false;
                 }
 
-                $config['commands'][$handler->type()][$handler->getGroupIndex()][] = [
+                $config['actions'][$handler->type()][$handler->getGroupIndex()][] = [
                     'key' => $commandName,
                     'label' => $handler->label(),
                     'description' => $handler->description(),

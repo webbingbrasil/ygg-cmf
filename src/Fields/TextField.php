@@ -41,7 +41,7 @@ class TextField extends AbstractField
      */
     public function toArray(): array
     {
-        return parent::buildArray([
+        return $this->buildArray([
             'inputType' => $this->inputType(),
             'placeholder' => $this->placeholder,
             'maxLength' => $this->maxLength,

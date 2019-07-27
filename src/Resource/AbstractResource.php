@@ -276,6 +276,8 @@ abstract class AbstractResource implements Resource
     }
 
     /**
+     * Get data for list
+     *
      * @param ResourceQueryParams $params
      * @return array
      */

@@ -1,0 +1,26 @@
+<?php
+
+namespace DummyNamespace;
+
+use Ygg\Actions\ResourceState;
+
+class DummyClass extends ResourceState
+{
+    /**
+     * @return mixed
+     */
+    protected function states()
+    {
+        $this->addState('active', 'Active', 'green');
+    }
+
+    /**
+     * @param string $instanceId
+     * @param string $stateId
+     * @return mixed
+     */
+    protected function updateState($instanceId, $stateId)
+    {
+        //
+    }
+}

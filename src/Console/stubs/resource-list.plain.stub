@@ -1,0 +1,47 @@
+<?php
+
+namespace DummyNamespace;
+
+use Ygg\Resource\AbstractResource;
+use Ygg\Resource\Field;
+use Ygg\Resource\ResourceQueryParams;
+
+class DummyClass extends AbstractResource
+{
+    /**
+     * Build list fields using ->addField()
+     *
+     * @return void
+     */
+    public function fields(): void
+    {
+    }
+
+    /**
+     * Build list config
+     *
+     * @return void
+     */
+    public function config(): void
+    {
+    }
+
+    /**
+     * Build list layout
+     *
+     * @return void
+     */
+    public function layout(): void
+    {
+    }
+
+    /**
+     * Get data for list
+     *
+     * @param ResourceQueryParams $params
+     * @return array
+     */
+    public function data(ResourceQueryParams $params): array
+    {
+    }
+}

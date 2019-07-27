@@ -24,9 +24,9 @@ abstract class ResourceState extends InstanceAction
     /**
      * @return array
      */
-    public function states(): array
+    public function build(): array
     {
-        $this->buildStates();
+        $this->states();
 
         return $this->states;
     }
@@ -34,7 +34,7 @@ abstract class ResourceState extends InstanceAction
     /**
      * @return mixed
      */
-    abstract protected function buildStates();
+    abstract protected function states();
 
     /**
      * @param string $instanceId
@@ -45,7 +45,7 @@ abstract class ResourceState extends InstanceAction
     public function execute($instanceId, array $data = []): array
     {
         $stateId = $data['value'];
-        $this->buildStates();
+        $this->states();
 
         if (!array_key_exists($stateId, $this->states)) {
             throw new InvalidResourceStateException($stateId);

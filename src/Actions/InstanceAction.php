@@ -23,7 +23,7 @@ abstract class InstanceAction extends Action
     }
 
     /**
-     * @param       $instanceId
+     * @param mixed $instanceId
      * @param array $data
      * @return array
      */

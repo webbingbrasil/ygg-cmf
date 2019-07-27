@@ -5,6 +5,7 @@ namespace Ygg\Resource;
 
 
 use Illuminate\Support\Collection;
+use Ygg\Actions\InstanceAction;
 use Ygg\Actions\ResourceAction;
 use Ygg\Actions\ResourceState;
 
@@ -33,7 +34,11 @@ interface Resource
      * @return ResourceAction|null
      */
     public function resourceActionHandler(string $commandKey): ?ResourceAction;
-
+    /**
+     * @param string $commandKey
+     * @return InstanceAction|null
+     */
+    public function instanceActionHandler(string $commandKey): ?InstanceAction;
     /**
      * Build list config
      *

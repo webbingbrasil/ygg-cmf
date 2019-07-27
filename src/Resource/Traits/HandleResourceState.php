@@ -52,7 +52,7 @@ trait HandleResourceState
         if ($this->resourceStateAttribute) {
             $config['state'] = [
                 'attribute' => $this->resourceStateAttribute,
-                'values' => collect($this->resourceStateHandler->states())
+                'values' => collect($this->resourceStateHandler->build())
                     ->map(function ($state, $key) {
                         return [
                             'value' => $key,
