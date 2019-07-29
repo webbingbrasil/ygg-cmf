@@ -131,7 +131,7 @@ class FormController extends ApiController
 
         $form = $this->getFormInstance($resourceKey);
 
-        $form->deleteResourceById($instanceId);
+        $form->delete($instanceId);
 
         return response()->json(['ok' => true]);
     }

@@ -1,0 +1,13 @@
+<?php
+
+namespace DummyNamespace;
+
+use Ygg\Actions\ReorderHandler;
+
+class DummyClass implements ReorderHandler
+{
+    public function reorder(array $ids)
+    {
+        //
+    }
+}

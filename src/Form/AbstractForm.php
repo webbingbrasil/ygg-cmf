@@ -232,5 +232,5 @@ abstract class AbstractForm implements Form
     /**
      * @param $id
      */
-    abstract public function deleteResourceById($id): void;
+    abstract public function delete($id): void;
 }

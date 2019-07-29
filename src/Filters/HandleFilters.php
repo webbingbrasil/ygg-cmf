@@ -29,7 +29,7 @@ trait HandleFilters
      */
     protected function addFilter(string $filterName, $filterHandler, Closure $callback = null): self
     {
-        $this->filterHandlers[$filterName] = $filterHandler instanceof ListFilter
+        $this->filterHandlers[$filterName] = $filterHandler instanceof Filter
             ? $filterHandler
             : app($filterHandler);
 
@@ -49,8 +49,8 @@ trait HandleFilters
     protected function appendFiltersToConfig(array &$config): void
     {
         foreach ($this->filterHandlers as $filterName => $handler) {
-            $multiple = $handler instanceof ListMultipleFilter;
-            $required = !$multiple && $handler instanceof ListRequiredFilter;
+            $multiple = $handler instanceof MultipleFilter;
+            $required = !$multiple && $handler instanceof RequiredFilter;
 
             $config['filters'][] = [
                 'key' => $filterName,
@@ -72,7 +72,7 @@ trait HandleFilters
      * @param $attribute
      * @return array|SessionManager|Store|int|mixed|string|null
      */
-    protected function getFilterDefaultOption(ListRequiredFilter $handler, $attribute)
+    protected function getFilterDefaultOption(RequiredFilter $handler, $attribute)
     {
         if ($this->isGlobalFilter($handler)) {
             return session('_ygg_retained_global_filter_'.$attribute) ?: $handler->defaultOption();
@@ -81,12 +81,12 @@ trait HandleFilters
         if ($this->isRetainedFilter($handler, $attribute, true)) {
             $sessionValue = session('_ygg_retained_filter_'.$attribute);
 
-            return $handler instanceof ListMultipleFilter
+            return $handler instanceof MultipleFilter
                 ? explode(',', $sessionValue)
                 : $sessionValue;
         }
 
-        return $handler instanceof ListRequiredFilter
+        return $handler instanceof RequiredFilter
             ? $handler->defaultOption()
             : null;
     }
@@ -114,10 +114,10 @@ trait HandleFilters
     }
 
     /**
-     * @param ListFilter $handler
+     * @param Filter $handler
      * @return array
      */
-    protected function formatFilterValues(ListFilter $handler): array
+    protected function formatFilterValues(Filter $handler): array
     {
         if (!method_exists($handler, 'template')) {
             return collect($handler->options())->map(function ($label, $id) {
@@ -129,10 +129,10 @@ trait HandleFilters
     }
 
     /**
-     * @param ListFilter $handler
+     * @param Filter $handler
      * @return string
      */
-    protected function formatFilterTemplate(ListFilter $handler): string
+    protected function formatFilterTemplate(Filter $handler): string
     {
         if (($template = $handler->template()) instanceof View) {
             return $template->render();
@@ -152,11 +152,11 @@ trait HandleFilters
                 return !request()->has('filter_'.$attribute);
             })
             // Only required filters or retained filters with value saved in session
-            ->filter(function (ListFilter $handler, $attribute) {
-                return $handler instanceof ListRequiredFilter
+            ->filter(function (Filter $handler, $attribute) {
+                return $handler instanceof RequiredFilter
                     || $this->isRetainedFilter($handler, $attribute, true);
             })
-            ->map(function (ListFilter $handler, $attribute) {
+            ->map(function (Filter $handler, $attribute) {
                 if ($this->isRetainedFilter($handler, $attribute, true)) {
                     return [
                         'name' => $attribute,
@@ -164,7 +164,7 @@ trait HandleFilters
                     ];
                 }
 
-                /** @var ListRequiredFilter $handler */
+                /** @var RequiredFilter $handler */
                 return [
                     'name' => $attribute,
                     'value' => $handler->defaultOption()

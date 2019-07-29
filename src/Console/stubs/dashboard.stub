@@ -1,0 +1,35 @@
+<?php
+
+namespace DummyNamespace;
+
+use Ygg\Dashboard\AbstractDashboard;
+use Ygg\Dashboard\DashboardQueryParams;
+
+class DummyClass extends AbstractDashboard
+{
+    /**
+     * Build dashboard's widget using ->addWidget.
+     */
+    protected function buildWidgets(): void
+    {
+        //
+    }
+
+    /**
+     * Build dashboard's widgets layout.
+     */
+    protected function buildWidgetsLayout(): void
+    {
+        //
+    }
+
+    /**
+     * Build dashboard's widgets data, using ->addGraphDataSet and ->setPanelData
+     *
+     * @param DashboardQueryParams $params
+     */
+    protected function buildWidgetsData(DashboardQueryParams $params): void
+    {
+        //
+    }
+}

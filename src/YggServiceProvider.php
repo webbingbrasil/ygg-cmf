@@ -3,6 +3,7 @@
 namespace Ygg;
 
 use Ygg\Auth\AuthorizationManager;
+use Ygg\Console\FilterMakeCommand;
 use Ygg\Console\InstanceActionMakeCommand;
 use Ygg\Console\ListActionMakeCommand;
 use Ygg\Console\MediaMigrationMakeCommand;
@@ -86,7 +87,8 @@ class YggServiceProvider extends ServiceProvider
             ListActionMakeCommand::class,
             StateMakeCommand::class,
             PolicyMakeCommand::class,
-            InstanceActionMakeCommand::class
+            InstanceActionMakeCommand::class,
+            FilterMakeCommand::class,
         ]);
     }
 

@@ -24,6 +24,8 @@ abstract class FormRequest extends BaseFormRequest
         return true;
     }
 
+    abstract public function rules(): array;
+
     /**
      * Handle RTF (markdown and wysiwyg) fields
      *

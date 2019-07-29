@@ -50,7 +50,7 @@ interface Form
     /**
      * @param $id
      */
-    public function deleteResourceById($id): void;
+    public function delete($id): void;
 
     /**
      * @param string $key

@@ -365,8 +365,7 @@
                     value: state
                 })
                 .then(response => {
-                    const { data } = response;
-                    this.handleActionRequestedResponse(data.action, data);
+                    this.handleActionResponse(response);
                 })
                 .catch(error => {
                     const { data } = error.response;

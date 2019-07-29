@@ -1,0 +1,17 @@
+<?php
+
+namespace DummyNamespace;
+
+use Ygg\Filters\Filter;
+use Ygg\Filters\MultipleFilter;
+
+class DummyClass implements Filter, MultipleFilter
+{
+    /**
+    * @return array
+    */
+    public function options(): array;
+    {
+        //
+    }
+}

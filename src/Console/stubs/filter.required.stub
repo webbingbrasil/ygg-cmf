@@ -1,0 +1,25 @@
+<?php
+
+namespace DummyNamespace;
+
+use Ygg\Filters\RequiredFilter;
+use Ygg\Filters\MultipleFilter;
+
+class DummyClass implements RequiredFilter, MultipleFilter
+{
+    /**
+    * @return array
+    */
+    public function options(): array
+    {
+        //
+    }
+
+    /**
+    * @return string|int
+    */
+    public function defaultOption()
+    {
+        //
+    }
+}
