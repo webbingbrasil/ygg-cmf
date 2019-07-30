@@ -68,6 +68,8 @@ class UploadModel extends Model
      * @var array
      */
     protected $fillable = [
+        'model_id',
+        'model_type',
         'type',
         'file_key',
         'file_name',
