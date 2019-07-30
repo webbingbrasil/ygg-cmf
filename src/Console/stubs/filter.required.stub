@@ -2,10 +2,11 @@
 
 namespace DummyNamespace;
 
-use Ygg\Filters\RequiredFilter;
-use Ygg\Filters\MultipleFilter;
+use Ygg\Filters\AbstractFilter;
+use Ygg\Filters\SelectRequiredFilter;
+use Ygg\Filters\SelectMultipleFilter;
 
-class DummyClass implements RequiredFilter, MultipleFilter
+class DummyClass extends AbstractFilter implements SelectMultipleFilter, SelectRequiredFilter
 {
     /**
     * @return array

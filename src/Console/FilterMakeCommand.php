@@ -3,6 +3,7 @@
 namespace Ygg\Console;
 
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Symfony\Component\Console\Input\InputOption;
 
 class FilterMakeCommand extends GeneratorCommand
@@ -31,7 +32,7 @@ class FilterMakeCommand extends GeneratorCommand
     /**
      * @param string $name
      * @return mixed|string
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     protected function buildClass($name)
     {
@@ -57,7 +58,8 @@ class FilterMakeCommand extends GeneratorCommand
     {
         return array_merge($replace, [
             "use Ygg\Filters\MultipleFilter;\n" => '',
-            ', MultipleFilter' => '',
+            'MultipleFilter,' => '',
+            'MultipleFilter' => '',
         ]);
     }
 
