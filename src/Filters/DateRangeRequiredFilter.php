@@ -3,10 +3,10 @@
 namespace Ygg\Filters;
 
 /**
- * Interface RequiredFilter
+ * Interface DateRangeRequiredFilter
  * @package Ygg\Filters
  */
-interface RequiredFilter extends Filter
+interface DateRangeRequiredFilter extends SelectFilter
 {
     /**
      * @return string|int

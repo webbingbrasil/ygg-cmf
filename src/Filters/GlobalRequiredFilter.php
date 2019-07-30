@@ -6,6 +6,6 @@ namespace Ygg\Filters;
  * Interface GlobalRequiredFilter
  * @package Ygg\Filters
  */
-interface GlobalRequiredFilter extends RequiredFilter
+interface GlobalRequiredFilter extends SelectRequiredFilter
 {
 }

@@ -2,6 +2,7 @@
 
 namespace Ygg\Filters;
 
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use function is_array;
 use function strlen;
@@ -20,9 +21,9 @@ trait HasFiltersInQuery
 
     /**
      * @param string $filterName
-     * @return array|null
+     * @return string|array|null
      */
-    public function filterFor(string $filterName): ?array
+    public function filterFor(string $filterName)
     {
         $forcedFilterName = '/forced/'.$filterName;
         if (isset($this->filters[$forcedFilterName])) {
@@ -33,9 +34,17 @@ trait HasFiltersInQuery
             return null;
         }
 
-        return Str::contains($this->filters[$filterName], ',')
-            ? explode(',', $this->filters[$filterName])
-            : $this->filters[$filterName];
+        if (str_contains($this->filters[$filterName], '..')) {
+            [$start, $end] = explode('..', $this->filters[$filterName]);
+            return [
+                'start' => Carbon::createFromFormat('Ymd', $start)->setTime(0, 0, 0, 0),
+                'end' => Carbon::createFromFormat('Ymd', $end)->setTime(23, 59, 59, 999999),
+            ];
+        }
+        if (str_contains($this->filters[$filterName], ',')) {
+            return explode(',', $this->filters[$filterName]);
+        }
+        return $this->filters[$filterName];
     }
 
     /**
@@ -58,14 +67,20 @@ trait HasFiltersInQuery
     protected function setFilterValue(string $filter, $value): void
     {
         if (is_array($value)) {
-            // Force all filter values to be string, to be consistent with
-            // all use cases (filter in ResourceList or in Command)
-            $value = empty($value) ? null : implode(',', $value);
+            // Force all filter values to be string, to be consistent with all use cases
+            // (filter in EntityList or in Command)
+            if (empty($value)) {
+                $value = null;
+            } elseif (isset($value['start']) && $value['start'] instanceof Carbon) {
+                // RangeFilter case
+                $value = collect($value)->map->format('Ymd')->implode('..');
+            } else {
+                // Multiple filter case
+                $value = implode(',', $value);
+            }
         }
-
         $this->filters[$filter] = $value;
-
-        event("filter-{$filter}-was-set", [$value, $this]);
+        event('filter-'.$filter.'-was-set', [$value, $this]);
     }
 
     /**
@@ -75,7 +90,7 @@ trait HasFiltersInQuery
      */
     public function forceFilterValue(string $filter, $value): void
     {
-        $this->filters["/forced/$filter"] = $value;
+        $this->filters['/forced/'.$filter] = $value;
     }
 
     /**
