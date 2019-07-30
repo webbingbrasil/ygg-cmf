@@ -1,0 +1,53 @@
+.YggSelect {
+
+    &--list {
+        background: $ui-03;
+        padding: 1rem;
+    }
+
+    &__clear-button {
+        @extend %select-close-button;
+
+        &-icon {
+            @extend %select-close-icon;
+            position: initial;
+        }
+    }
+
+    .YggSelect__clear-button ~ .multiselect__tags {
+        padding-right: 2rem;
+    }
+
+    &__radio-button-group {
+        display: flex;
+        //flex-flow: row wrap;
+        align-items: center;
+        //margin-top: rem(6px);
+
+        &--block {
+            display: block;
+        }
+    }
+
+    &__item {
+        margin-top: .3rem;
+
+        &:first-child, &--inline {
+            margin-top: 0;
+        }
+
+        &--inline {
+            margin-left: 1rem;
+
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+
+    &--multiple {
+        .multiselect__tags {
+            padding-bottom: rem(9px) - .1875rem;
+        }
+    }
+}

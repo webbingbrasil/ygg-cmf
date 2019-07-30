@@ -1,0 +1,12 @@
+.dashboard {
+    .Ygg__empty-view {
+        height: 100vh;
+        color: rgba($text-02, .5);
+    }
+
+    .YggDashboardPage {
+        .row + .row {
+            margin-top: 1rem;
+        }
+    }
+}

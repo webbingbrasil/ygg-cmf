@@ -18,29 +18,24 @@
                      role="tablist"
                      :aria-setsize="tabs.length"
                      :aria-posinset="currentTab + 1"
-                     @keydown.left="previousTab"
-                     @keydown.up="previousTab"
-                     @keydown.right="nextTab"
-                     @keydown.down="nextTab"
-                     @keydown.shift.left="setTab(-1,false,1)"
-                     @keydown.shift.up="setTab(-1,false,1)"
-                     @keydown.shift.right="setTab(tabs.length,false,-1)"
-                     @keydown.shift.down="setTab(tabs.length,false,-1)"
                 >
                     <slot v-if="!hasNavOverflow" name="nav-prepend"></slot>
-                    <a v-for="(tab, index) in tabs"
+                    <a :class="{'YggTabs__nav-link--has-error':tab.hasError,
+                         'YggTabs__nav-link--active': tab.localActive,
+                         'YggTabs__nav-link--disabled': tab.disabled}"
                        class="YggTabs__nav-link"
-                       :class="{'YggTabs__nav-link--has-error':tab.hasError,
-                        'YggTabs__nav-link--active': tab.localActive,
-                        'YggTabs__nav-link--disabled': tab.disabled}"
+                       @click.prevent.stop="clickTab(tab)"
                        :href="tab.href"
                        role="tab"
                        :aria-selected="tab.localActive ? 'true' : 'false'"
                        :aria-controls="tab.id || null"
                        :id="tab.controlledBy || null"
-                       @click.prevent.stop="setTab(index)"
-                       @keydown.space.prevent.stop="setTab(index)"
-                       @keydown.enter.prevent.stop="setTab(index)"
+                       @keydown.down="nextTab"
+                       @keydown.left="previousTab"
+                       @keydown.right="nextTab"
+                       @keydown.space.prevent.stop="clickTab(tab)"
+                       @keydown.up="previousTab"
+                       v-for="tab in tabs"
                        v-html="tab.title"
                     ></a>
                 </div>
@@ -56,24 +51,20 @@
 </template>
 
 <script>
-    import Vue from 'vue';
     import Tabs from 'bootstrap-vue/es/components/tabs/tabs'
     import bCollapse from 'bootstrap-vue/es/components/collapse/collapse';
     import DropdownArrow from './dropdown/Arrow.vue';
     import HasOverflow from '../directives/HasOverflow';
-    import { Responsive } from '../mixins';
+    import {Responsive} from '../mixins';
 
     export default {
         name:'YggBTabs',
-
         mixins: [Responsive('sm')],
-
         extends: Tabs,
         components: {
             bCollapse,
             DropdownArrow
         },
-
         data() {
             return {
                 expanded: true,
@@ -115,4 +106,3 @@
         }
     }
 </script>
-

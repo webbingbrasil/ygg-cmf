@@ -8,24 +8,24 @@
                 <form @submit.prevent="handleSearchSubmitted">
                     <label id="ab-search-label" class="YggSearch__label" for="ab-search-input">{{ l('action_bar.list.search.placeholder') }}</label>
                     <input class="YggSearch__input"
-                        :value="search"
-                        :placeholder="l('action_bar.list.search.placeholder')"
-                        type="text"
-                        id="ab-search-input"
-                        role="search"
-                        aria-labelledby="ab-search-label"
-                        @input="handleSearchInput"
-                        @focus="handleSearchFocused"
-                        @blur="handleSearchBlur"
-                        ref="search"
+                           :placeholder="l('action_bar.list.search.placeholder')"
+                           :value="search"
+                           @blur="handleSearchBlur"
+                           @focus="handleSearchFocused"
+                           @input="handleSearchInput"
+                           aria-labelledby="ab-search-label"
+                           id="ab-search-input"
+                           ref="search"
+                           role="search"
+                           type="text"
                     >
                     <svg class="YggSearch__magnifier" width="16" height="16" viewBox="0 0 16 16" fill-rule="evenodd">
                         <path d="M6 2c2.2 0 4 1.8 4 4s-1.8 4-4 4-4-1.8-4-4 1.8-4 4-4zm0-2C2.7 0 0 2.7 0 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6zM16 13.8L13.8 16l-3.6-3.6 2.2-2.2z"></path>
                         <path d="M16 13.8L13.8 16l-3.6-3.6 2.2-2.2z"></path>
                     </svg>
                     <svg class="YggSearch__close" :class="{'YggSearch__close--hidden':!(search||'').length}"
-                        @click="handleClearButtonClicked"
-                        width="16" height="16" viewBox="0 0 16 16" fill-rule="evenodd">
+                         @click="handleClearButtonClicked"
+                         fill-rule="evenodd" height="16" viewBox="0 0 16 16" width="16">
                         <path d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm3.5 10.1l-1.4 1.4L8 9.4l-2.1 2.1-1.4-1.4L6.6 8 4.5 5.9l1.4-1.4L8 6.6l2.1-2.1 1.4 1.4L9.4 8l2.1 2.1z"></path>
                     </svg>
                 </form>
@@ -60,26 +60,24 @@
             </template>
         </template>
         <template slot="extras">
-            <ygg-filter-select
-                v-for="filter in filters"
-                v-show="!reorderActive"
-                :name="filter.label"
-                :filter-key="`actionbarlist_${filter.key}`"
-                :values="filter.values"
-                :value="filtersValues[filter.key]"
-                :multiple="filter.multiple"
-                :required="filter.required"
-                :template="filter.template"
-                :search-keys="filter.searchKeys"
-                :searchable="filter.searchable"
-                :key="filter.key"
-                @input="handleFilterChanged(filter, $event)"
-            />
+            <template v-if="!reorderActive"></template>
+            <div class="row mx-n2">
+                <template v-for="filter in filters">
+                    <div class="col-auto px-2">
+                        <YggFilter
+                            :filter="filter"
+                            :key="filter.id"
+                            :value="filtersValues[filter.key]"
+                            @input="handleFilterChanged(filter, $event)"
+                        />
+                    </div>
+                </template>
+            </div>
         </template>
         <template v-if="actions.length" slot="extras-right">
             <YggActionsDropdown class="YggActionBar__actions-dropdown YggActionBar__actions-dropdown--actions"
-                :actions="actions"
-                @select="handleActionSelected"
+                                :actions="actions"
+                                @select="handleActionSelected"
             >
                 <div slot="text">
                     {{ l('resource_list.actions.resource.label') }}
@@ -91,11 +89,9 @@
 
 <script>
     import YggActionBar from './ActionBar';
-    import { Localization } from '../../mixins';
-
+    import {Localization} from '../../mixins';
     import YggText from '../form/fields/Text';
-    import YggFilterSelect from '../list/FilterSelect';
-
+    import YggFilter from '../list/Filter';
     import YggDropdown from '../dropdown/Dropdown';
     import YggDropdownItem from '../dropdown/DropdownItem';
     import YggItemVisual from '../ui/ItemVisual';
@@ -106,15 +102,13 @@
         components : {
             YggActionBar,
             YggText,
-            YggFilterSelect,
             YggDropdown,
             YggDropdownItem,
             YggItemVisual,
-            YggActionsDropdown
+            YggActionsDropdown,
+            YggFilter,
         },
-
         mixins: [Localization],
-
         props: {
             count: Number,
             search: String,
@@ -122,14 +116,11 @@
             filtersValues: Object,
             actions: Array,
             forms: Array,
-
             canCreate: Boolean,
             canReorder: Boolean,
             canSearch: Boolean,
-
             reorderActive: Boolean
         },
-
         data() {
             return {
                 searchActive: false

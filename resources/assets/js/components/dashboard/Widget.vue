@@ -10,20 +10,18 @@
     </article>
 </template>
 <script>
-    import { widgetByType } from './widgets/index';
+    import {widgetByType} from './widgets/index';
 
     export default {
         name:'YggWidget',
-
         props: {
             widgetType: String,
             widgetProps: Object,
             value: Object
         },
-
         computed: {
             widgetComp() {
-                return widgetByType(this.widgetType);
+                return widgetByType(this.widgetType, this.widgetProps.display);
             },
             exposedProps() {
                 return { ...this.widgetProps, value:this.value }

@@ -2,15 +2,17 @@
     <div class="YggDashboardPage">
         <template v-if="ready">
             <YggActionBarDashboard :actions="actions" @action="handleActionRequested" />
-            <YggGrid :rows="layout.rows">
-                <template slot-scope="widgetLayout">
-                    <YggWidget
-                        :widget-type="widgets[widgetLayout.key].type"
-                        :widget-props="widgets[widgetLayout.key]"
-                        :value="data[widgetLayout.key]"
-                    />
-                </template>
-            </YggGrid>
+            <div class="container">
+                <YggGrid :rows="layout.rows">
+                    <template slot-scope="widgetLayout">
+                        <YggWidget
+                            :value="data[widgetLayout.key]"
+                            :widget-props="widgets[widgetLayout.key]"
+                            :widget-type="widgets[widgetLayout.key].type"
+                        />
+                    </template>
+                </YggGrid>
+            </div>
         </template>
 
         <YggActionFormModal :form="actionCurrentForm" ref="actionForm" />
@@ -24,16 +26,13 @@
     import YggActionBarDashboard from '../action-bar/ActionBarDashboard.vue';
     import YggActionFormModal from '../actions/ActionFormModal.vue';
     import YggActionViewPanel from '../actions/ActionViewPanel.vue';
-
-    import { withAxiosInterceptors } from "../DynamicViewMixin";
+    import {withAxiosInterceptors} from "../DynamicViewMixin";
     import withActions from '../../mixins/page/with-actions';
-
-    import { mapState, mapGetters } from 'vuex';
+    import {mapGetters, mapState} from 'vuex';
 
     export default {
         name:'YggDashboardPage',
         mixins: [withAxiosInterceptors, withActions],
-
         components: {
             YggGrid,
             YggWidget,
@@ -41,7 +40,6 @@
             YggActionFormModal,
             YggActionViewPanel,
         },
-
         data() {
             return {
                 ready: false
@@ -61,7 +59,7 @@
                 actionsForType: 'actions/forType',
             }),
             actions() {
-                return this.actionsForType('dashboard') || [];
+                return this.actionsForType('dashboard') || [];
             },
         },
         methods: {

@@ -21,67 +21,70 @@
                 @create="handleCreateButtonClicked"
             />
 
-            <YggDataList
-                :items="items"
-                :columns="columns"
-                :page="page"
-                :paginated="paginated"
-                :total-count="totalCount"
-                :page-size="pageSize"
-                :reorder-active="reorderActive"
-                :sort="sortedBy"
-                :dir="sortDir"
-                @change="handleReorderedItemsChanged"
-                @sort-change="handleSortChanged"
-                @page-change="handlePageChanged"
-            >
-                <template slot="empty">
-                    {{ l('resource_list.empty_text') }}
-                </template>
-                <template slot="item" slot-scope="{ item }">
-                    <YggDataListRow :url="instanceFormUrl(item)" :columns="columns" :row="item">
-                        <template v-if="hasActionsColumn">
-                            <template slot="append">
-                                <div class="row justify-content-end justify-content-md-start mx-n2">
-                                    <template v-if="instanceHasState(item)">
-                                        <div class="col-auto col-md-12 my-1 px-2">
-                                            <YggDropdown class="YggResourceList__state-dropdown" :disabled="!instanceHasStateAuthorization(item)">
-                                                <template slot="text">
-                                                    <YggStateIcon :color="instanceStateIconColor(item)" />
-                                                    <span class="text-truncate">
-                                                        {{ instanceStateLabel(item) }}
-                                                    </span>
-                                                </template>
-                                                <YggDropdownItem
-                                                    v-for="stateOptions in config.state.values"
-                                                    @click="handleInstanceStateChanged(item, stateOptions.value)"
-                                                    :key="stateOptions.value"
+            <div class="container">
+                <YggDataList
+                    :columns="columns"
+                    :dir="sortDir"
+                    :items="items"
+                    :page="page"
+                    :page-size="pageSize"
+                    :paginated="paginated"
+                    :reorder-active="reorderActive"
+                    :sort="sortedBy"
+                    :total-count="totalCount"
+                    @change="handleReorderedItemsChanged"
+                    @page-change="handlePageChanged"
+                    @sort-change="handleSortChanged"
+                >
+                    <template slot="empty">
+                        {{ l('resource_list.empty_text') }}
+                    </template>
+                    <template slot="item" slot-scope="{ item }">
+                        <YggDataListRow :columns="columns" :row="item" :url="instanceFormUrl(item)">
+                            <template v-if="hasActionsColumn">
+                                <template slot="append">
+                                    <div class="row justify-content-end justify-content-md-start mx-n2">
+                                        <template v-if="instanceHasState(item)">
+                                            <div class="col-auto col-md-12 my-1 px-2">
+                                                <YggDropdown :disabled="!instanceHasStateAuthorization(item)"
+                                                             class="YggResourceList__state-dropdown">
+                                                    <template slot="text">
+                                                        <YggStateIcon :color="instanceStateIconColor(item)"/>
+                                                        <span class="text-truncate">
+                                                    {{ instanceStateLabel(item) }}
+                                                </span>
+                                                    </template>
+                                                    <YggDropdownItem
+                                                        :key="stateOptions.value"
+                                                        @click="handleInstanceStateChanged(item, stateOptions.value)"
+                                                        v-for="stateOptions in config.state.values"
+                                                    >
+                                                        <YggStateIcon :color="stateOptions.color"/>&nbsp;
+                                                        {{ stateOptions.label }}
+                                                    </YggDropdownItem>
+                                                </YggDropdown>
+                                            </div>
+                                        </template>
+                                        <template v-if="instanceHasActions(item)">
+                                            <div class="col-auto col-md-12 my-1 px-2">
+                                                <YggActionsDropdown
+                                                    :actions="instanceActions(item)"
+                                                    @select="handleInstanceActionRequested(item, $event)"
+                                                    class="YggResourceList__actions-dropdown"
                                                 >
-                                                    <YggStateIcon :color="stateOptions.color" />&nbsp;
-                                                    {{ stateOptions.label }}
-                                                </YggDropdownItem>
-                                            </YggDropdown>
-                                        </div>
-                                    </template>
-                                    <template v-if="instanceHasActions(item)">
-                                        <div class="col-auto col-md-12 my-1 px-2">
-                                            <YggActionsDropdown
-                                                class="YggResourceList__actions-dropdown"
-                                                :actions="instanceActions(item)"
-                                                @select="handleInstanceActionRequested(item, $event)"
-                                            >
-                                                <template slot="text">
-                                                    {{ l('resource_list.actions.instance.label') }}
-                                                </template>
-                                            </YggActionsDropdown>
-                                        </div>
-                                    </template>
-                                </div>
+                                                    <template slot="text">
+                                                        {{ l('resource_list.actions.instance.label') }}
+                                                    </template>
+                                                </YggActionsDropdown>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </template>
                             </template>
-                        </template>
-                    </YggDataListRow>
-                </template>
-            </YggDataList>
+                        </YggDataListRow>
+                    </template>
+                </YggDataList>
+            </div>
         </template>
 
         <YggActionFormModal :form="actionCurrentForm" ref="actionForm" />
@@ -97,16 +100,12 @@
     import YggActionsDropdown from '../actions/ActionsDropdown.vue';
     import YggActionFormModal from '../actions/ActionFormModal.vue';
     import YggActionViewPanel from '../actions/ActionViewPanel.vue';
-
-    import { YggDropdown, YggDropdownItem } from "../ui";
-
-    import { Localization } from '../../mixins';
+    import {YggDropdown, YggDropdownItem} from "../ui";
+    import {Localization} from '../../mixins';
     import DynamicViewMixin from '../DynamicViewMixin';
     import withActions from '../../mixins/page/with-actions';
-
-    import { BASE_URL } from "../../consts";
-
-    import { mapState, mapGetters } from 'vuex';
+    import {BASE_URL} from "../../consts";
+    import {mapGetters, mapState} from 'vuex';
 
     export default {
         name: 'YggResourceListPage',
@@ -115,29 +114,23 @@
             YggActionBarList,
             YggDataList,
             YggDataListRow,
-
             YggStateIcon,
             YggActionsDropdown,
-
             YggDropdown,
             YggDropdownItem,
-
             YggActionFormModal,
             YggActionViewPanel,
         },
         data() {
             return {
                 ready: false,
-
                 page: 0,
                 search: '',
                 sortedBy: null,
                 sortDir: null,
                 sortDirs: {},
-
                 reorderActive: false,
                 reorderedItems: null,
-
                 fields: null,
                 layout: null,
                 data: null,
@@ -168,7 +161,6 @@
             apiPath() {
                 return `list/${this.resourceKey}`;
             },
-
             /**
              * Action bar computed data
              */
@@ -190,7 +182,6 @@
             canSearch() {
                 return !!this.config.searchable;
             },
-
             /**
              * Data list props
              */
@@ -207,12 +198,11 @@
                 return !!this.config.paginated;
             },
             totalCount() {
-                return this.data.totalCount;
+                return this.data.totalCount || this.items.length;
             },
             pageSize() {
                 return this.data.pageSize;
             },
-
             hasActionsColumn() {
                 return this.items.some(instance =>
                     this.instanceHasState(instance) ||
@@ -267,10 +257,8 @@
                 const formUrl = multiform
                     ? this.formUrl({ formKey:multiform.key })
                     : this.formUrl();
-
                 location.href = formUrl;
             },
-
             /**
              * [Data list] getters
              */
@@ -298,7 +286,6 @@
                 }
                 const { authorization } = this.config.state;
                 const instanceId = this.instanceId(instance);
-
                 return Array.isArray(authorization)
                     ? authorization.includes(instanceId)
                     : !!authorization;
@@ -306,7 +293,6 @@
             instanceActions(instance) {
                 const allInstanceActions = this.config.actions.instance || [];
                 const instanceId = this.instanceId(instance);
-
                 return allInstanceActions.reduce((res, group) => [
                     ...res, group.filter(action => action.authorization.includes(instanceId))
                 ], []);
@@ -349,12 +335,9 @@
                     ? viewAuthorizations.includes(instanceId)
                     : !!viewAuthorizations;
             },
-
-
             filterByKey(key) {
                 return (this.config.filters || []).find(filter => filter.key === key);
             },
-
             /**
              * [Data list] actions
              */
@@ -364,22 +347,22 @@
                     attribute: this.config.state.attribute,
                     value: state
                 })
-                .then(response => {
-                    this.handleActionResponse(response);
-                })
-                .catch(error => {
-                    const { data } = error.response;
-                    if(error.response.status === 422) {
-                        this.actionsBus.$emit('showMainModal', {
-                            title: this.l('modals.state.422.title'),
-                            text: data.message,
-                            isError: true,
-                            okCloseOnly: true
-                        });
-                    }
-                })
+                    .then(response => {
+                        const {data} = response;
+                        this.handleActionRequestedResponse(data.action, data);
+                    })
+                    .catch(error => {
+                        const {data} = error.response;
+                        if (error.response.status === 422) {
+                            this.actionsBus.$emit('showMainModal', {
+                                title: this.l('modals.state.422.title'),
+                                text: data.message,
+                                isError: true,
+                                okCloseOnly: true
+                            });
+                        }
+                    })
             },
-
             /**
              * [Data list] events
              */
@@ -395,7 +378,7 @@
             handleSortChanged({ prop, dir }) {
                 this.$router.push({
                     query: {
-                        ...this.$router.query,
+                        ...this.$route.query,
                         page: 1,
                         sort: prop,
                         dir: dir,
@@ -408,12 +391,11 @@
             handlePageChanged(page) {
                 this.$router.push({
                     query: {
-                        ...this.$router.query,
+                        ...this.$route.query,
                         page
                     }
                 });
             },
-
             /**
              * Helpers
              */
@@ -430,7 +412,6 @@
             filterValueOrDefault(val, filter) {
                 return val != null && val !== '' ? this.tryParseNumber(val) : (filter.default || (filter.multiple?[]:null));
             },
-
             /**
              * Actions
              */
@@ -441,7 +422,6 @@
             },
             handleActionRequested(action, { endpoint }) {
                 const query = this.$route.query;
-
                 this.sendAction(action, {
                     postAction: () => this.axiosInstance.post(endpoint, { query }, { responseType:'blob' }),
                     postForm: data => this.axiosInstance.post(endpoint, { query, data }, { responseType:'blob' }),
@@ -451,13 +431,12 @@
             handleRefreshAction(data) {
                 const findInstance = (list, instance) => list.find(item => this.instanceId(instance) === this.instanceId(item));
                 this.data.items = this.data.items.map(item =>
-                     findInstance(data.items, item) || item
+                    findInstance(data.items, item) || item
                 );
             },
             actionEndpoint(actionKey, instanceId) {
                 return `${this.apiPath}/action/${actionKey}${instanceId?`/${instanceId}`:''}`;
             },
-
             /**
              * Data
              */
@@ -468,17 +447,14 @@
                 this.config = config;
                 this.authorizations = authorizations;
                 this.forms = forms;
-
                 this.config.actions = config.actions || {};
                 this.config.filters = config.filters || [];
-
                 this.page = this.data.page;
                 !this.sortDir && (this.sortDir = this.config.defaultSortDir);
                 !this.sortedBy && (this.sortedBy = this.config.defaultSort);
             },
             bindParams(params) {
                 let { search, page, sort, dir } = params;
-
                 this.search = search;
                 page && (this.page = Number(page));
                 sort && (this.sortedBy = sort);
@@ -489,7 +465,6 @@
                 // legacy
                 await this.get();
                 this.bindParams(this.$route.query);
-
                 await this.$store.dispatch('resource-list/update', {
                     config: this.config,
                     filtersValues: this.getFiltersValuesFromQuery(this.$route.query)

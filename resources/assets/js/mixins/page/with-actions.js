@@ -1,4 +1,4 @@
-import { parseBlobJSONContent, getFileName } from "../../util";
+import {getFileName, parseBlobJSONContent} from "../../util";
 
 export default {
     data() {
@@ -24,11 +24,7 @@ export default {
         async handleActionResponse(response) {
             if(response.data.type === 'application/json') {
                 const data = await parseBlobJSONContent(response.data);
-                const handler = this.actionHandlers[data.action];
-
-                if(handler) {
-                    handler(data);
-                }
+                this.handleActionRequestedResponse(data.action, data)
             } else {
                 this.downloadActionFile(response);
             }
@@ -78,6 +74,13 @@ export default {
                 ...this.actionHandlers,
                 ...handlers,
             };
+        },
+        handleActionRequestedResponse(action, data) {
+            const handler = this.actionHandlers[action];
+
+            if (handler) {
+                handler(data);
+            }
         },
 
         /** Action actions handlers */

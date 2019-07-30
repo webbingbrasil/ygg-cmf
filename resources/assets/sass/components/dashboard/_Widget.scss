@@ -1,0 +1,46 @@
+.YggWidget {
+    &--link {
+        &.YggCard {
+            &:hover {
+                @include focus-outline('layer');
+            }
+        }
+    }
+
+    &.YggWidget--chart {
+        &.YggCard {
+            display: block;
+
+            .YggCard__overview {
+                display: block;
+
+                .YggCard__overview-about {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    &.YggCard {
+        height: 100%;
+
+        .YggWidget__link {
+            color: $color__blue-90;
+            text-decoration: none;
+
+            &:focus {
+                @include focus-outline('border');
+            }
+        }
+
+        .YggCard__overview {
+            height: 100%;
+            padding: 1rem;
+
+            .YggCard__overview-about {
+                padding: 0;
+                justify-content: center;
+            }
+        }
+    }
+}

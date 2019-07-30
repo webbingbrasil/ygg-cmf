@@ -1,24 +1,22 @@
 <template>
     <div class="YggSelect" :class="[{'YggSelect--multiple':multiple}, `YggSelect--${display}`]">
         <ygg-multiselect
-                v-if="display==='dropdown'"
-                :value="value"
-                :searchable="searchable"
-                :options="multiselectOptions"
-                :multiple="multiple"
-                :hide-selected="multiple"
-                :close-on-select="!multiple"
-                :custom-label="multiselectLabel"
-                :placeholder="placeholder"
-                :disabled="readOnly"
-                :max="maxSelected"
-                :show-pointer="highlighting"
-                :allow-empty="clearable"
-                :show-labels="true"
-                @input="handleInput"
-                @open="$emit('open')"
-                @close="$emit('close')"
-                ref="multiselect">
+            :allow-empty="clearable"
+            :close-on-select="!multiple"
+            :custom-label="multiselectLabel"
+            :disabled="readOnly"
+            :hide-selected="multiple"
+            :max="maxSelected"
+            :multiple="multiple"
+            :options="multiselectOptions"
+            :placeholder="placeholder"
+            :searchable="false"
+            :value="value"
+            @close="$emit('close')"
+            @input="handleInput"
+            @open="$emit('open')"
+            ref="multiselect"
+            v-if="display==='dropdown'">
             <template v-if="clearable && !multiple && value!=null">
                 <button slot="caret" class="YggSelect__clear-button" type="button" @mousedown.stop.prevent="remove()">
                     <svg class="YggSelect__clear-button-icon"
@@ -33,6 +31,7 @@
                     <i aria-hidden="true" tabindex="1" @keypress.enter.prevent="remove(option)" @mousedown.prevent.stop="remove(option)" class="multiselect__tag-icon"></i>
                 </span>
             </template>
+            <slot name="option" slot="option"></slot>
         </ygg-multiselect>
         <template v-else>
             <template v-if="multiple">
@@ -81,23 +80,22 @@
     import YggMultiselect from '../../Multiselect';
     import YggCheck from './Check.vue';
     import localize from '../../../mixins/localize/Select';
+    import {setDefaultValue} from "../../../util/field";
 
     export default {
         name: 'YggSelect',
-
         mixins: [localize],
-
         components: {
             YggMultiselect,
             YggCheck
         },
-
         props: {
             value: [Array, String, Number],
             uniqueIdentifier: String,
             options: {
                 type: Array,
-                required: true
+                required: true,
+                default: () => [],
             },
             multiple: {
                 type: Boolean,
@@ -116,25 +114,20 @@
                 default: '-'
             },
             maxSelected: Number,
-            highlighting: {
-                type: Boolean,
-                default: true
-            },
-            searchable: {
-                type: Boolean,
-                default: false
-            },
             readOnly: Boolean,
-
             inline: {
                 type: Boolean,
                 default: true
             },
         },
-
         data() {
             return {
                 checkboxes: this.value
+            }
+        },
+        watch: {
+            options() {
+                this.init();
             }
         },
         computed: {
@@ -144,7 +137,6 @@
             optionsLabel() {
                 // if (this.display !== 'dropdown')
                 //     return;
-
                 return this.options.reduce((map, opt) => {
                     map[opt.id] = this.localizedOptionLabel(opt);
                     return map;
@@ -174,12 +166,20 @@
             },
             handleRadioChanged(optId) {
                 this.$emit('input', optId);
+            },
+            setDefault() {
+                if (!this.clearable && this.value == null && this.options.length > 0) {
+                    this.$emit('input', this.options[0].id, {force: true});
+                }
+            },
+            init() {
+                setDefaultValue(this, this.setDefault, {
+                    dependantAttributes: ['options'],
+                });
             }
         },
         created() {
-            if(!this.clearable && this.value == null && this.options.length>0) {
-                this.$emit('input', this.options[0].id);
-            }
+            this.init();
         }
     }
 </script>

@@ -24,7 +24,7 @@ export default class SearchStrategy {
     }
 
     search(querystring) {
-        if(querystring.length < this.minQueryLength)
+        if (querystring === undefined || querystring.length < this.minQueryLength)
             return this.fuse.list;
         return this.fuse.search(querystring);
     }

@@ -1,23 +1,17 @@
 <script>
     import Multiselect from 'vue-multiselect';
     import DropdownArrow from './dropdown/Arrow';
-
-    import { lang } from '../mixins/Localization';
-
+    import {lang} from '../mixins/Localization';
 
     export default {
         name:'YggMultiselect',
         functional:true,
         render(h, { data, children=[], slots ,props }) {
-
             if(!props.placeholder) {
                 data.attrs.placeholder = lang('form.multiselect.placeholder');
             }
-
-            //data.attrs.showPointer = false;
-
+            data.attrs.showPointer = false;
             let carretSlot = slots().caret;
-
             return h({
                 'extends': Multiselect,
                 computed: {

@@ -1,12 +1,12 @@
 <template>
-    <span class="YggFilterSelect"
-          :class="{
+    <div :class="{
               'YggFilterSelect--open':opened,
               'YggFilterSelect--empty':empty,
               'YggFilterSelect--multiple':multiple,
               'YggFilterSelect--searchable':searchable
           }"
-          tabindex="0"
+         class="YggFilterSelect"
+         tabindex="0"
     >
         <!-- dropdown & search input -->
         <ygg-autocomplete
@@ -28,34 +28,30 @@
             @multiselect-input="handleAutocompleteInput"
             @close="close"
         />
-        <span class="YggFilterSelect__text" @mousedown="handleMouseDown">
-            {{name}}
-        </span>
 
-        <!-- value text & tags -->
-        <ygg-select
-            class="YggFilterSelect__select"
-            :value="value"
-            :options="values"
-            :multiple="multiple"
-            :clearable="!required"
-            :inline="false"
-            :unique-identifier="filterKey"
-            placeholder=" "
-            ref="select"
-            @input="handleSelect"
-            @mousedown.native="handleMouseDown"
-        />
-    </span>
+        <YggFilterControl :label="label" @click="handleClick" no-caret>
+            <!-- value text & tags -->
+            <ygg-select
+                :clearable="!required"
+                :inline="false"
+                :multiple="multiple"
+                :options="values"
+                :value="value"
+                @input="handleSelect"
+                class="YggFilterSelect__select"
+                placeholder=" "
+                ref="select"
+            />
+        </YggFilterControl>
+    </div>
 </template>
 
 <script>
-    import YggDropdown from '../dropdown/Dropdown';
-    import YggSelect from '../form/fields/Select';
-    import YggAutocomplete from '../form/fields/Autocomplete';
-
-    import { Localization } from '../../mixins';
-
+    import YggDropdown from '../../dropdown/Dropdown';
+    import YggSelect from '../../form/fields/Select';
+    import YggAutocomplete from '../../form/fields/Autocomplete';
+    import YggFilterControl from '../FilterControl';
+    import {Localization} from '../../../mixins';
 
     export default {
         name: 'YggFilterSelect',
@@ -63,10 +59,11 @@
         components: {
             YggDropdown,
             YggSelect,
-            YggAutocomplete
+            YggAutocomplete,
+            YggFilterControl,
         },
         props: {
-            name : {
+            label: {
                 type: String,
                 required: true
             },
@@ -82,8 +79,6 @@
             searchable: Boolean,
             searchKeys: Array,
             template: String,
-
-            filterKey: String,
         },
         data() {
             return {
@@ -110,7 +105,7 @@
             handleAutocompleteInput(value) {
                 this.$emit('input', this.multiple ? value.map(v=>v.id) : (value||{}).id);
             },
-            handleMouseDown() {
+            handleClick() {
                 if(this.opened) {
                     this.close();
                 } else {

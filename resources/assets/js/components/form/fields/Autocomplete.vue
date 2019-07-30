@@ -28,7 +28,7 @@
                     <template v-if="clearButtonVisible">
                         <button class="YggAutocomplete__result-item__close-button" type="button" @click="handleClearButtonClicked">
                             <svg class="YggAutocomplete__result-item__close-icon"
-                                aria-label="close" width="10" height="10" viewBox="0 0 10 10" fill-rule="evenodd">
+                                 aria-label="close" fill-rule="evenodd" height="10" viewBox="0 0 10 10" width="10">
                                 <path d="M9.8 8.6L8.4 10 5 6.4 1.4 10 0 8.6 3.6 5 .1 1.4 1.5 0 5 3.6 8.6 0 10 1.4 6.4 5z"></path>
                             </svg>
                         </button>
@@ -55,6 +55,18 @@
                     {{ l('form.autocomplete.no_results_text') }}
                 </template>
             </multiselect>
+
+            <template v-if="overlayVisible">
+                <div class="YggAutocomplete__overlay multiselect">
+                    <div class="multiselect__tags">
+                        <YggTemplate
+                            :template="resultItemTemplate"
+                            :template-data="localizedTemplateData(value)"
+                            name="ResultItem"
+                        />
+                    </div>
+                </div>
+            </template>
         </template>
     </div>
 </template>
@@ -63,16 +75,14 @@
     import YggTemplate from '../../Template.vue';
     import YggLoading from '../../ui/Loading.vue';
     import Multiselect from 'vue-multiselect';
-
     import SearchStrategy from '../../../app/models/SearchStrategy';
-
     import debounce from 'lodash/debounce';
-
-    import { warn, error } from '../../../util';
-    import { Localization, Debounce } from '../../../mixins';
-    import { lang } from '../../../mixins/Localization';
-    import { getAutocompleteSuggestions } from "../../../api";
+    import {error, warn} from '../../../util';
+    import {Debounce, Localization} from '../../../mixins';
+    import {lang} from '../../../mixins/Localization';
+    import {getAutocompleteSuggestions} from "../../../api";
     import localize from '../../../mixins/localize/Autocomplete';
+    import {setDefaultValue} from "../../../util/field";
 
     export default {
         name:'YggAutocomplete',
@@ -81,14 +91,10 @@
             YggTemplate,
             YggLoading
         },
-
         mixins: [Localization, Debounce, localize],
-
         props: {
             fieldKey: String,
-
             value: [String, Number, Object, Array],
-
             mode: String,
             localValues: {
                 type: Array,
@@ -138,7 +144,8 @@
             showPointer: {
                 type:Boolean,
                 default:true
-            }
+            },
+            dynamicAttributes: Array,
         },
         data() {
             return {
@@ -151,7 +158,9 @@
         },
         watch: {
             localValues() {
-                this.updateLocalSuggestions();
+                if (!this.isRemote) {
+                    this.updateLocalSuggestions(this.query);
+                }
             },
         },
         computed: {
@@ -180,6 +189,10 @@
                     { 'YggAutocomplete--disabled': this.readOnly }
                 ];
             },
+            overlayVisible() {
+                const isFormField = !!this.fieldKey;
+                return this.value && isFormField;
+            }
         },
         methods: {
             updateSuggestions(query) {
@@ -195,7 +208,6 @@
                     this.updateLocalSuggestions(query);
                 }
             },
-
             updateLocalSuggestions(query) {
                 this.suggestions = this.searchStrategy.search(query);
             },
@@ -207,14 +219,13 @@
                     searchAttribute: this.remoteSearchAttribute,
                     query,
                 })
-                .then(suggestions => {
-                    this.suggestions = suggestions;
-                })
-                .finally(() => {
-                    this.isLoading = false;
-                });
+                    .then(suggestions => {
+                        this.suggestions = suggestions;
+                    })
+                    .finally(() => {
+                        this.isLoading = false;
+                    });
             }, 200),
-
             handleSelect(value) {
                 this.$emit('input', value);
             },
@@ -243,18 +254,23 @@
                     return null;
                 }
                 return this.localValues.find(this.itemMatchValue);
+            },
+            async setDefault() {
+                this.$emit('input', this.findLocalValue(), {force: true});
+                await this.$nextTick();
+                this.ready = true;
             }
         },
-        async created() {
+        created() {
             if(this.mode === 'local' && !this.searchKeys) {
                 warn(`Autocomplete (key: ${this.fieldKey}) has local mode but no searchKeys, default set to ['value']`);
             }
             if(this.isRemote) {
                 this.ready = true;
             } else {
-                this.$emit('input', this.findLocalValue(), { force: true });
-                await this.$nextTick();
-                this.ready = true;
+                setDefaultValue(this, this.setDefault, {
+                    dependantAttributes: ['localValues'],
+                });
             }
         }
     }

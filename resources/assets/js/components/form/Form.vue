@@ -1,81 +1,75 @@
 <template>
     <div class="YggForm">
         <template v-if="ready">
-            <div v-show="hasErrors" class="YggNotification YggNotification--error" role="alert">
-                <div class="YggNotification__details">
-                    <div class="YggNotification__text-wrapper">
-                        <p class="YggNotification__title">{{ l('form.validation_error.title') }}</p>
-                        <p class="YggNotification__subtitle">{{ l('form.validation_error.description') }}</p>
+            <div class="container">
+                <div class="YggNotification YggNotification--error" role="alert" v-show="hasErrors">
+                    <div class="YggNotification__details">
+                        <div class="YggNotification__text-wrapper">
+                            <p class="YggNotification__title">{{ l('form.validation_error.title') }}</p>
+                            <p class="YggNotification__subtitle">{{ l('form.validation_error.description') }}</p>
+                        </div>
                     </div>
                 </div>
+                <ygg-tabbed-layout :layout="layout" ref="tabbedLayout">
+                    <!-- Tab -->
+                    <template slot-scope="tab">
+                        <ygg-grid :rows="[tab.columns]" ref="columnsGrid">
+                            <!-- column -->
+                            <template slot-scope="column">
+                                <ygg-fields-layout :layout="column.fields" :visible="fieldVisible" ref="fieldLayout"
+                                                   v-if="fields">
+                                    <!-- field -->
+                                    <template slot-scope="fieldLayout">
+                                        <ygg-field-display
+                                            :config-identifier="fieldLayout.key"
+                                            :context-data="data"
+                                            :context-fields="transformedFields"
+                                            :error-identifier="fieldLayout.key"
+                                            :field-key="fieldLayout.key"
+                                            :field-layout="fieldLayout"
+                                            :locale="fieldLocale[fieldLayout.key]"
+                                            :update-data="updateData"
+                                            :update-visibility="updateVisibility"
+                                            @locale-change="updateLocale"
+                                            ref="field"
+                                        />
+                                    </template>
+                                </ygg-fields-layout>
+                            </template>
+                        </ygg-grid>
+                    </template>
+                </ygg-tabbed-layout>
             </div>
-            <ygg-tabbed-layout :layout="layout" ref="tabbedLayout">
-                <!-- Tab -->
-                <template slot-scope="tab">
-                    <ygg-grid :rows="[tab.columns]" ref="columnsGrid">
-                        <!-- column -->
-                        <template slot-scope="column">
-                            <ygg-fields-layout v-if="fields" :layout="column.fields" :visible="fieldVisible" ref="fieldLayout">
-                                <!-- field -->
-                                <template slot-scope="fieldLayout">
-                                    <ygg-field-display
-                                        :field-key="fieldLayout.key"
-                                        :context-fields="isReadOnly ? readOnlyFields : fields"
-                                        :context-data="data"
-                                        :field-layout="fieldLayout"
-                                        :locale="fieldLocale[fieldLayout.key]"
-                                        :error-identifier="fieldLayout.key"
-                                        :config-identifier="fieldLayout.key"
-                                        :update-data="updateData"
-                                        :update-visibility="updateVisibility"
-                                        @locale-change="updateLocale"
-                                        ref="field"
-                                    />
-                                </template>
-                            </ygg-fields-layout>
-                        </template>
-                    </ygg-grid>
-                </template>
-            </ygg-tabbed-layout>
         </template>
     </div>
 </template>
 
 <script>
     import * as util from '../../util';
-    import { API_PATH, BASE_URL } from '../../consts';
-
-    import { ActionEvents, ReadOnlyFields, Localization } from '../../mixins';
-
+    import {BASE_URL} from '../../consts';
+    import {ActionEvents, Localization, ReadOnlyFields} from '../../mixins';
     import DynamicView from '../DynamicViewMixin';
-
     import YggTabbedLayout from '../TabbedLayout'
     import YggGrid from '../Grid';
     import YggFieldsLayout from './FieldsLayout.vue';
     // import YggLocaleSelector from '../LocaleSelector.vue';
-
     import localize from '../../mixins/localize/form';
+    import {getDependantFieldsResetData, transformFields} from "../../util/form";
 
     const noop = ()=>{};
-
     export default {
         name:'YggForm',
         extends: DynamicView,
-
         mixins: [ActionEvents, ReadOnlyFields('fields'), Localization, localize('fields')],
-
         components: {
             YggTabbedLayout,
             YggFieldsLayout,
             YggGrid,
             // YggLocaleSelector
         },
-
-
         props:{
             resourceKey: String,
             instanceId: String,
-
             /// Extras props for customization
             independant: {
                 type:Boolean,
@@ -84,29 +78,22 @@
             ignoreAuthorizations: Boolean,
             props: Object
         },
-
         inject:['actionsBus'],
-
         provide() {
             return {
                 $form:this
             }
         },
-
         data() {
             return {
                 ready: false,
-
                 fields: null,
                 authorizations: null,
-
                 errors:{},
                 fieldLocale: {},
                 locales: null,
-
                 fieldVisible: {},
                 curFieldsetId:0,
-
                 pendingJobs: []
             }
         },
@@ -132,18 +119,15 @@
             hasErrors() {
                 return Object.keys(this.errors).some(errorKey => !this.errors[errorKey].cleared);
             },
-
             baseResourceKey() {
                 return this.resourceKey.split(':')[0];
             },
-
             downloadLinkBase() {
                 return `/download/${this.resourceKey}/${this.instanceId}`;
             },
             listUrl() {
                 return `${BASE_URL}/list/${this.baseResourceKey}?restore-context=1`;
             },
-
             localeSelectorErrors() {
                 return Object.keys(this.errors).reduce((res,errorKey)=>{
                     let errorLocale = this.locales.find(l=>errorKey.endsWith(`.${l}`));
@@ -152,11 +136,23 @@
                     }
                     return res;
                 },{})
-            }
+            },
+            transformedFields() {
+                const fields = this.isReadOnly
+                    ? this.readOnlyFields
+                    : this.fields;
+                return transformFields(fields, this.data);
+            },
         },
         methods: {
-            updateData(key, value) {
-                this.$set(this.data,key,this.fieldLocalizedValue(key, value));
+            async updateData(key, value, {forced} = {}) {
+                this.data = {
+                    ...this.data,
+                    ...(!forced ? getDependantFieldsResetData(this.fields, key,
+                        field => this.fieldLocalizedValue(field.key, null),
+                    ) : null),
+                    [key]: this.fieldLocalizedValue(key, value),
+                }
             },
             updateVisibility(key, visibility) {
                 this.$set(this.fieldVisible, key, visibility);
@@ -166,12 +162,10 @@
             },
             mount({fields, layout, data={}, authorizations={}, locales,}) {
                 this.fields = fields;
-                this.layout = this.patchLayout(layout);
                 this.data = data;
+                this.layout = this.patchLayout(layout);
                 this.locales = locales;
-                // this.locale = locales && locales[0];
                 this.authorizations = authorizations;
-
                 if(fields) {
                     this.fieldVisible = Object.keys(this.fields).reduce((res, fKey) => {
                         res[fKey] = true;
@@ -197,7 +191,6 @@
                 if(response.status===422)
                     this.errors = response.data.errors || {};
             },
-
             patchLayout(layout) {
                 if(!layout)return;
                 let curFieldsetId = 0;
@@ -209,10 +202,9 @@
                             row.forEach(mapFields);
                         });
                 };
-                layout.tabs.forEach(r => r.columns.forEach(mapFields));
+                layout.tabs.forEach(t => t.columns.forEach(mapFields));
                 return layout;
             },
-
             async init() {
                 if(this.independant) {
                     this.mount(this.props);
@@ -227,10 +219,8 @@
                     else util.error('no resource key provided');
                 }
             },
-
             setupActionBar({ disable=false }={}) {
                 const showSubmitButton = this.isCreation ? this.authorizations.create : this.authorizations.update;
-
                 this.actionsBus.$emit('setup', {
                     showSubmitButton: showSubmitButton && !disable,
                     showDeleteButton: !this.isCreation && this.authorizations.delete && !disable,
@@ -272,19 +262,16 @@
                     this.redirectToList();
                 }
                 catch(error) {
-
                 }
             },
             cancel() {
                 this.redirectToList();
             },
-
             setPendingJob({ key, origin, value:isPending }) {
                 if(isPending)
                     this.pendingJobs.push(key);
                 else
                     this.pendingJobs = this.pendingJobs.filter(jobKey => jobKey !== key);
-
                 if(this.pendingJobs.length) {
                     this.actionsBus.$emit('updateActionsState', {
                         state: 'pending',

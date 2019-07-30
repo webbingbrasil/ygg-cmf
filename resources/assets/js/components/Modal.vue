@@ -1,15 +1,15 @@
 <template>
     <b-modal class="YggModal" :class="{ 'YggModal--error': isError }"
-        v-bind="$attrs"
-        :title="title"
-        :visible="visible"
-        :cancel-title="cancelTitle || l('modals.cancel_button')"
-        :ok-title="okTitle || l('modals.ok_button')"
-        :ok-only="okOnly"
-        no-enforce-focus
-        v-on="$listeners"
-        @change="handleVisibilityChanged"
-        ref="modal"
+             :cancel-title="cancelTitle || l('modals.cancel_button')"
+             :ok-only="okOnly"
+             :ok-title="okTitle || l('modals.ok_button')"
+             :title="title"
+             :visible="visible"
+             @change="handleVisiblityChanged"
+             no-enforce-focus
+             ref="modal"
+             v-bind="$attrs"
+             v-on="$listeners"
     >
         <template slot="modal-header">
             <div>
@@ -34,12 +34,10 @@
     export default {
         name: 'YggModal',
         mixins: [Localization],
-
         components: {
             BModal
         },
         inheritAttrs: false,
-
         props: {
             // bootstrap-vue override
             visible: Boolean,
@@ -47,11 +45,9 @@
             title: String,
             okTitle: String,
             okOnly: Boolean,
-
             // custom props
             isError: Boolean,
         },
-
         methods: {
             show() {
                 this.$refs.modal.show();
@@ -59,9 +55,9 @@
             hide() {
                 this.$refs.modal.hide();
             },
-            handleVisibilityChanged(isVisible) {
-                this.$emit('update:visible', isVisible);
-            }
+            handleVisiblityChanged(visible) {
+                this.$emit('update:visible', visible);
+            },
         }
     }
 </script>

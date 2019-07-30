@@ -1,0 +1,67 @@
+.YggCheck {
+    height: 100%;
+
+    &__label {
+        @include reset;
+        @include font-smoothing;
+        @include font-size('14');
+        display: flex;
+        height: 100%;
+        align-items: center;
+        cursor: pointer;
+
+        .YggCheck__input {
+            @include hidden;
+        }
+
+        .YggCheck__label-text {
+            user-select: none;
+        }
+
+        .YggCheck__appearance {
+            display: inline-block;
+            height: rem(18px);
+            min-width: rem(18px);
+            max-width: rem(18px);
+            margin-right: .5rem;
+            background-color: $ui-01;
+            border-radius: 2px;
+            border: 2px solid $ui-05;
+        }
+
+        .YggCheck__input:checked + .YggCheck__appearance,
+        .YggCheck__input:checked + .YggCheck__label .YggCheck__appearance {
+            display: flex;
+            align-items: baseline;
+            background-color: $brand-01;
+            border-color: $brand-01;
+        }
+
+        .YggCheck__input:disabled + .YggCheck__appearance,
+        .YggCheck__input:disabled ~ .YggCheck__label-text {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        .YggCheck__input:focus + .YggCheck__appearance {
+            @include focus-outline('blurred');
+        }
+
+        .YggCheck__checkmark {
+            display: none;
+            fill: $inverse-01;
+            width: rem(15px);
+            height: rem(15px);
+        }
+
+        .YggCheck__input:checked + .YggCheck__appearance .YggCheck__checkmark {
+            display: block;
+
+            @-moz-document url-prefix() {
+                & {
+                    stroke: $brand-01;
+                }
+            }
+        }
+    }
+}

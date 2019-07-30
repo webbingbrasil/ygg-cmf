@@ -1,25 +1,23 @@
 <template>
     <YggActionBar>
         <template slot="extras">
-            <YggFilterSelect
-                v-for="filter in filters"
-                :name="filter.label"
-                :values="filter.values"
-                :value="filterValue(filter.key)"
-                :filter-key="filterKey(filter)"
-                :multiple="filter.multiple"
-                :required="filter.required"
-                :template="filter.template"
-                :search-keys="filter.searchKeys"
-                :searchable="filter.searchable"
-                :key="filter.key"
-                @input="handleFilterChanged(filter, $event)"
-            />
+            <div class="row mx-n2">
+                <template v-for="filter in filters">
+                    <div class="col-auto px-2">
+                        <YggFilter
+                            :filter="filter"
+                            :key="filter.id"
+                            :value="filterValue(filter.key)"
+                            @input="handleFilterChanged(filter, $event)"
+                        />
+                    </div>
+                </template>
+            </div>
         </template>
         <template v-if="actions.length" slot="extras-right">
             <YggActionsDropdown class="YggActionBar__actions-dropdown YggActionBar__actions-dropdown--actions"
-                :actions="actions"
-                @select="handleActionSelected"
+                                :actions="actions"
+                                @select="handleActionSelected"
             >
                 <div slot="text">
                     {{ l('dashboard.actions.dashboard.label') }}
@@ -31,17 +29,17 @@
 
 <script>
     import YggActionBar from './ActionBar.vue';
-    import YggFilterSelect from '../list/FilterSelect.vue';
+    import YggFilter from '../list/Filter';
     import YggActionsDropdown from '../actions/ActionsDropdown.vue';
-    import { Localization } from "../../mixins";
-    import { mapGetters } from 'vuex';
+    import {Localization} from "../../mixins";
+    import {mapGetters} from 'vuex';
 
     export default {
         name: 'YggActionBarDashboard',
         mixins: [Localization],
         components: {
             YggActionBar,
-            YggFilterSelect,
+            YggFilter,
             YggActionsDropdown,
         },
         props: {

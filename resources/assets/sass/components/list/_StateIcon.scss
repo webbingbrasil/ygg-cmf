@@ -1,0 +1,30 @@
+.StateIcon {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+
+    @mixin color($color) {
+        background: $color;
+    }
+
+    &.ygg_primary {
+        @include color($brand-02)
+    }
+
+    &.ygg_secondary {
+        @include color($brand-03)
+    }
+
+    &.ygg_gray {
+        @include color($color__navy-gray-7)
+    }
+
+    &.ygg_lightgray {
+        @include color($color__navy-gray-9)
+    }
+
+    &.ygg_darkgray {
+        @include color($color__navy-gray-4)
+    }
+}

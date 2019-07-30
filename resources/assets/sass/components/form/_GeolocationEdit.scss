@@ -1,0 +1,24 @@
+.YggGeolocationEdit {
+    &--loading {
+        .YggGeolocationEdit__input {
+            padding-right: 2rem;
+        }
+    }
+
+    .YggGeolocationEdit__loading {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+    }
+
+    .leaflet-container {
+        cursor: crosshair;
+    }
+
+    &__map {
+        padding-bottom: 80%;
+        max-width: 100%;
+    }
+}

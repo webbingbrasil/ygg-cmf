@@ -1,0 +1,21 @@
+@import '~element-ui/packages/theme-chalk/src/date-picker';
+
+.YggDateRange {
+    .el-range__close-icon {
+        display: none;
+        font-weight: normal;
+        font-size: 16px;
+        -webkit-font-smoothing: subpixel-antialiased;
+        font-family: inherit !important;
+
+        &::before {
+            content: '×';
+        }
+    }
+
+    &--clearable {
+        .el-range__close-icon {
+            display: inline-block;
+        }
+    }
+}

@@ -1,0 +1,19 @@
+.YggActionView {
+    transition: padding 300ms $bx--standard-easing;
+    padding-left: rem(48px);
+    padding-bottom: 3rem;
+    //overflow: auto;
+}
+
+@include media-breakpoint-up($breakpoint-fixed-menu) {
+    .YggActionView {
+        padding-left: rem(200px);
+        padding-top: 5rem;
+        overflow: visible;
+    }
+    #ygg-app.leftNav--collapsed {
+        .YggActionView {
+            padding-left: rem(48px);
+        }
+    }
+}
