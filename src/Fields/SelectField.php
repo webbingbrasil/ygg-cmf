@@ -17,10 +17,6 @@ class SelectField extends AbstractField
 
     protected const FIELD_TYPE = 'select';
 
-    /**
-     * @var array
-     */
-    protected $options;
 
     /**
      * @var bool
@@ -53,11 +49,6 @@ class SelectField extends AbstractField
     protected $display = 'list';
 
     /**
-     * @var string
-     */
-    protected $idAttribute = 'id';
-
-    /**
      * @var bool
      */
     protected $inline = false;
@@ -69,17 +60,6 @@ class SelectField extends AbstractField
     public static function make(string $key): self
     {
         return new static($key, static::FIELD_TYPE, new SelectFormatter);
-    }
-
-    /**
-     * @param mixed $options
-     * @return $this
-     */
-    public function setOptions($options): self
-    {
-        $this->options = self::formatOptions($options);
-
-        return $this;
     }
 
     /**
@@ -232,31 +212,12 @@ class SelectField extends AbstractField
     }
 
     /**
-     * @return string
-     */
-    public function getIdAttribute(): string
-    {
-        return $this->idAttribute;
-    }
-
-    /**
-     * @param string $idAttribute
-     * @return $this
-     */
-    public function setIdAttribute(string $idAttribute): self
-    {
-        $this->idAttribute = $idAttribute;
-
-        return $this;
-    }
-
-    /**
      * @return array
      * @throws FieldValidationException
      */
     public function toArray(): array
     {
-        return parent::buildArray([
+        return $this->buildArray([
             'options' => $this->options,
             'multiple' => $this->multiple,
             'clearable' => $this->clearable,

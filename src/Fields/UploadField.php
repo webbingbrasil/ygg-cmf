@@ -79,7 +79,7 @@ class UploadField extends AbstractField
      */
     public function toArray(): array
     {
-        return parent::buildArray([
+        return $this->buildArray([
             'maxFileSize' => $this->maxFileSize,
             'fileFilter' => $this->fileFilter,
             'ratioX' => $this->cropRatio ? (int)$this->cropRatio[0] : null,

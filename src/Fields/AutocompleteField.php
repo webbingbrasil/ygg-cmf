@@ -224,7 +224,7 @@ class AutocompleteField extends AbstractField
      */
     public function toArray(): array
     {
-        return parent::buildArray([
+        return $this->buildArray([
             'mode' => $this->mode,
             'placeholder' => $this->placeholder,
             'localValues' => $this->localValues,

@@ -2,10 +2,10 @@
 
 namespace Ygg\Fields;
 
-use function count;
 use Illuminate\Support\Facades\Validator;
 use Ygg\Exceptions\Form\FieldValidationException;
 use Ygg\Fields\Formatters\FieldFormatter;
+use function count;
 
 /**
  * Class AbstractField
@@ -167,7 +167,7 @@ abstract class AbstractField implements Field
     }
 
     /**
-     * Create the properties array for the field, using parent::buildArray()
+     * Create the properties array for the field, using $this->buildArray()
      *
      * @return array
      */

@@ -3,7 +3,6 @@
 namespace Ygg\Fields\Traits;
 
 use function count;
-use Illuminate\Support\Collection;
 
 /**
  * Trait FieldWithOptions
@@ -11,6 +10,10 @@ use Illuminate\Support\Collection;
  */
 trait FieldWithOptions
 {
+    /**
+     * @var array
+     */
+    protected $options;
 
     /**
      * @param mixed $options
@@ -34,5 +37,21 @@ trait FieldWithOptions
                 'label' => $label
             ];
         })->values()->all();
+    }
+
+    /**
+     * @param mixed $options
+     * @return $this
+     */
+    public function setOptions($options): self
+    {
+        $this->options = self::formatOptions($options);
+
+        return $this;
+    }
+
+    public function options(): array
+    {
+        return $this->options;
     }
 }

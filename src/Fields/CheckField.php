@@ -44,7 +44,7 @@ class CheckField extends AbstractField
      */
     public function toArray(): array
     {
-        return parent::buildArray([
+        return $this->buildArray([
             'text' => $this->text
         ]);
     }

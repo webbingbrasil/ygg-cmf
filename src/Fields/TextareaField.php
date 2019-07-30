@@ -49,7 +49,7 @@ class TextareaField extends AbstractField
      */
     public function toArray(): array
     {
-        return parent::buildArray([
+        return $this->buildArray([
             'rows' => $this->rows,
             'placeholder' => $this->placeholder,
             'maxLength' => $this->maxLength,

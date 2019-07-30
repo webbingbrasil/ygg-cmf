@@ -237,7 +237,7 @@ class ListField extends AbstractField
      */
     public function toArray(): array
     {
-        return parent::buildArray([
+        return $this->buildArray([
             'addable' => $this->addable,
             'removable' => $this->removable,
             'sortable' => $this->sortable,

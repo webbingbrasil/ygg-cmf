@@ -104,7 +104,7 @@ class NumberField extends AbstractField
      */
     public function toArray(): array
     {
-        return parent::buildArray([
+        return $this->buildArray([
             'min' => $this->min,
             'max' => $this->max,
             'step' => $this->step,

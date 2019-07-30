@@ -189,7 +189,7 @@ class DateField extends AbstractField
      */
     public function toArray(): array
     {
-        return parent::buildArray([
+        return $this->buildArray([
             'hasDate' => $this->hasDate,
             'hasTime' => $this->hasTime,
             'minTime' => $this->minTime,

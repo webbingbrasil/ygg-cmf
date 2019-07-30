@@ -2,54 +2,57 @@
 
 namespace Ygg\Form\Eloquent\Uploads;
 
+use Eloquent;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
-use function in_array;
 use Ygg\Form\Eloquent\Uploads\Thumbnails\Thumbnail;
+use function in_array;
 
 /**
  *  Ygg\Form\Eloquent\Uploads\UploadModel
  *
- * @property int $id
- * @property string $model_type
- * @property int $model_id
- * @property string|null $type
- * @property string $file_key
- * @property string|null $file_name
- * @property string|null $mime_type
- * @property string $file_path
- * @property string|null $disk
- * @property int|null $size
- * @property string $checksum
- * @property array|null $custom_properties
- * @property int|null $order
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|self[] $model
- * @property-write mixed $file
- * @property-write mixed $transformed
- * @method static \Illuminate\Database\Eloquent\Builder|self newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|self newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|self query()
- * @method static \Illuminate\Database\Eloquent\Builder|self whereChecksum($value)
- * @method static \Illuminate\Database\Eloquent\Builder|self whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|self whereCustomProperties($value)
- * @method static \Illuminate\Database\Eloquent\Builder|self whereDisk($value)
- * @method static \Illuminate\Database\Eloquent\Builder|self whereFileKey($value)
- * @method static \Illuminate\Database\Eloquent\Builder|self whereFileName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|self whereFilePath($value)
- * @method static \Illuminate\Database\Eloquent\Builder|self whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|self whereMimeType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|self whereModelId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|self whereModelType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|self whereOrder($value)
- * @method static \Illuminate\Database\Eloquent\Builder|self whereSize($value)
- * @method static \Illuminate\Database\Eloquent\Builder|self whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|self whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property int                    $id
+ * @property string                 $model_type
+ * @property int                    $model_id
+ * @property string|null            $type
+ * @property string                 $file_key
+ * @property string|null            $file_name
+ * @property string|null            $mime_type
+ * @property string                 $file_path
+ * @property string|null            $disk
+ * @property int|null               $size
+ * @property string                 $checksum
+ * @property array|null             $custom_properties
+ * @property int|null               $order
+ * @property Carbon|null            $created_at
+ * @property Carbon|null            $updated_at
+ * @property-read Collection|self[] $model
+ * @property-write mixed            $file
+ * @property-write mixed            $transformed
+ * @method static Builder|self newModelQuery()
+ * @method static Builder|self newQuery()
+ * @method static Builder|self query()
+ * @method static Builder|self whereChecksum($value)
+ * @method static Builder|self whereCreatedAt($value)
+ * @method static Builder|self whereCustomProperties($value)
+ * @method static Builder|self whereDisk($value)
+ * @method static Builder|self whereFileKey($value)
+ * @method static Builder|self whereFileName($value)
+ * @method static Builder|self whereFilePath($value)
+ * @method static Builder|self whereId($value)
+ * @method static Builder|self whereMimeType($value)
+ * @method static Builder|self whereModelId($value)
+ * @method static Builder|self whereModelType($value)
+ * @method static Builder|self whereOrder($value)
+ * @method static Builder|self whereSize($value)
+ * @method static Builder|self whereType($value)
+ * @method static Builder|self whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class UploadModel extends Model
 {
@@ -189,9 +192,20 @@ class UploadModel extends Model
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getUrl()
     {
         return Storage::disk($this->disk)->url($this->file_path);
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullPath()
+    {
+        return Storage::disk($this->disk)->path($this->file_path);
     }
 
     /**
