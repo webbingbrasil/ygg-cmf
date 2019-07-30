@@ -125,6 +125,18 @@ abstract class Action
     }
 
     /**
+     * @param $ids
+     * @return array
+     */
+    protected function refresh($ids): array
+    {
+        return [
+            'action' => 'refresh',
+            'items' => (array)$ids
+        ];
+    }
+
+    /**
      * @param string $bladeView
      * @param array  $params
      * @return array|void

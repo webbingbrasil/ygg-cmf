@@ -20,14 +20,39 @@ interface Resource
      */
     public function getLayout(): array;
     /**
+     * @return string
+     */
+    public function getDefaultSort();
+
+    /**
+     * @return string
+     */
+    public function getDefaultSortDir();
+
+    /**
+     * @return mixed
+     */
+    public function getFilterDefaultOptions();
+
+    /**
      * @param array|Collection|null $items
      * @return array
      */
     public function getData($items = null): array;
     /**
+     * @param string $attribute
+     * @return $this
+     */
+    public function data(ResourceQueryParams $params): array;
+
+    /**
      * @return array
      */
     public function getConfig(): array;
+
+    /**
+     * @param array $ids
+     */
     public function reorder(array $ids): void;
     /**
      * @param string $commandKey

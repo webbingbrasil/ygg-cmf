@@ -6,8 +6,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\Stream;
 use Ygg\Dashboard\Dashboard;
-use Ygg\Resource\ResourceQueryParams;
 use Ygg\Resource\Resource;
+use Ygg\Resource\ResourceQueryParams;
 
 /**
  * Trait HandleCommandReturn
@@ -33,11 +33,12 @@ trait HandleActionReturn
 
         if ($actionContainer instanceof Resource && $returnedValue['action'] === 'refresh') {
             // We have to load and build items from ids
-            $returnedValue['items'] = $actionContainer->data(
-                $actionContainer->getListData(
+            $returnedValue['items'] = $actionContainer->getData(
+                $actionContainer->data(
                     ResourceQueryParams::createFromArrayOfIds(
                         $returnedValue['items']
                     )
+                        ->setDefaultSort($actionContainer->getDefaultSort(), $actionContainer->getDefaultSortDir())
                 )
             )['items'];
         }

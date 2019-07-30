@@ -26,15 +26,4 @@ abstract class ResourceAction extends Action
      */
     abstract public function execute(ResourceQueryParams $params, array $data = []): array;
 
-    /**
-     * @param $ids
-     * @return array
-     */
-    protected function refresh($ids): array
-    {
-        return [
-            'action' => 'refresh',
-            'items' => (array)$ids
-        ];
-    }
 }

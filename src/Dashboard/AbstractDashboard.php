@@ -155,7 +155,7 @@ abstract class AbstractDashboard implements Dashboard
      */
     public function getData(): array
     {
-        $this->putRetainedFilterValuesInSession();
+        $this->putRetainedFilterOptionsInSession();
 
         $this->buildWidgetsData(
             DashboardQueryParams::create()

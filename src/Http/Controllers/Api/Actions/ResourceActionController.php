@@ -3,14 +3,15 @@
 namespace Ygg\Http\Controllers\Api\Actions;
 
 use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Ygg\Actions\ActionForm;
+use Ygg\Actions\ResourceAction;
 use Ygg\Exceptions\Actions\InvalidActionException;
 use Ygg\Exceptions\Auth\AuthorizationException;
 use Ygg\Exceptions\InvalidResourceKeyException;
 use Ygg\Http\Controllers\Api\ApiController;
-use Ygg\Actions\ResourceAction;
-use Ygg\Resource\ResourceQueryParams;
 use Ygg\Resource\Resource as ResourceInterface;
+use Ygg\Resource\ResourceQueryParams;
 
 class ResourceActionController extends ApiController
 {
@@ -70,7 +71,7 @@ class ResourceActionController extends ApiController
      * @throws InvalidActionException
      * @throws InvalidResourceKeyException
      */
-    public function update(string $resourceKey, string $actionKey): JsonResponse
+    public function update(string $resourceKey, string $actionKey): Response
     {
         $list = $this->getListInstance($resourceKey);
         $list->config();

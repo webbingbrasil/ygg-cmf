@@ -232,12 +232,28 @@ abstract class AbstractResource implements Resource
     abstract public function config(): void;
 
     /**
+     * @return string
+     */
+    public function getDefaultSort()
+    {
+        return $this->defaultSort;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultSortDir()
+    {
+        return $this->defaultSortDir;
+    }
+
+    /**
      * @param array|Collection|null $items
      * @return array
      */
     public function getData($items = null): array
     {
-        $this->putRetainedFilterValuesInSession();
+        $this->putRetainedFilterOptionsInSession();
 
         $page = null;
         $items = $items ?: $this->data(

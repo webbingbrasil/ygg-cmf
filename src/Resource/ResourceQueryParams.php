@@ -3,7 +3,6 @@
 namespace Ygg\Resource;
 
 use Ygg\Filters\HasFiltersInQuery;
-use function strlen;
 use function trim;
 
 /**
@@ -98,7 +97,7 @@ class ResourceQueryParams
      */
     public function hasSearch(): bool
     {
-        return strlen(trim($this->search)) > 0;
+        return trim($this->search) !== '';
     }
 
     /**
