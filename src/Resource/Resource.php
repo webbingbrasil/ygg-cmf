@@ -4,6 +4,7 @@
 namespace Ygg\Resource;
 
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Ygg\Actions\InstanceAction;
 use Ygg\Actions\ResourceAction;
@@ -41,9 +42,9 @@ interface Resource
     public function getData($items = null): array;
     /**
      * @param string $attribute
-     * @return $this
+     * @return array|LengthAwarePaginator
      */
-    public function data(ResourceQueryParams $params): array;
+    public function data(ResourceQueryParams $params);
 
     /**
      * @return array

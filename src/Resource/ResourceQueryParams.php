@@ -117,6 +117,14 @@ class ResourceQueryParams
     }
 
     /**
+     * @return string|null
+     */
+    public function searchTerm(): ?string
+    {
+        return $this->search;
+    }
+
+    /**
      * @param bool   $isLike
      * @param bool   $handleStar
      * @param string $noStarTermPrefix

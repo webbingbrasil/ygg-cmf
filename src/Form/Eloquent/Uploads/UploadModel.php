@@ -12,6 +12,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Ygg\Form\Eloquent\Uploads\Thumbnails\Thumbnail;
 use function in_array;
+use Ygg\Traits\Searchable;
 
 /**
  *  Ygg\Form\Eloquent\Uploads\UploadModel
@@ -34,6 +35,7 @@ use function in_array;
  * @property-read Collection|self[] $model
  * @property-write mixed            $file
  * @property-write mixed            $transformed
+ * @method Builder|self search($keyword = '')
  * @method static Builder|self newModelQuery()
  * @method static Builder|self newQuery()
  * @method static Builder|self query()
@@ -56,6 +58,7 @@ use function in_array;
  */
 class UploadModel extends Model
 {
+    use Searchable;
     /**
      * The attributes that aren't mass assignable.
      *
@@ -81,6 +84,15 @@ class UploadModel extends Model
         'created_at',
         'order',
     ];
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'url',
+        'full_path'
+    ];
 
     /**
      * @var array
@@ -89,6 +101,13 @@ class UploadModel extends Model
         'custom_properties' => 'array',
         'size' => 'integer',
     ];
+
+    /**
+     * List of searchable attributes.
+     *
+     * @var array
+     */
+    protected $searchable = ['file_name'];
 
     /**
      * @return MorphTo
@@ -190,14 +209,16 @@ class UploadModel extends Model
             'custom_properties',
             'order',
             'created_at',
-            'updated_at'
+            'updated_at',
+            'url',
+            'full_path'
         ]);
     }
 
     /**
      * @return string
      */
-    public function getUrl()
+    public function getUrlAttribute()
     {
         return Storage::disk($this->disk)->url($this->file_path);
     }
@@ -205,7 +226,7 @@ class UploadModel extends Model
     /**
      * @return string
      */
-    public function getFullPath()
+    public function getFullPathAttribute()
     {
         return Storage::disk($this->disk)->path($this->file_path);
     }

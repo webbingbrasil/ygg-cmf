@@ -99,6 +99,25 @@ trait HandleFilters
         }
         return $template;
     }
+    public function getFilterSelectedOptions()
+    {
+        return collect($this->filterHandlers)
+            ->map(function ($handler, $attribute) {
+                if ($this->isRetainedFilter($handler, $attribute, true)) {
+                    return [
+                        'name' => $attribute,
+                        'value' => session('_ygg_retained_filter_'.$attribute)
+                    ];
+                }
+
+                return [
+                    'name' => $attribute,
+                    'value' => request()->get('filter_'.$attribute, $handler->defaultOption())
+                ];
+            })
+            ->pluck('value', 'name')
+            ->all();
+    }
     /**
      * @return array
      */
@@ -191,12 +210,15 @@ trait HandleFilters
      * - the default value is the filter is required
      * - or null
      *
-     * @param        $handler
+     * @param        $filterHandler
      * @param string $attribute
      * @return int|string|array|null
      */
-    protected function getFilterDefaultOption($handler, $attribute)
+    protected function getFilterDefaultOption($filterHandler, $attribute)
     {
+        $handler = $filterHandler instanceof Filter
+            ? $filterHandler
+            : app($filterHandler);
         if ($this->isGlobalFilter($handler)) {
             return session('_ygg_retained_global_filter_'.$attribute) ?: $handler->defaultOption();
         }
