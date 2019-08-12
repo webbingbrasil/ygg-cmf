@@ -3,6 +3,7 @@
 namespace Ygg\Console;
 
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Symfony\Component\Console\Input\InputOption;
 
 class MediaMakeCommand extends GeneratorCommand
@@ -33,7 +34,7 @@ class MediaMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return __DIR__.'/stubs/media.stub';
     }
@@ -41,9 +42,9 @@ class MediaMakeCommand extends GeneratorCommand
     /**
      * @param string $name
      * @return mixed|string
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
-    protected function buildClass($name)
+    protected function buildClass($name): string
     {
         $replace = [];
 
@@ -64,7 +65,7 @@ class MediaMakeCommand extends GeneratorCommand
      * @param array $replace
      * @return array
      */
-    protected function replaceTableName(array $replace)
+    protected function replaceTableName(array $replace): array
     {
         return array_merge($replace, [
             'DummyTable' => $this->option('table'),
@@ -77,7 +78,7 @@ class MediaMakeCommand extends GeneratorCommand
      * @param array $replace
      * @return array
      */
-    protected function removeTableProperty(array $replace)
+    protected function removeTableProperty(array $replace): array
     {
         return array_merge($replace, [
             "    protected \$table = 'DummyTable';\n" => '',
@@ -89,7 +90,7 @@ class MediaMakeCommand extends GeneratorCommand
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return [
             ['table', 't', InputOption::VALUE_REQUIRED, 'Database table name'],

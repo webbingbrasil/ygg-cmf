@@ -11,7 +11,7 @@ class ListActionMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $name = 'ygg:make:resource:action';
+    protected $name = 'ygg:make:list:action';
 
     /**
      * The console command description.
@@ -32,7 +32,7 @@ class ListActionMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return __DIR__.'/stubs/resource-action.stub';
     }
@@ -43,7 +43,7 @@ class ListActionMakeCommand extends GeneratorCommand
      * @param string $rootNamespace
      * @return string
      */
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace($rootNamespace): string
     {
         return $rootNamespace.'\Ygg\Actions';
     }

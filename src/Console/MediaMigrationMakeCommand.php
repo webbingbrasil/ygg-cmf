@@ -2,6 +2,7 @@
 
 namespace Ygg\Console;
 
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Composer;
 
@@ -46,11 +47,9 @@ class MediaMigrationMakeCommand extends Command
     }
 
     /**
-     * Execute the console command.
-     *
-     * @return void
+     * @throws Exception
      */
-    public function handle()
+    public function handle(): void
     {
         $table = trim($this->input->getArgument('table_name'));
         $name = "create_{$table}_table";
@@ -61,13 +60,11 @@ class MediaMigrationMakeCommand extends Command
     }
 
     /**
-     * Write the migration file to disk.
-     *
-     * @param string $name
-     * @param string $table
-     * @return string
+     * @param $name
+     * @param $table
+     * @throws Exception
      */
-    protected function writeMigration($name, $table)
+    protected function writeMigration($name, $table): void
     {
         $file = pathinfo($this->creator->create(
             $name, $this->getMigrationPath(), $table, true
@@ -81,7 +78,7 @@ class MediaMigrationMakeCommand extends Command
      *
      * @return string
      */
-    protected function getMigrationPath()
+    protected function getMigrationPath(): string
     {
         return $this->laravel->databasePath().DIRECTORY_SEPARATOR.'migrations';
     }

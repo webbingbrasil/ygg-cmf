@@ -12,8 +12,6 @@ class DummyClass extends AbstractForm
 {
     use WithFormEloquentUpdater;
 
-
-
     /**
      * Build list fields using ->addField()
      *
@@ -23,7 +21,7 @@ class DummyClass extends AbstractForm
     {
         $this->addField(
             TextField::make('name')->setLabel('Name')
-        )
+        );
     }
 
     /**
@@ -35,7 +33,7 @@ class DummyClass extends AbstractForm
     {
         $this->addColumn(12, function(FormRow $row) {
             $row->withSingleField('name');
-        })
+        });
     }
 
     /**

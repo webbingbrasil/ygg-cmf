@@ -3,6 +3,7 @@
 namespace Ygg\Console;
 
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Symfony\Component\Console\Input\InputOption;
@@ -14,7 +15,7 @@ class ListMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $name = 'ygg:make:resource:list';
+    protected $name = 'ygg:make:list';
 
     /**
      * The console command description.
@@ -33,12 +34,10 @@ class ListMakeCommand extends GeneratorCommand
     /**
      * @param string $name
      * @return mixed|string
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     protected function buildClass($name)
     {
-        $namespace = $this->getNamespace($name);
-
         $replace = [];
 
         if ($this->option('model')) {
@@ -55,14 +54,12 @@ class ListMakeCommand extends GeneratorCommand
      * @param array $replace
      * @return array
      */
-    protected function buildModelReplacements(array $replace)
+    protected function buildModelReplacements(array $replace): array
     {
         $modelClass = $this->parseModel($this->option('model'));
 
-        if (!class_exists($modelClass)) {
-            if ($this->confirm("A {$modelClass} model does not exist. Do you want to generate it?", true)) {
-                $this->call('make:model', ['name' => $modelClass]);
-            }
+        if (!class_exists($modelClass) && $this->confirm("A {$modelClass} model does not exist. Do you want to generate it?", true)) {
+            $this->call('make:model', ['name' => $modelClass]);
         }
 
         return array_merge($replace, [
@@ -78,9 +75,9 @@ class ListMakeCommand extends GeneratorCommand
      * @param string $model
      * @return string
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    protected function parseModel($model)
+    protected function parseModel($model): string
     {
         if (preg_match('([^A-Za-z0-9_/\\\\])', $model)) {
             throw new InvalidArgumentException('Model name contains invalid characters.');
@@ -100,7 +97,7 @@ class ListMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return $this->option('model')
             ? __DIR__.'/stubs/resource-list.stub'
@@ -113,7 +110,7 @@ class ListMakeCommand extends GeneratorCommand
      * @param string $rootNamespace
      * @return string
      */
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace($rootNamespace): string
     {
         return $rootNamespace.'\Ygg';
     }
@@ -123,7 +120,7 @@ class ListMakeCommand extends GeneratorCommand
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return [
             ['model', 'm', InputOption::VALUE_REQUIRED, 'The model that the list displays'],

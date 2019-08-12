@@ -3,7 +3,9 @@
 namespace Ygg\Console;
 
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Symfony\Component\Console\Input\InputOption;
 
 class StateMakeCommand extends GeneratorCommand
@@ -13,7 +15,7 @@ class StateMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $name = 'ygg:make:resource:state';
+    protected $name = 'ygg:make:state';
 
     /**
      * The console command description.
@@ -31,10 +33,10 @@ class StateMakeCommand extends GeneratorCommand
 
     /**
      * @param string $name
-     * @return mixed|string
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @return string
+     * @throws FileNotFoundException
      */
-    protected function buildClass($name)
+    protected function buildClass($name): string
     {
         $replace = [];
 
@@ -52,7 +54,7 @@ class StateMakeCommand extends GeneratorCommand
      * @param array $replace
      * @return array
      */
-    protected function buildModelReplacements(array $replace)
+    protected function buildModelReplacements(array $replace): array
     {
         $modelClass = $this->parseModel($this->option('model'));
 
@@ -75,12 +77,12 @@ class StateMakeCommand extends GeneratorCommand
      * @param string $model
      * @return string
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    protected function parseModel($model)
+    protected function parseModel($model): string
     {
         if (preg_match('([^A-Za-z0-9_/\\\\])', $model)) {
-            throw new \InvalidArgumentException('Model name contains invalid characters.');
+            throw new InvalidArgumentException('Model name contains invalid characters.');
         }
 
         $model = trim(str_replace('/', '\\', $model), '\\');
@@ -97,7 +99,7 @@ class StateMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return $this->option('model')
             ? __DIR__.'/stubs/resource-state.model.stub'
@@ -110,7 +112,7 @@ class StateMakeCommand extends GeneratorCommand
      * @param string $rootNamespace
      * @return string
      */
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace($rootNamespace): string
     {
         return $rootNamespace.'\Ygg\States';
     }
@@ -120,7 +122,7 @@ class StateMakeCommand extends GeneratorCommand
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return [
             ['model', 'm', InputOption::VALUE_REQUIRED, 'The model that the state governs'],

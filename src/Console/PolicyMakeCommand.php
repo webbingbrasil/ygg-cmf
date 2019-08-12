@@ -18,7 +18,7 @@ class PolicyMakeCommand extends Base
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return $this->option('model')
             ? __DIR__.'/stubs/policy.stub'
@@ -31,7 +31,7 @@ class PolicyMakeCommand extends Base
      * @param string $rootNamespace
      * @return string
      */
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace($rootNamespace): string
     {
         return $rootNamespace.'\Ygg\Policies';
     }

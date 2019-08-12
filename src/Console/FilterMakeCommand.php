@@ -36,8 +36,6 @@ class FilterMakeCommand extends GeneratorCommand
      */
     protected function buildClass($name)
     {
-        $namespace = $this->getNamespace($name);
-
         $replace = [];
         if (!$this->option('multiple')) {
             $replace = $this->removeMultipleInterface($replace);
@@ -54,7 +52,7 @@ class FilterMakeCommand extends GeneratorCommand
      * @param array $replace
      * @return array
      */
-    protected function removeMultipleInterface(array $replace)
+    protected function removeMultipleInterface(array $replace): array
     {
         return array_merge($replace, [
             "use Ygg\Filters\MultipleFilter;\n" => '',
@@ -68,7 +66,7 @@ class FilterMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return $this->option('required')
             ? __DIR__.'/stubs/filter.required.stub'
@@ -81,7 +79,7 @@ class FilterMakeCommand extends GeneratorCommand
      * @param string $rootNamespace
      * @return string
      */
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace($rootNamespace): string
     {
         return $rootNamespace.'\Ygg\Filters';
     }
@@ -91,7 +89,7 @@ class FilterMakeCommand extends GeneratorCommand
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return [
             ['required', 'r', InputOption::VALUE_NONE, 'Create a filter whoes value cannot be null'],

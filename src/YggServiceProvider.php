@@ -4,6 +4,7 @@ namespace Ygg;
 
 use Ygg\Auth\AuthorizationManager;
 use Ygg\Console\FilterMakeCommand;
+use Ygg\Console\FormMakeCommand;
 use Ygg\Console\InstanceActionMakeCommand;
 use Ygg\Console\ListActionMakeCommand;
 use Ygg\Console\MediaMigrationMakeCommand;
@@ -12,6 +13,8 @@ use Ygg\Composers\MenuViewComposer;
 use Ygg\Console\ListMakeCommand;
 use Ygg\Console\PolicyMakeCommand;
 use Ygg\Console\StateMakeCommand;
+use Ygg\Console\ValidatorMakeCommand;
+use Ygg\Console\WizardCommand;
 use Ygg\Http\Middleware\Api\AddContext;
 use Ygg\Http\Middleware\Api\AppendFormAuthorizations;
 use Ygg\Http\Middleware\Api\AppendListAuthorizations;
@@ -84,11 +87,14 @@ class YggServiceProvider extends ServiceProvider
         $this->commands([
             MediaMigrationMakeCommand::class,
             ListMakeCommand::class,
+            FormMakeCommand::class,
+            ValidatorMakeCommand::class,
             ListActionMakeCommand::class,
             StateMakeCommand::class,
             PolicyMakeCommand::class,
             InstanceActionMakeCommand::class,
             FilterMakeCommand::class,
+            WizardCommand::class,
         ]);
     }
 
