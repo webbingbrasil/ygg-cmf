@@ -5,6 +5,7 @@ namespace DummyNamespace;
 use Ygg\Resource\AbstractResource;
 use Ygg\Resource\Field;
 use Ygg\Resource\ResourceQueryParams;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class DummyClass extends AbstractResource
 {
@@ -39,9 +40,9 @@ class DummyClass extends AbstractResource
      * Get data for list
      *
      * @param ResourceQueryParams $params
-     * @return array
+     * @return array|LengthAwarePaginator
      */
-    public function data(ResourceQueryParams $params): array
+    public function data(ResourceQueryParams $params)
     {
     }
 }
