@@ -7,6 +7,7 @@ use Ygg\Console\FilterMakeCommand;
 use Ygg\Console\FormMakeCommand;
 use Ygg\Console\InstanceActionMakeCommand;
 use Ygg\Console\ListActionMakeCommand;
+use Ygg\Console\MediaMakeCommand;
 use Ygg\Console\MediaMigrationMakeCommand;
 use Ygg\Composers\AssetViewComposer;
 use Ygg\Composers\MenuViewComposer;
@@ -86,6 +87,7 @@ class YggServiceProvider extends ServiceProvider
 
         $this->commands([
             MediaMigrationMakeCommand::class,
+            MediaMakeCommand::class,
             ListMakeCommand::class,
             FormMakeCommand::class,
             ValidatorMakeCommand::class,

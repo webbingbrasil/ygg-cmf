@@ -56,8 +56,8 @@ class FilterMakeCommand extends GeneratorCommand
     {
         return array_merge($replace, [
             "use Ygg\Filters\MultipleFilter;\n" => '',
-            'MultipleFilter,' => '',
-            'MultipleFilter' => '',
+            'MultipleFilter,' => 'Filter,',
+            'Multiple' => '',
         ]);
     }
 

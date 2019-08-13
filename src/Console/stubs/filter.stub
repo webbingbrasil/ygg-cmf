@@ -10,7 +10,7 @@ class DummyClass extends AbstractFilter implements SelectMultipleFilter
     /**
     * @return array
     */
-    public function options(): array;
+    public function options(): array
     {
         //
     }

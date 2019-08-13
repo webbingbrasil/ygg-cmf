@@ -54,6 +54,7 @@ class DummyClass extends AbstractResource
      */
     public function data(ResourceQueryParams $params): array
     {
-        return $this->transform(DummyModelClass::orderBy($params->sortedBy(), $params->sortedDir())->get());
+        $query = DummyModelClass::orderBy($params->sortedBy(), $params->sortedDir());
+        return $this->transform($query->paginate());
     }
 }
