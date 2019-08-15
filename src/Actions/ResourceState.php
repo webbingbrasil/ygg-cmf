@@ -9,17 +9,28 @@ use Ygg\Exceptions\YggException;
  * Class ResourceState
  * @package Ygg\Actions
  */
-abstract class ResourceState extends InstanceAction
+abstract class ResourceState extends Action
 {
+    use WithAuthorizeFor, WithRefreshResponseAction;
+
     public const PRIMARY_COLOR = 'ygg_primary';
     public const SECONDARY_COLOR = 'ygg_secondary';
     public const GRAY_COLOR = 'ygg_gray';
     public const LIGHTGRAY_COLOR = 'ygg_lightgray';
     public const DARKGRAY_COLOR = 'ygg_darkgray';
+
     /**
      * @var array
      */
     protected $states = [];
+
+    /**
+     * @return string
+     */
+    public function type(): string
+    {
+        return 'instance';
+    }
 
     /**
      * @return array
@@ -62,14 +73,6 @@ abstract class ResourceState extends InstanceAction
     abstract protected function updateState($instanceId, $stateId);
 
     /**
-     * @return string
-     */
-    public function label(): string
-    {
-        return null;
-    }
-
-    /**
      * @param string      $key
      * @param string      $label
      * @param string|null $color
@@ -80,26 +83,5 @@ abstract class ResourceState extends InstanceAction
         $this->states[$key] = [$label, $color];
 
         return $this;
-    }
-
-    /**
-     * @param string $bladeView
-     * @param array  $params
-     * @return array|void
-     * @throws YggException
-     */
-    protected function view(string $bladeView, array $params = []): ?array
-    {
-        throw new YggException('View return type is not supported for a state.');
-    }
-
-    /**
-     * @param string $message
-     * @return array|void
-     * @throws YggException
-     */
-    protected function info(string $message): ?array
-    {
-        throw new YggException('Info return type is not supported for a state.');
     }
 }

@@ -10,6 +10,7 @@ use Ygg\Resource\ResourceQueryParams;
  */
 abstract class ResourceAction extends Action
 {
+    use WithRefreshResponseAction, WithDownloadResponseAction, WithGroup, WithLabel;
 
     /**
      * @return string

@@ -10,6 +10,7 @@ use Ygg\Dashboard\DashboardQueryParams;
  */
 abstract class DashboardAction extends Action
 {
+    use WithDownloadResponseAction, WithGroup, WithLabel;
 
     /**
      * @return string

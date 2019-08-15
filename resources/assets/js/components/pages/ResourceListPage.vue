@@ -341,8 +341,18 @@
             /**
              * [Data list] actions
              */
-            setState(instance, state) {
+            async setState(instance, state) {
                 const instanceId = this.instanceId(instance);
+                const confirmation = this.config.state.confirmation;
+                if(confirmation) {
+                    await new Promise(resolve => {
+                        this.actionsBus.$emit('showMainModal', {
+                            title: this.l('modals.action.confirm.title'),
+                            text: confirmation,
+                            okCallback: resolve,
+                        });
+                    });
+                }
                 return this.axiosInstance.post(`${this.apiPath}/state/${instanceId}`, {
                     attribute: this.config.state.attribute,
                     value: state

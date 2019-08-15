@@ -5,6 +5,7 @@ namespace Ygg\Fields\Formatters;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\FilesystemManager;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
 use Ygg\Exceptions\Form\FieldFormattingMustBeDelayedException;
@@ -81,10 +82,13 @@ class UploadFormatter extends FieldFormatter
             $storage->put($storedFilePath, $fileContent);
 
             return [
-                'file_name' => $storedFilePath,
+                'file_key' => uniqid('file', true),
+                'file_name' => basename($storedFilePath),
                 'size' => $storage->size($storedFilePath),
                 'mime_type' => $storage->mimeType($storedFilePath),
+                'file_path' => $storedFilePath,
                 'disk' => $field->storageDisk(),
+                'checksum' => sha1_file(Storage::disk($field->storageDisk())->path($storedFilePath)),
                 'transformed' => $transformed
             ];
         }

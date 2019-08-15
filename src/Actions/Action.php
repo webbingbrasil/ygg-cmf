@@ -14,9 +14,7 @@ use Ygg\Traits\Transformers\WithTransformers;
  */
 abstract class Action
 {
-    use WithTransformers;
-
-    protected $groupIndex = 0;
+    use WithTransformers, WithBasicResponseActions;
 
     abstract public function type(): string;
 
@@ -45,22 +43,6 @@ abstract class Action
     }
 
     /**
-     * @return int
-     */
-    public function getGroupIndex(): int
-    {
-        return $this->groupIndex;
-    }
-
-    /**
-     * @param $index
-     */
-    public function setGroupIndex($index): void
-    {
-        $this->groupIndex = $index;
-    }
-
-    /**
      * @param array $params
      * @param array $rules
      * @param array $messages
@@ -75,94 +57,5 @@ abstract class Action
                 $validator, new JsonResponse($validator->errors()->getMessages(), 422)
             );
         }
-    }
-
-    /**
-     * @return string
-     */
-    public function description(): string
-    {
-        return '';
-    }
-
-    /**
-     * @return string
-     */
-    abstract public function label(): string;
-
-    /**
-     * @param string $message
-     * @return array|void
-     */
-    protected function info(string $message): ?array
-    {
-        return [
-            'action' => 'info',
-            'message' => $message
-        ];
-    }
-
-    /**
-     * @param string $link
-     * @return array
-     */
-    protected function link(string $link): array
-    {
-        return [
-            'action' => 'link',
-            'link' => $link
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function reload(): array
-    {
-        return [
-            'action' => 'reload'
-        ];
-    }
-
-    /**
-     * @param $ids
-     * @return array
-     */
-    protected function refresh($ids): array
-    {
-        return [
-            'action' => 'refresh',
-            'items' => (array)$ids
-        ];
-    }
-
-    /**
-     * @param string $bladeView
-     * @param array  $params
-     * @return array|void
-     * @throws Throwable
-     */
-    protected function view(string $bladeView, array $params = []): ?array
-    {
-        return [
-            'action' => 'view',
-            'html' => view($bladeView, $params)->render()
-        ];
-    }
-
-    /**
-     * @param string $filePath
-     * @param null   $fileName
-     * @param null   $diskName
-     * @return array
-     */
-    protected function download(string $filePath, $fileName = null, $diskName = null): array
-    {
-        return [
-            'action' => 'download',
-            'file' => $filePath,
-            'disk' => $diskName,
-            'name' => $fileName
-        ];
     }
 }

@@ -3,8 +3,8 @@
 namespace Ygg\Http\Controllers\Api;
 
 use Illuminate\Filesystem\FilesystemManager;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 use Ygg\Exceptions\InvalidResourceKeyException;
 use Ygg\Fields\Field;
 use Ygg\Fields\Traits\FieldWithUpload;
@@ -29,10 +29,10 @@ class FormDownloadController extends ApiController
      * @param string $resourceKey
      * @param string $instanceId
      * @param string $formUploadFieldKey
-     * @return JsonResponse
+     * @return Response
      * @throws InvalidResourceKeyException
      */
-    public function show(string $resourceKey, string $instanceId, string $formUploadFieldKey): JsonResponse
+    public function show(string $resourceKey, string $instanceId, string $formUploadFieldKey): Response
     {
         ygg_check_ability('view', $resourceKey, $instanceId);
 
