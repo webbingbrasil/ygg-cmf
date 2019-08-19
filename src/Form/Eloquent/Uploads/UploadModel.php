@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Ygg\Form\Eloquent\Uploads\Thumbnails\Thumbnail;
 use function in_array;
 use Ygg\Traits\Searchable;
@@ -229,6 +230,14 @@ class UploadModel extends Model
     public function getFullPathAttribute()
     {
         return Storage::disk($this->disk)->path($this->file_path);
+    }
+
+    /**
+     * @return StreamedResponse
+     */
+    public function download(): StreamedResponse
+    {
+        return Storage::disk($this->disk)->download($this->file_path);
     }
 
     /**
