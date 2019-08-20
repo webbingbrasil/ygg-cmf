@@ -22,10 +22,10 @@ class Widget implements Element
 
     /**
      * Widget constructor.
-     * @param $key
      * @param $size
+     * @param $key
      */
-    public function __construct($key, $size)
+    public function __construct($size, $key)
     {
         $this->key = $key;
         $this->size = $size;

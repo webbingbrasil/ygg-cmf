@@ -3,6 +3,7 @@
 namespace Ygg\Layout\Form;
 
 use Closure;
+use Ygg\Layout\Element;
 use Ygg\Layout\WithElements;
 
 /**
@@ -54,9 +55,9 @@ trait HasFieldRows
     protected function fieldsToArray(): array
     {
         return [
-            'fields' => collect($this->elements)->map(function (array $row) {
-                return collect($row)->map(function (FieldRow $field) {
-                    return $field->toArray();
+            'fields' => collect($this->elements)->map(function (array $elements) {
+                return collect($elements)->map(function (Element $element) {
+                    return $element->toArray();
                 })->all();
             })->all()
         ];

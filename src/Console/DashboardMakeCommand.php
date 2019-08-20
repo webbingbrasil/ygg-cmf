@@ -11,14 +11,14 @@ class DashboardMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $name = 'ygg:make:dashboard:action';
+    protected $name = 'ygg:make:dashboard';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a new dashboard action';
+    protected $description = 'Create a new dashboard';
 
     /**
      * The type of class being generated.

@@ -3,15 +3,26 @@
 namespace Ygg\Layout\Form;
 
 use Closure;
-use Ygg\Layout\Column;
+use Ygg\Layout\Element;
 
 /**
  * Class FormColumn
  * @package Ygg\Layout\Form
  */
-class FormColumn extends Column
+class FormColumn implements Element
 {
     use HasFieldRows;
+
+    protected $size;
+
+    /**
+     * FormRow constructor.
+     * @param $size
+     */
+    public function __construct($size)
+    {
+        $this->size = $size;
+    }
 
     /**
      * @param string       $legend
@@ -30,8 +41,7 @@ class FormColumn extends Column
     public function toArray(): array
     {
         return [
-                'size' => $this->size,
-                'rows' => $this->elements
+                'size' => $this->size
             ] + $this->fieldsToArray();
     }
 }

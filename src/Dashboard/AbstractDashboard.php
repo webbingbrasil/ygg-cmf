@@ -6,8 +6,8 @@ use Closure;
 use Illuminate\Support\Arr;
 use Ygg\Actions\HandleDashboardActions;
 use Ygg\Filters\HandleFilters;
-use Ygg\Layout\Dashboard\DashboardColumn;
-use Ygg\Layout\Row;
+use Ygg\Layout\Dashboard\DashboardRow;
+use Ygg\Layout\Element;
 use Ygg\Widgets\GraphWidgetDataSet;
 use Ygg\Widgets\Widget;
 
@@ -89,8 +89,8 @@ abstract class AbstractDashboard implements Dashboard
         }
 
         return [
-            'rows' => collect($this->rows)->map(function (Row $row) {
-                return $row->toArray();
+            'rows' => collect($this->rows)->map(function (Element $element) {
+                return $element->toArray();
             })->all()
         ];
     }
@@ -141,7 +141,7 @@ abstract class AbstractDashboard implements Dashboard
      */
     protected function addRow(Closure $callback): self
     {
-        $row = (new Row())->useColumnClass(DashboardColumn::class);
+        $row = new DashboardRow();
 
         $callback($row);
 

@@ -3,6 +3,7 @@
 namespace Ygg;
 
 use Ygg\Auth\AuthorizationManager;
+use Ygg\Console\DashboardMakeCommand;
 use Ygg\Console\FilterMakeCommand;
 use Ygg\Console\FormMakeCommand;
 use Ygg\Console\InstanceActionMakeCommand;
@@ -97,6 +98,7 @@ class YggServiceProvider extends ServiceProvider
             InstanceActionMakeCommand::class,
             FilterMakeCommand::class,
             WizardCommand::class,
+            DashboardMakeCommand::class,
         ]);
     }
 

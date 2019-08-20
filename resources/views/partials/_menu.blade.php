@@ -13,21 +13,9 @@
         </ygg-nav-item>
 
         @foreach($yggMenu->menuItems as $menuItem)
-            @if($menuItem->type === 'category')
-                <ygg-collapsible-item label="{{ $menuItem->label }}">
-                    @foreach($menuItem->resources as $resource)
-                        @include('ygg::partials._menu-item', [
-                            'item' => $resource,
-                            'isCurrent' => $yggMenu->currentResource === $resource->key
-                        ])
-                    @endforeach
-                </ygg-collapsible-item>
-            @else
-                @include('ygg::partials._menu-item', [
-                    'item' => $menuItem,
-                    'isCurrent' => $yggMenu->currentResource === $menuItem->key
-                ])
-            @endif
+            @include('ygg::partials._menu-category', [
+                'menuItem' => $menuItem,
+            ])
         @endforeach
     </ul>
 </ygg-left-nav>

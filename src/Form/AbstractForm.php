@@ -9,7 +9,7 @@ use stdClass;
 use Ygg\Exceptions\Form\FormUpdateException;
 use Ygg\Layout\Element;
 use Ygg\Layout\Form\FieldRow;
-use Ygg\Layout\Form\FormRow;
+use Ygg\Layout\Form\FormColumn;
 use Ygg\Layout\Layout;
 use Ygg\Layout\Form\Tab;
 use Ygg\Layout\WithElements;
@@ -56,9 +56,9 @@ abstract class AbstractForm implements Form
     abstract protected function layout(): void;
 
     /**
-     * @param string        $label
+     * @param string       $label
      * @param Closure|null $callback
-     * @return $this
+     * @return AbstractForm
      */
     protected function addTab(string $label, Closure $callback = null): self
     {

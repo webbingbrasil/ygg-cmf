@@ -34,7 +34,7 @@ class Tab implements Element
      */
     public function addColumn(int $size, Closure $callback): self
     {
-        $element = new FormRow($size);
+        $element = new FormColumn($size);
         return $this->addElement($element, $callback);
     }
 

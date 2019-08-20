@@ -41,7 +41,7 @@ class ItemDashboard extends Item
         $this->key = $config['dashboard'];
         $this->label = $config['label'] ?? 'Unnamed dashboard';
         $this->icon = $config['icon'] ?? null;
-        $this->url = route('ygg.admin.dashboard', $this->key);
+        $this->url = route('ygg.dashboard', $this->key);
     }
 
     /**

@@ -59,7 +59,7 @@ abstract class AbstractField implements Field
     protected $formatter;
 
     /**
-     * Field constructor.
+     * AbstractField constructor.
      * @param string              $key
      * @param string              $type
      * @param FieldFormatter|null $formatter

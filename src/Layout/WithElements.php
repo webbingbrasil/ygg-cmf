@@ -14,7 +14,7 @@ trait WithElements
     /**
      * @var array
      */
-    private $elements = [];
+    protected $elements = [];
 
     /**
      * @param Element $element
