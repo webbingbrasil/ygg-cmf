@@ -11,7 +11,7 @@ class LineGraphWidget extends GraphWidget
 
     /**
      * @param string $key
-     * @return $this
+     * @return LineGraphWidget
      */
     public static function make(string $key): self
     {

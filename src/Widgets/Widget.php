@@ -34,7 +34,7 @@ abstract class Widget
     protected $link;
 
     /**
-     * YggWidget constructor.
+     * Widget constructor.
      * @param string $key
      * @param string $type
      */
@@ -94,7 +94,7 @@ abstract class Widget
                 'title' => $this->title,
                 'link' => $this->link
             ] + $childArray)
-            ->filter(function ($value) {
+            ->filter(static function ($value) {
                 return $value !== null;
             })->all();
 

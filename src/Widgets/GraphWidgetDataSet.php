@@ -48,7 +48,7 @@ class GraphWidgetDataSet
 
     /**
      * @param string $label
-     * @return $this
+     * @return GraphWidgetDataSet
      */
     public function setLabel(string $label): self
     {
@@ -59,7 +59,7 @@ class GraphWidgetDataSet
 
     /**
      * @param string $color
-     * @return $this
+     * @return GraphWidgetDataSet
      */
     public function setColor(string $color): self
     {

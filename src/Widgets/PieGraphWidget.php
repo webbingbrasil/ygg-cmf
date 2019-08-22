@@ -10,7 +10,7 @@ class PieGraphWidget extends GraphWidget
 {
     /**
      * @param string $key
-     * @return $this
+     * @return PieGraphWidget
      */
     public static function make(string $key): self
     {

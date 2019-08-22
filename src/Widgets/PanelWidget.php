@@ -35,7 +35,7 @@ class PanelWidget extends Widget
      */
     public function toArray(): array
     {
-        return parent::buildArray([
+        return $this->buildArray([
             'template' => $this->htmlFormField->template()
         ]);
     }

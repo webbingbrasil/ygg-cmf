@@ -50,7 +50,7 @@ abstract class GraphWidget extends Widget
      */
     public function toArray(): array
     {
-        return parent::buildArray([
+        return $this->buildArray([
             'display' => $this->display,
             'ratioX' => $this->ratio ? (int)$this->ratio[0] : null,
             'ratioY' => $this->ratio ? (int)$this->ratio[1] : null,

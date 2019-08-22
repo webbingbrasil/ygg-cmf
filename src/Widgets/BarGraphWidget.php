@@ -11,7 +11,7 @@ class BarGraphWidget extends GraphWidget
 
     /**
      * @param string $key
-     * @return $this
+     * @return BarGraphWidget
      */
     public static function make(string $key): self
     {

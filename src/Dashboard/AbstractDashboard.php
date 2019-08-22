@@ -68,7 +68,7 @@ abstract class AbstractDashboard implements Dashboard
     private function checkDashboardIsBuilt(): void
     {
         if (!$this->dashboardBuilt) {
-            $this->buildWidgets();
+            $this->widgets();
             $this->dashboardBuilt = true;
         }
     }
@@ -76,7 +76,7 @@ abstract class AbstractDashboard implements Dashboard
     /**
      * Build dashboard's widget using ->addWidget.
      */
-    abstract protected function buildWidgets(): void;
+    abstract protected function widgets(): void;
 
     /**
      * @return array
@@ -84,7 +84,7 @@ abstract class AbstractDashboard implements Dashboard
     public function getLayout(): array
     {
         if (!$this->layoutBuilt) {
-            $this->buildWidgetsLayout();
+            $this->layout();
             $this->layoutBuilt = true;
         }
 
@@ -98,7 +98,7 @@ abstract class AbstractDashboard implements Dashboard
     /**
      * Build dashboard's widgets layout.
      */
-    abstract protected function buildWidgetsLayout(): void;
+    abstract protected function layout(): void;
 
     /**
      * Configure dashboard adding filters if necessary.
@@ -157,7 +157,7 @@ abstract class AbstractDashboard implements Dashboard
     {
         $this->putRetainedFilterOptionsInSession();
 
-        $this->buildWidgetsData(
+        $this->data(
             DashboardQueryParams::create()
                 ->fillWithRequest()
                 ->setDefaultFilters($this->getFilterDefaultOptions())
@@ -193,7 +193,7 @@ abstract class AbstractDashboard implements Dashboard
      *
      * @param DashboardQueryParams $params
      */
-    abstract protected function buildWidgetsData(DashboardQueryParams $params): void;
+    abstract protected function data(DashboardQueryParams $params): void;
 
     /**
      * @param string             $graphWidgetKey

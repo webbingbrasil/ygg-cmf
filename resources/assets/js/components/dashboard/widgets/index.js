@@ -1,15 +1,24 @@
 import YggWidgetPanel from './Panel';
+import YggWidgetForm from './Form';
+import YggWidgetList from './List';
 import YggWidgetChart from './chart/Chart';
 
 export function widgetByType(type) {
-    if(type === 'graph') {
-        return YggWidgetChart;
-    } else if(type === 'panel') {
-        return YggWidgetPanel;
+    switch (type) {
+        case 'graph':
+            return YggWidgetChart;
+        case 'panel':
+            return YggWidgetPanel;
+        case 'form':
+            return YggWidgetForm;
+        case 'list':
+            return YggWidgetList;
     }
 }
 
 export {
     YggWidgetChart,
-    YggWidgetPanel
+    YggWidgetPanel,
+    YggWidgetForm,
+    YggWidgetList
 };

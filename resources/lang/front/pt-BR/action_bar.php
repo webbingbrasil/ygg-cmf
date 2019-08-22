@@ -12,6 +12,8 @@ return [
     'locale_selector.label' => 'Escolha uma linguagem',
     'form.submit_button.create' => 'Criar',
     'form.submit_button.update' => 'Atualizar',
+    'form.submit_button.save' => 'Salvar',
+    'form.submit_button.submit' => 'Enviar',
     'form.cancel_button' => 'Cancelar',
     'form.delete_button' => 'Deletar',
     'form.back_button' => 'Voltar',
