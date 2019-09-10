@@ -10,11 +10,6 @@
         functional: true,
 
         render(h,ctx) {
-            ctx.data.attrs.firstText = `<i class="fa fa-angle-double-left" aria-hidden="true"></i>`;
-            ctx.data.attrs.prevText = `<i class="fa fa-angle-left" aria-hidden="true"></i>`;
-            ctx.data.attrs.nextText = `<i class="fa fa-angle-right" aria-hidden="true"></i>`;
-            ctx.data.attrs.lastText = `<i class="fa fa-angle-double-right" aria-hidden="true"></i>`;
-
             ctx.data.staticClass = 'YggPagination';
 
             return h({
