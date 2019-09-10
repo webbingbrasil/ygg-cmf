@@ -16,12 +16,11 @@ interface ActionForm
      * @return array
      */
     public function formData($instanceId = null): array;
+
     /**
-     * Applies Field Formatters on $data.
-     *
-     * @param array       $data
-     * @param string|null $instanceId
-     * @param bool        $handleDelayedData
+     * @param array $data
+     * @param null  $instanceId
+     * @param bool  $handleDelayedData
      * @return array
      */
     public function formatRequestData(array $data, $instanceId = null, bool $handleDelayedData = false): array;

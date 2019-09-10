@@ -4,6 +4,7 @@
                 :resource-key="resourceKey"
                 :instance-id="instanceId"
                 style="transition-duration: 300ms"
+                reloadOnSubmit
                 ref="form"
         />
         <div>

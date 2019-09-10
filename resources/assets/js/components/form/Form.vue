@@ -76,6 +76,10 @@
                 default: false
             },
             ignoreAuthorizations: Boolean,
+            reloadOnSubmit: {
+                type:Boolean,
+                default: false
+            },
             props: Object
         },
         inject:['actionsBus'],
@@ -228,7 +232,11 @@
                     opType: this.isCreation ? 'create' : 'update'
                 });
             },
-            redirectToList() {
+            afterSubmit() {
+                if(this.reloadOnSubmit) {
+                    location.reload();
+                    return;
+                }
                 location.href = this.listUrl;
             },
             async submit({ postFn }={}) {
@@ -243,7 +251,7 @@
                     }
                     else if(response.data.ok) {
                         this.mainLoading.$emit('show');
-                        this.redirectToList();
+                        this.afterSubmit();
                     }
                 }
                 catch(error) {
@@ -259,13 +267,13 @@
             async 'delete'() {
                 try {
                     await this.axiosInstance.delete(this.apiPath);
-                    this.redirectToList();
+                    this.afterSubmit();
                 }
                 catch(error) {
                 }
             },
             cancel() {
-                this.redirectToList();
+                this.afterSubmit();
             },
             setPendingJob({ key, origin, value:isPending }) {
                 if(isPending)
