@@ -33,7 +33,8 @@
             "<rootDir>/resources/assets/js/__tests__/setup/mockBootstrapVue.js",
             "<rootDir>/resources/assets/js/__tests__/setup/setupVue.js",
             "<rootDir>/resources/assets/js/polyfill.js"
-        ]
+        ],
+        "collectCoverage": true
     },
     "scripts": {
         "dev": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
