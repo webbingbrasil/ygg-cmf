@@ -1,5 +1,5 @@
-import localizeSelect from '../Select';
-import localizeField from '../field';
+import localizeSelect from '../../../mixins/localize/Select';
+import localizeField from '../../../mixins/localize/field';
 import {mount} from '@vue/test-utils';
 import {mockInjections} from "./mock";
 

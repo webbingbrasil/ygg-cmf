@@ -1,9 +1,9 @@
-import localizeForm from '../form';
+import localizeForm from '../../../mixins/localize/form';
 import {mount} from '@vue/test-utils';
-import {isLocalizableValueField, localeObjectOrEmpty} from "../utils";
+import {isLocalizableValueField, localeObjectOrEmpty} from "../../../mixins/localize/utils";
 
 
-jest.mock('../utils', () => ({
+jest.mock('../../../mixins/localize/utils', () => ({
     isLocalizableValueField: jest.fn(() => true),
     localeObjectOrEmpty: jest.fn(() => 'localeObjectOrEmpty')
 }));

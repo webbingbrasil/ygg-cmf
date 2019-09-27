@@ -4,7 +4,7 @@ import {
     isLocalizableValueField,
     localeObject,
     localeObjectOrEmpty
-} from "../utils";
+} from "../../../mixins/localize/utils";
 
 describe('localize-utils', () => {
     test('isLocaleObject', () => {

@@ -1,10 +1,10 @@
-import localizeEditor from '../editor';
-import localizeField from '../field';
-import {localeObjectOrEmpty} from "../utils";
+import localizeEditor from '../../../mixins/localize/editor';
+import localizeField from '../../../mixins/localize/field';
+import {localeObjectOrEmpty} from "../../../mixins/localize/utils";
 import {mount} from '@vue/test-utils';
 import {mockInjections} from "./mock";
 
-jest.mock('../utils', () => ({
+jest.mock('../../../mixins/localize/utils', () => ({
     localeObjectOrEmpty: jest.fn(() => 'localeObjectOrEmpty')
 }));
 

@@ -1,4 +1,4 @@
-import localizeField from '../field';
+import localizeField from '../../../mixins/localize/field';
 import {mount} from '@vue/test-utils';
 import {mockInjections} from "./mock";
 
