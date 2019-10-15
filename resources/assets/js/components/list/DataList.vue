@@ -22,8 +22,10 @@
                                 <a class="YggDataList__sort-link" @click.prevent="handleSortClicked(column.key)" href=""></a>
                             </template>
                         </template>
-                        <template slot="append">
-                            <div class="d-none d-md-block" :style="{ width: headerRowAppendWidth }">&nbsp;</div>
+                        <template v-if="!!headerRowAppendWidth">
+                            <template slot="append">
+                                <div class="d-none d-md-block" :style="{ width: headerRowAppendWidth }">&nbsp;</div>
+                            </template>
                         </template>
                     </YggDataListRow>
                 </div>
