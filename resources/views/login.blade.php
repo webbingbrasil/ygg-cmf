@@ -7,7 +7,7 @@
             <form method="POST" action="{{ route('ygg.login.post') }}">
                 {{ csrf_field() }}
                 <div class="row justify-content-center">
-                    <div class="col-sm-9 col-md-6 col-lg-5 col-xl-4">
+                    <div class="col-sm-27 col-md-18 col-lg-15 col-xl-12">
 
                         <h1 class="text-center mb-3">{{ygg_title()}}</h1>
 
