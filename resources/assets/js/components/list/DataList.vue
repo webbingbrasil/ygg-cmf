@@ -19,7 +19,7 @@
                                 >
                                     <path d="M10 0L5 5 0 0z"></path>
                                 </svg>
-                                <a class="YggDataList__sort-link" @click.prevent="handleSortClicked(column.key)" href=""></a>
+                                <a class="YggDataList__sort-link" v-bind:title="column.label" @click.prevent="handleSortClicked(column.key)" href=""></a>
                             </template>
                         </template>
                         <template v-if="!!headerRowAppendWidth">

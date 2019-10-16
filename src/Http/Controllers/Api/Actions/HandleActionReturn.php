@@ -25,10 +25,10 @@ trait HandleActionReturn
     {
         if ($returnedValue['action'] === 'download') {
             // Download case is specific: we return a File Stream
-            return Storage::disk($returnedValue['disk'])->download(
+            return response()->download(
                 $returnedValue['file'],
                 $returnedValue['name']
-            );
+            )->deleteFileAfterSend($returnedValue['shouldDelete']);
         }
 
         if ($actionContainer instanceof Resource && $returnedValue['action'] === 'refresh') {

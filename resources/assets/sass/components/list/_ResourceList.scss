@@ -194,13 +194,14 @@
         @include line-height('body');
         //@include padding-td;
         position: relative;
+        word-break: break-word;
         //display: table-cell;
 
         &-html-container {
             max-width: 100%;
 
             * {
-                font-size: rem(14px) !important;
+                font-size: rem(14px);
             }
 
             img {

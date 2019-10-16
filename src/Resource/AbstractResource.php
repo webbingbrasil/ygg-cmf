@@ -316,7 +316,7 @@ abstract class AbstractResource implements Resource
      * @param int|null $sizeXS
      * @return $this
      */
-    protected function addColumn(string $label, int $size, int $sizeXS = null): self
+    protected function addColumn(string $label, int $size = 0, int $sizeXS = null): self
     {
         $this->layoutBuilt = false;
 

@@ -53,6 +53,13 @@
         },
         methods: {
             colClasses(column) {
+                if(column.size === 0) {
+                    return [
+                        `col`,
+                        ...(column.hideOnXS ? ['d-none d-md-flex'] : [])
+                    ];
+                }
+
                 return [
                     `col-${column.sizeXS}`,
                     `col-md-${column.size}`,
