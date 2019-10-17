@@ -52,7 +52,7 @@ trait HasFieldRows
     /**
      * @return array
      */
-    protected function fieldsToArray(): array
+    public function fieldsToArray(): array
     {
         return [
             'fields' => collect($this->elements)->map(function (array $elements) {
