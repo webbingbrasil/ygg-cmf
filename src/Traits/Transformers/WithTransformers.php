@@ -23,6 +23,24 @@ trait WithTransformers
     protected $transformers = [];
 
     /**
+     * @return array
+     */
+    public function getTransformers(): array
+    {
+        return $this->transformers;
+    }
+
+    /**
+     * @param array $transformers
+     */
+    public function setTransformers(array $transformers): self
+    {
+        $this->transformers = $transformers;
+
+        return $this;
+    }
+
+    /**
      * @param string                              $attribute
      * @param string|AttributeTransformer|Closure $transformer
      * @return $this
