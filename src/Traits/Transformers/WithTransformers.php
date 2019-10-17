@@ -32,6 +32,7 @@ trait WithTransformers
 
     /**
      * @param array $transformers
+     * @return WithTransformers
      */
     public function setTransformers(array $transformers): self
     {
