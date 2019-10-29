@@ -1,9 +1,10 @@
 <template>
     <div class="YggDataList__row container"
-        :class="{
-            'YggDataList__row--header': header,
-            'YggDataList__row--disabled': !header && !hasLink,
-        }"
+        :class="[
+            header ? 'YggDataList__row--header': '',
+            !header && !hasLink ? 'YggDataList__row--disabled' : '',
+            rowClasses(row)
+        ]"
     >
         <div class="YggDataList__cols">
             <div class="row">
@@ -52,18 +53,28 @@
             }
         },
         methods: {
+            rowClasses(row) {
+                if("rowClass" in row) {
+                    return row['rowClass']
+                }
+
+                return [];
+            },
             colClasses(column) {
                 if(column.size === 0) {
                     return [
                         `col`,
-                        ...(column.hideOnXS ? ['d-none d-md-flex'] : [])
+                        ...(column.hideOnXS ? ['d-none d-md-flex'] : []),
+                        ...(column.customClasses),
+                        ...(column.classes)
                     ];
                 }
 
                 return [
                     `col-${column.sizeXS}`,
                     `col-md-${column.size}`,
-                    ...(column.hideOnXS ? ['d-none d-md-flex'] : [])
+                    ...(column.hideOnXS ? ['d-none d-md-flex'] : []),
+                    ...(column.classes)
                 ];
             },
         }

@@ -29,6 +29,10 @@ class ResourceColumn implements Element
      * @var boolean
      */
     protected $hideOnXs = false;
+    /**
+     * @var array
+     */
+    protected $classes = [];
 
     /**
      * @param string   $key
@@ -48,6 +52,14 @@ class ResourceColumn implements Element
     }
 
     /**
+     * @param array $classes
+     */
+    public function withClasses(array $classes): void
+    {
+        $this->classes = $classes;
+    }
+
+    /**
      * @return array
      */
     public function toArray(): array
@@ -57,6 +69,7 @@ class ResourceColumn implements Element
             'size' => $this->size,
             'sizeXS' => $this->sizeXS,
             'hideOnXS' => $this->hideOnXs,
+            'classes' => $this->classes
         ];
     }
 }

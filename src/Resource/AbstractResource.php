@@ -215,6 +215,19 @@ abstract class AbstractResource implements Resource
     }
 
     /**
+     * @param callable $callback
+     * @return AbstractResource
+     */
+    public function withRowClass(callable $callback): self
+    {
+        $this->setCustomTransformer('rowClass', static function($value, $row) use (&$callback) {
+            return $callback($row);
+        });
+
+        return $this;
+    }
+
+    /**
      * @param array $ids
      */
     public function reorder(array $ids): void
@@ -283,10 +296,11 @@ abstract class AbstractResource implements Resource
                                 array_merge(
                                     $this->resourceStateAttribute ? [$this->resourceStateAttribute] : [],
                                     $this->multiformAttribute ? [$this->multiformAttribute] : [],
-                                    [$this->instanceIdAttribute],
+                                    [$this->instanceIdAttribute, 'rowClass'],
                                     $keys
                                 )
                             )->all();
+
                         })->all()
             ] + ($page !== null ? compact('page', 'totalCount', 'pageSize') : []);
     }
@@ -311,31 +325,39 @@ abstract class AbstractResource implements Resource
     }
 
     /**
-     * @param string   $label
-     * @param int      $size
-     * @param int|null $sizeXS
-     * @return $this
+     * @param string        $label
+     * @param int           $size
+     * @param int|null      $sizeXS
+     * @param callable|null $callback
+     * @return AbstractResource
      */
-    protected function addColumn(string $label, int $size = 0, int $sizeXS = null): self
+    protected function addColumn(string $label, int $size = 0, int $sizeXS = null, callable $callback = null): self
     {
         $this->layoutBuilt = false;
-
-        $this->columns[] = new ResourceColumn($label, $size, $sizeXS);
+        $column = new ResourceColumn($label, $size, $sizeXS);
+        if($callback) {
+            $callback($column);
+        }
+        $this->columns[] = $column;
 
         return $this;
     }
 
     /**
-     * @param string $label
-     * @param int    $size
-     * @return $this
+     * @param string        $label
+     * @param int           $size
+     * @param callable|null $callback
+     * @return AbstractResource
      */
-    protected function addLargeColumn(string $label, int $size): self
+    protected function addLargeColumn(string $label, int $size, callable $callback = null): self
     {
         $this->layoutBuilt = false;
 
-        $column = new ResourceColumn($label, $size);
+        $column = new ResourceColumn($label, $size, null);
         $column->hideOnXs();
+        if($callback) {
+            $callback($column);
+        }
         $this->columns[] = $column;
 
         return $this;

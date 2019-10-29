@@ -57,6 +57,12 @@
             flex-flow: column;
         }
 
+        @each $color, $value in $theme-colors {
+            @include list-row-variant($color, theme-color-level($color, $table-bg-level), theme-color-level($color, $table-border-level));
+        }
+
+        @include list-row-variant(active, $table-active-bg);
+
         &--header {
             border: none;
             cursor: inherit;
