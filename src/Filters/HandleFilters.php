@@ -54,7 +54,7 @@ trait HandleFilters
                 $filterConfigData += [
                     'type' => 'select',
                     'multiple' => $multiple,
-                    'required' => !$multiple && $handler instanceof SelectRequiredFilter,
+                    'required' => !$multiple && $handler instanceof RequiredFilter,
                     'values' => $this->formatSelectFilterOptions($handler),
                     'master' => method_exists($handler, 'isMaster') ? $handler->isMaster() : false,
                     'searchable' => method_exists($handler, 'isSearchable') ? $handler->isSearchable() : false,
@@ -130,8 +130,7 @@ trait HandleFilters
             })
             // Only required filters or retained filters with value saved in session
             ->filter(function ($handler, $attribute) {
-                return $handler instanceof SelectRequiredFilter
-                    || $handler instanceof DateRangeRequiredFilter
+                return $handler instanceof RequiredFilter
                     || $this->isRetainedFilter($handler, $attribute, true);
             })
             ->map(function ($handler, $attribute) {
@@ -233,12 +232,12 @@ trait HandleFilters
             }
             return $sessionOption;
         }
-        if ($handler instanceof SelectRequiredFilter) {
-            return $handler->defaultOption();
-        }
         if ($handler instanceof DateRangeRequiredFilter) {
             return collect($handler->defaultOption())
                 ->map->format('Y-m-d')->toArray();
+        }
+        if ($handler instanceof RequiredFilter || method_exists($handler, 'defaultOption')) {
+            return $handler->defaultOption();
         }
         return null;
     }

@@ -6,10 +6,6 @@ namespace Ygg\Filters;
  * Interface SelectRequiredFilter
  * @package Ygg\Filters
  */
-interface SelectRequiredFilter extends SelectFilter
+interface SelectRequiredFilter extends SelectFilter, RequiredFilter
 {
-    /**
-     * @return string|int
-     */
-    function defaultOption();
 }
