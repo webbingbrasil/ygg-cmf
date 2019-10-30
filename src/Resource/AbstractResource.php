@@ -8,6 +8,7 @@ use Ygg\Actions\HandleActions;
 use Ygg\Actions\ReorderHandler;
 use Ygg\Filters\HandleFilters;
 use Ygg\Layout\Resource\ResourceColumn;
+use Ygg\Layout\Resource\WithContextualColors;
 use Ygg\Resource\Traits\HandleResourceState;
 use Ygg\Traits\Transformers\WithTransformers;
 
@@ -17,7 +18,7 @@ use Ygg\Traits\Transformers\WithTransformers;
  */
 abstract class AbstractResource implements Resource
 {
-    use HandleFilters, HandleFields, HandleResourceState, HandleActions, WithTransformers;
+    use HandleFilters, HandleFields, HandleResourceState, HandleActions, WithTransformers, WithContextualColors;
 
     /**
      * @var array
@@ -73,6 +74,66 @@ abstract class AbstractResource implements Resource
      * @var string
      */
     protected $defaultSortDir = 'asc';
+
+    /**
+     * The array of booted resources.
+     *
+     * @var array
+     */
+    protected static $booted = [];
+
+    /**
+     * AbstractResource constructor.
+     */
+    public function __construct()
+    {
+        $this->bootIfNotBooted();
+    }
+
+    /**
+     * Check if the model needs to be booted and if so, do it.
+     *
+     * @return void
+     */
+    protected function bootIfNotBooted()
+    {
+        if (! isset(static::$booted[static::class])) {
+            static::$booted[static::class] = true;
+            $this->boot();
+        }
+    }
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected function boot()
+    {
+        $this->bootTraits();
+    }
+
+    /**
+     * Boot all of the bootable traits on the model.
+     *
+     * @return void
+     */
+    protected function bootTraits()
+    {
+        $class = static::class;
+
+        $booted = [];
+
+        foreach (class_uses_recursive($class) as $trait) {
+            $method = 'boot'.class_basename($trait);
+
+            if (method_exists($class, $method) && ! in_array($method, $booted)) {
+                call_user_func([$this, $method]);
+
+                $booted[] = $method;
+            }
+        }
+    }
 
     /**
      * @return array
@@ -215,19 +276,6 @@ abstract class AbstractResource implements Resource
     }
 
     /**
-     * @param callable $callback
-     * @return AbstractResource
-     */
-    public function withRowClass(callable $callback): self
-    {
-        $this->setCustomTransformer('rowClass', static function($value, $row) use (&$callback) {
-            return $callback($row);
-        });
-
-        return $this;
-    }
-
-    /**
      * @param array $ids
      */
     public function reorder(array $ids): void
@@ -300,7 +348,6 @@ abstract class AbstractResource implements Resource
                                     $keys
                                 )
                             )->all();
-
                         })->all()
             ] + ($page !== null ? compact('page', 'totalCount', 'pageSize') : []);
     }
