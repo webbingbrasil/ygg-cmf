@@ -130,8 +130,7 @@ trait HandleFilters
             })
             // Only required filters or retained filters with value saved in session
             ->filter(function ($handler, $attribute) {
-                return $handler instanceof RequiredFilter
-                    || $this->isRetainedFilter($handler, $attribute, true);
+                return method_exists($handler, 'defaultOption') || $this->isRetainedFilter($handler, $attribute, true);
             })
             ->map(function ($handler, $attribute) {
                 if ($this->isRetainedFilter($handler, $attribute, true)) {
@@ -236,7 +235,7 @@ trait HandleFilters
             return collect($handler->defaultOption())
                 ->map->format('Y-m-d')->toArray();
         }
-        if ($handler instanceof RequiredFilter || method_exists($handler, 'defaultOption')) {
+        if (method_exists($handler, 'defaultOption')) {
             return $handler->defaultOption();
         }
         return null;
