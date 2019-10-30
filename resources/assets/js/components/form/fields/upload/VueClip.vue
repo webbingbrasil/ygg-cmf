@@ -10,11 +10,11 @@
                 </form>
                 <template v-if="file">
                     <div :class="{ row:showThumbnail }" class="YggUpload__container">
-                        <div :class="[modifiers.compacted?'col-4 col-sm-3 col-xl-2':'col-4 col-md-4']"
+                        <div :class="[modifiers.compacted?'col-12 col-sm-9 col-xl-6':'col-12 col-md-12']"
                              class="YggUpload__thumbnail" v-if="showThumbnail">
                             <img :src="imageSrc" @load="handleImageLoaded">
                         </div>
-                        <div :class="{[modifiers.compacted?'col-8 col-sm-9 col-xl-10':'col-8 col-md-8']:showThumbnail}"
+                        <div :class="{[modifiers.compacted?'col-24 col-sm-27 col-xl-30':'col-24 col-md-24']:showThumbnail}"
                              class="YggUpload__infos">
                             <div class="mb-3 text-truncate">
                                 <label class="YggUpload__filename">{{ fileName }}</label>

@@ -45,7 +45,7 @@
                                 <template slot="append">
                                     <div class="row justify-content-end justify-content-md-start mx-n2">
                                         <template v-if="instanceHasState(item)">
-                                            <div class="col-auto col-md-12 my-1 px-2">
+                                            <div class="col-auto my-1 px-2">
                                                 <YggDropdown :disabled="!instanceHasStateAuthorization(item)"
                                                              class="YggResourceList__state-dropdown">
                                                     <template slot="text">
@@ -66,7 +66,7 @@
                                             </div>
                                         </template>
                                         <template v-if="instanceHasActions(item)">
-                                            <div class="col-auto col-md-12 my-1 px-2">
+                                            <div class="col-auto my-1 px-2">
                                                 <YggActionsDropdown
                                                     :actions="instanceActions(item)"
                                                     @select="handleInstanceActionRequested(item, $event)"
