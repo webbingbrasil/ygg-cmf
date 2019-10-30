@@ -68,7 +68,7 @@ export default {
         },
         resolveFilterValue(state, getters) {
             return ({filter, value}) => {
-                if (value == null) {
+                if ((filter.required || typeof state.values[filter.key] === 'undefined') && value == null) {
                     return getters.defaultValue(filter);
                 }
                 if (filter.multiple && !Array.isArray(value)) {
