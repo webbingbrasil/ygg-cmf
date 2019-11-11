@@ -1,0 +1,49 @@
+name: Release
+on:
+  push:
+    branches:
+    - master
+    - beta
+
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: npm install, build, and test
+      run: |
+        npm install
+        npm run build --if-present
+        npm test
+      env:
+        CI: true
+    - name: upload code coverage
+      uses: codecov/codecov-action@v1.0.2
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+    - name: Semantic Release
+      uses: dmandrade/semantic-release-github-action@master
+      id: release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Send Release to Sentry
+      if: steps.release.outputs.published == 'true'
+      uses: dmandrade/sentry-release-github-action@master
+      env:
+        SENTRY_ORG: webbing-brasil
+        SENTRY_PROJECT: fenix
+        SENTRY_URL: https://sentry.webbingbrasil.com.br
+        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      with:
+        version: ${{ steps.release.outputs.version }}
