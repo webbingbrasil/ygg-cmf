@@ -34,14 +34,14 @@ trait HasFiltersInQuery
             return null;
         }
 
-        if (str_contains($this->filters[$filterName], '..')) {
+        if (Str::contains($this->filters[$filterName], '..')) {
             [$start, $end] = explode('..', $this->filters[$filterName]);
             return [
                 'start' => Carbon::createFromFormat('Ymd', $start)->setTime(0, 0, 0, 0),
                 'end' => Carbon::createFromFormat('Ymd', $end)->setTime(23, 59, 59, 999999),
             ];
         }
-        if (str_contains($this->filters[$filterName], ',')) {
+        if (Str::contains($this->filters[$filterName], ',')) {
             return explode(',', $this->filters[$filterName]);
         }
         return $this->filters[$filterName];

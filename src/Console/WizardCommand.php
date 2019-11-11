@@ -46,10 +46,10 @@ class WizardCommand extends Command
         $this->call('make:model', ['name' => $fullModelClass]);
 
         $this
-            ->runCommand('list', 'ygg:make:list', $resourceNamespace, $config, ['--model' => $inputModelClass])
-            ->runCommand('form', 'ygg:make:form', $resourceNamespace, $config, ['--model' => $inputModelClass])
-            ->runCommand('policy', 'ygg:make:policy', $resourceNamespace, $config, ['--model' => $inputModelClass])
-            ->runCommand('validator', 'ygg:make:validator', $resourceNamespace, $config);
+            ->generate('list', 'ygg:make:list', $resourceNamespace, $config, ['--model' => $inputModelClass])
+            ->generate('form', 'ygg:make:form', $resourceNamespace, $config, ['--model' => $inputModelClass])
+            ->generate('policy', 'ygg:make:policy', $resourceNamespace, $config, ['--model' => $inputModelClass])
+            ->generate('validator', 'ygg:make:validator', $resourceNamespace, $config);
 
         $this->info('Wizard complete!');
         $this->line('Add this to resources in `config/ygg.php`:');
@@ -115,7 +115,7 @@ class WizardCommand extends Command
      * @param array      $parameters
      * @return WizardCommand
      */
-    private function runCommand(string $option, string $command, string $resourceNamespace, Collection $config, array $parameters = []): self
+    protected function generate(string $option, string $command, string $resourceNamespace, Collection $config, array $parameters = []): self
     {
         if ($this->option($option) || $this->confirm('Would you like to generate a ' . $option . ' class for this model?')) {
             $studlyOption = Str::studly($option);
