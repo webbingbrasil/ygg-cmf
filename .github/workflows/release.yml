@@ -37,13 +37,3 @@ jobs:
       id: release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Send Release to Sentry
-      if: steps.release.outputs.published == 'true'
-      uses: dmandrade/sentry-release-github-action@master
-      env:
-        SENTRY_ORG: webbing-brasil
-        SENTRY_PROJECT: fenix
-        SENTRY_URL: https://sentry.webbingbrasil.com.br
-        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      with:
-        version: ${{ steps.release.outputs.version }}
