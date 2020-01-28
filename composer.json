@@ -38,7 +38,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Ygg\\YggServiceProvider"
+                "Ygg\\Platform\\Providers\\YggServiceProvider"
             ]
         }
     }

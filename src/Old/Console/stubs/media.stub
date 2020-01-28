@@ -1,0 +1,10 @@
+<?php
+
+namespace DummyNamespace;
+
+use Ygg\Old\Form\Eloquent\Uploads\UploadModel;
+
+class DummyClass extends UploadModel
+{
+    protected $table = 'DummyTable';
+}

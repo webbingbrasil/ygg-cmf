@@ -1,0 +1,25 @@
+<?php
+
+namespace DummyNamespace;
+
+use Ygg\Old\Form\Validator\FormRequest;
+
+class DummyClass extends FormRequest
+{
+    /**
+     * @return bool
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @return array
+     */
+    public function rules(): array
+    {
+        return [
+        ];
+    }
+}

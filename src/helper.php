@@ -1,6 +1,6 @@
 <?php
 
-use Ygg\Exceptions\Auth\AuthorizationException;
+use Ygg\Old\Exceptions\Auth\AuthorizationException;
 
 /**
  * @return string
@@ -98,7 +98,7 @@ function ygg_has_ability(string $ability, string $resourceKey, string $instanceI
  */
 function ygg_check_ability(string $ability, string $resourceKey, string $instanceId = null)
 {
-    app(Ygg\Auth\AuthorizationManager::class)
+    app(Ygg\Old\Auth\AuthorizationManager::class)
         ->check($ability, $resourceKey, $instanceId);
 }
 

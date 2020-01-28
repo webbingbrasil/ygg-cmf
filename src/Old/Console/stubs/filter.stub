@@ -1,0 +1,17 @@
+<?php
+
+namespace DummyNamespace;
+
+use Ygg\Old\Filters\AbstractFilter;
+use Ygg\Old\Filters\SelectMultipleFilter;
+
+class DummyClass extends AbstractFilter implements SelectMultipleFilter
+{
+    /**
+    * @return array
+    */
+    public function options(): array
+    {
+        //
+    }
+}
