@@ -2,37 +2,12 @@
 
 namespace Ygg\Platform\Providers;
 
-use Ygg\Old\Auth\AuthorizationManager;
-use Ygg\Old\Console\DashboardMakeCommand;
-use Ygg\Old\Console\FilterMakeCommand;
-use Ygg\Old\Console\FormMakeCommand;
-use Ygg\Old\Console\InstanceActionMakeCommand;
-use Ygg\Old\Console\ListActionMakeCommand;
-use Ygg\Old\Console\MediaMakeCommand;
-use Ygg\Old\Console\MediaMigrationMakeCommand;
-use Ygg\Old\Composers\AssetViewComposer;
-use Ygg\Old\Composers\MenuViewComposer;
-use Ygg\Old\Console\ListMakeCommand;
-use Ygg\Old\Console\PolicyMakeCommand;
-use Ygg\Old\Console\StateMakeCommand;
-use Ygg\Old\Console\ValidatorMakeCommand;
-use Ygg\Old\Console\WizardCommand;
-use Ygg\Old\Http\Middleware\Api\AddContext;
-use Ygg\Old\Http\Middleware\Api\AppendFormAuthorizations;
-use Ygg\Old\Http\Middleware\Api\AppendListAuthorizations;
-use Ygg\Old\Http\Middleware\Api\AppendListMultiForm;
-use Ygg\Old\Http\Middleware\Api\AppendNotifications;
-use Ygg\Old\Http\Middleware\Api\BindValidationResolver;
-use Ygg\Old\Http\Middleware\Api\HandleApiErrors;
-use Ygg\Old\Http\Middleware\Api\SaveResourceListParams;
-use Ygg\Old\Http\Middleware\Api\YggSetLocale;
-use Ygg\Old\Http\Middleware\RestoreResourceListParams;
-use Ygg\Old\Http\Middleware\YggAuthenticate;
-use Ygg\Old\Http\Middleware\YggRedirectIfAuthenticated;
-use Illuminate\Contracts\Auth\Access\Gate as GateContract;
-use Illuminate\Support\Facades\Gate;
-use Ygg\Old\Http\Context;
+use Illuminate\Foundation\Console\PresetCommand;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Routing\Router;
+use Ygg\Platform\Kernel;
+use Ygg\Support\Facades\Dashboard;
 
 /**
  * Class YggServiceProvider
@@ -40,153 +15,200 @@ use Illuminate\Support\ServiceProvider;
  */
 class YggServiceProvider extends ServiceProvider
 {
+    /**
+     * @var array
+     */
+    protected $commands = [
+    ];
+
     public function boot(): void
     {
-        $this->loadRoutesFrom(__DIR__.'/../routes/ygg.php');
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'ygg');
+        $this
+            ->registerYgg()
+            ->registerAssets()
+            ->registerDatabase()
+            ->registerConfig()
+            ->registerTranslations()
+            ->registerBlade()
+            ->registerViews()
+            ->registerProviders();
+    }
 
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang/back', 'ygg');
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang/front', 'ygg-front');
+    /**
+     * Register migrate.
+     *
+     * @return $this
+     */
+    protected function registerDatabase(): self
+    {
+        $path = Dashboard::path('database/migrations');
+
+        $this->loadMigrationsFrom($path);
 
         $this->publishes([
-            __DIR__.'/../resources/assets/dist' => public_path('vendor/ygg')
-        ], 'assets');
+            $path => database_path('migrations'),
+        ], 'migrations');
 
-        $this->registerPolicies();
-
-        view()->composer(
-            ['ygg::form', 'ygg::list', 'ygg::dashboard', 'ygg::welcome'],
-            MenuViewComposer::class
-        );
-
-        view()->composer(
-            ['ygg::form', 'ygg::list', 'ygg::dashboard', 'ygg::welcome', 'ygg::login', 'ygg::unauthorized'],
-            AssetViewComposer::class
-        );
+        return $this;
     }
 
-    public function register(): void
+    /**
+     * Register translations.
+     *
+     * @return $this
+     */
+    public function registerTranslations(): self
     {
-        $this->registerMiddleware();
+        $this->loadJsonTranslationsFrom(Dashboard::path('resources/lang/'));
 
-        $this->app->singleton(
-            Context::class, Context::class
-        );
-
-        $this->app->singleton(
-            AuthorizationManager::class, AuthorizationManager::class
-        );
-
-        // Override Laravel's Gate to handle Ygg ability to define a custom Guard
-        $this->app->singleton(GateContract::class, function ($app) {
-            return new \Illuminate\Auth\Access\Gate($app, function () use ($app) {
-                return request()->is('ygg') || request()->is('ygg/*')
-                    ? auth()->user()
-                    : auth()->guard(config('auth.defaults.guard'))->user();
-            });
-        });
-
-        $this->commands([
-            MediaMigrationMakeCommand::class,
-            MediaMakeCommand::class,
-            ListMakeCommand::class,
-            FormMakeCommand::class,
-            ValidatorMakeCommand::class,
-            ListActionMakeCommand::class,
-            StateMakeCommand::class,
-            PolicyMakeCommand::class,
-            InstanceActionMakeCommand::class,
-            FilterMakeCommand::class,
-            WizardCommand::class,
-            DashboardMakeCommand::class,
-        ]);
+        return $this;
     }
 
-    protected function registerPolicies(): void
-    {
-        foreach((array)config('ygg.resources') as $resourceKey => $config) {
-            if(isset($config['policy'])) {
-                foreach(['resource', 'view', 'update', 'create', 'delete'] as $action) {
-                    $this->definePolicy($resourceKey, $config['policy'], $action);
-                }
-            }
-        }
 
-        foreach((array)config('ygg.dashboards') as $dashboardKey => $config) {
-            if(isset($config['policy'])) {
-                $this->definePolicy($dashboardKey, $config['policy'], 'view');
-            }
+    /**
+     * Register config.
+     *
+     * @return $this
+     */
+    protected function registerConfig(): self
+    {
+        $this->publishes([
+            Dashboard::path('config/platform.php') => config_path('platform.php'),
+        ], 'config');
+
+        return $this;
+    }
+
+    /**
+     * Register orchid.
+     *
+     * @return $this
+     */
+    protected function registerYgg(): self
+    {
+        $this->publishes([
+            Dashboard::path('install-stubs/routes/') => base_path('routes'),
+            Dashboard::path('install-stubs/Ygg/') => app_path('Ygg'),
+        ], 'ygg-stubs');
+
+        return $this;
+    }
+
+    /**
+     * Register assets.
+     *
+     * @return $this
+     */
+    protected function registerAssets(): self
+    {
+        $this->publishes([
+            Dashboard::path('resources/js')   => resource_path('js/ygg'),
+            Dashboard::path('resources/sass') => resource_path('sass/ygg'),
+        ], 'ygg-assets');
+
+        return $this;
+    }
+    /**
+     * @return $this
+     */
+    public function registerBlade(): self
+    {
+        return $this;
+    }
+
+    /**
+     * Register views & Publish views.
+     *
+     * @return $this
+     */
+    public function registerViews(): self
+    {
+        $path = Dashboard::path('resources/views');
+        $this->loadViewsFrom($path, 'platform');
+
+        $this->publishes([
+            $path => resource_path('views/vendor/platform'),
+        ], 'views');
+
+        return $this;
+    }
+
+    /**
+     * Register provider.
+     */
+    public function registerProviders(): void
+    {
+        foreach ($this->provides() as $provide) {
+            $this->app->register($provide);
         }
     }
 
     /**
-     * @param string $resourceKey
-     * @param string $policy
-     * @param string $action
+     * Get the services provided by the provider.
+     *
+     * @return array
      */
-    protected function definePolicy($resourceKey, $policy, $action): void
+    public function provides(): array
     {
-        if(method_exists(app($policy), $action)) {
-            Gate::define('ygg.'.$resourceKey.'.'.$action, $policy . '@'.$action);
-
-        } else {
-            // No policy = true by default
-            Gate::define('ygg.'.$resourceKey.'.'.$action, function () {
-                return true;
-            });
-        }
+        return [
+            RouteServiceProvider::class,
+            EventServiceProvider::class,
+            PlatformServiceProvider::class,
+        ];
     }
 
-    protected function registerMiddleware(): void
+    public function register(): void
     {
-        $this->app['router']->middlewareGroup('ygg_web', [
-            \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-            \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
-            \Illuminate\Foundation\Http\Middleware\TrimStrings::class,
-            \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-            \Illuminate\Cookie\Middleware\EncryptCookies::class,
-            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
-            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        ]);
+        $this->commands($this->commands);
 
-        $this->app['router']->aliasMiddleware(
-            'ygg_api_append_form_authorizations', AppendFormAuthorizations::class
+        $this->app->singleton(Kernel::class, static function () {
+            return new Kernel();
+        });
 
-        )->aliasMiddleware(
-            'ygg_api_append_list_authorizations', AppendListAuthorizations::class
+        if (! Route::hasMacro('screen')) {
+            Route::macro('screen', function ($url, $screen, $name = null) {
+                /* @var Router $this */
+                return $this->any($url.'/{method?}/{argument?}', [$screen, 'handle'])
+                    ->name($name);
+            });
+        }
 
-        )->aliasMiddleware(
-            'ygg_api_append_list_multiform', AppendListMultiForm::class
+        if (! defined('YGG_PATH')) {
+            /*
+             * @deprecated
+             *
+             * Get the path to ygg folder.
+             */
+            define('YGG_PATH', Dashboard::path());
+        }
 
-        )->aliasMiddleware(
-            'ygg_api_append_notifications', AppendNotifications::class
 
-        )->aliasMiddleware(
-            'ygg_api_errors', HandleApiErrors::class
-
-        )->aliasMiddleware(
-            'ygg_api_context', AddContext::class
-
-        )->aliasMiddleware(
-            'ygg_api_validation', BindValidationResolver::class
-
-        )->aliasMiddleware(
-            'ygg_locale', YggSetLocale::class
-
-        )->aliasMiddleware(
-            'ygg_save_list_params', SaveResourceListParams::class
-
-        )->aliasMiddleware(
-            'ygg_restore_list_params', RestoreResourceListParams::class
-
-        )->aliasMiddleware(
-            'ygg_auth', YggAuthenticate::class
-
-        )->aliasMiddleware(
-            'ygg_guest', YggRedirectIfAuthenticated::class
+        $this->mergeConfigFrom(
+            Dashboard::path('config/platform.php'), 'platform'
         );
+
+
+        /*
+         * Add ygg preset
+         */
+        PresetCommand::macro('ygg-source', static function (PresetCommand $command) {
+            $command->call('vendor:publish', [
+                '--provider' => self::class,
+                '--tag'      => 'ygg-assets',
+                '--force'    => true,
+            ]);
+
+            Source::install();
+            $command->warn('Please run "npm install && npm run dev" to compile your fresh scaffolding.');
+            $command->info('Ygg scaffolding installed successfully.');
+        });
+
+        PresetCommand::macro('ygg', static function (PresetCommand $command) {
+            Orchid::install();
+            $command->warn('Please run "npm install && npm run dev" to compile your fresh scaffolding.');
+            $command->warn("After that, You need to add this line to AppServiceProvider's register method:");
+            $command->warn("app(\Ygg\Platform\Ygg::class)->registerResource('scripts','/js/dashboard.js');");
+            $command->info('Ygg scaffolding installed successfully.');
+        });
     }
 }

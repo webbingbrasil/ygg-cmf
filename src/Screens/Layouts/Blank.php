@@ -6,12 +6,12 @@ namespace Ygg\Screens\Layouts;
 
 use Ygg\Screens\Repository;
 
-class Columns extends Base
+class Blank extends Base
 {
     /**
      * @var string
      */
-    protected $view = 'platform::layouts.columns';
+    protected $view = 'platform::layouts.blank';
 
     /**
      * Base constructor.
