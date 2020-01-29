@@ -1,6 +1,60 @@
 <?php
 
 use Ygg\Old\Exceptions\Auth\AuthorizationException;
+use Symfony\Component\Finder\Finder;
+use Illuminate\Support\Str;
+use Ygg\Support\Facades\Dashboard;
+
+if (! function_exists('ygg_mix')) {
+    /**
+     * @param string $file
+     * @param string $package
+     * @param string $dir
+     *
+     * @throws \Throwable
+     *
+     * @return string
+     */
+    function ygg_mix(string $file, string $package, string $dir = ''): string
+    {
+        $manifest = null;
+
+        $in = Dashboard::getPublicDirectory()
+            ->get($package);
+
+        if($in) {
+            $resources = (new Finder())
+                ->in($in)
+                ->ignoreUnreadableDirs()
+                ->files()
+                ->path($dir.'mix-manifest.json');
+
+            foreach ($resources as $resource) {
+                $manifest = $resource;
+            }
+        }
+
+        throw_if($manifest === null, \Exception::class, 'mix-manifest.json file not found');
+
+        $manifest = json_decode($manifest->getContents(), true);
+
+        $mixPath = $manifest[$file];
+
+        if (Str::startsWith($mixPath, '/')) {
+            $mixPath = ltrim($mixPath, '/');
+        }
+
+        if (file_exists(public_path('/resources'))) {
+            return url("/resources/$package/$mixPath");
+        }
+
+        return route('platform.resource', [$package, $mixPath]);
+    }
+}
+
+///
+/// OLD HELPERS
+///
 
 /**
  * @return string
