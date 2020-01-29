@@ -4,6 +4,7 @@ namespace Ygg\Platform\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Ygg\Platform\MenuActive;
 use Ygg\Support\Facades\Dashboard;
 
 class RouteServiceProvider extends ServiceProvider
@@ -30,6 +31,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function binding()
     {
+        $this->app->bind('active', MenuActive::class);
     }
 
     /**

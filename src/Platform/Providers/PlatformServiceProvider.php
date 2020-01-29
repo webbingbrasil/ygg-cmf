@@ -3,6 +3,7 @@
 
 namespace Ygg\Platform\Providers;
 
+use App\Ygg\PlatformProvider;
 use Illuminate\Support\ServiceProvider;
 use Ygg\Platform\Permission;
 use Ygg\Platform\Kernel as Dashboard;
@@ -57,6 +58,8 @@ class PlatformServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // todo: register project app platformprovider
+        if (class_exists(PlatformProvider::class)) {
+            $this->app->register(PlatformProvider::class);
+        }
     }
 }

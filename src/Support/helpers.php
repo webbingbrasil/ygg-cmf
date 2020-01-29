@@ -5,7 +5,43 @@ use Symfony\Component\Finder\Finder;
 use Illuminate\Support\Str;
 use Ygg\Support\Facades\Dashboard;
 use Ygg\Filters\HttpFilter;
+use Illuminate\Support\Facades\App;
 
+if ( ! function_exists('active')) {
+    /**
+     * Get the active class if an active path is provided.
+     *
+     * @param  mixed $routes
+     * @param  string $class
+     * @param  null  $fallbackClass
+     * @return string|null
+     */
+    function active($routes = null, $class = null, $fallbackClass = null)
+    {
+        if (is_null($routes)) {
+            return App::make('active');
+        }
+
+        $routes = is_array($routes) ? $routes : [$routes];
+
+        return active()->active($routes, $class, $fallbackClass);
+    }
+}
+
+if ( ! function_exists('is_active')) {
+    /**
+     * Determine if any of the provided routes are active.
+     *
+     * @param  mixed  $routes
+     * @return bool
+     */
+    function is_active($routes)
+    {
+        $routes = is_array($routes) ? $routes : func_get_args();
+
+        return active()->isActive($routes);
+    }
+}
 
 if (! function_exists('revert_sort')) {
 
