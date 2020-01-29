@@ -1,17 +1,17 @@
 <?php
 
 
-namespace Ygg\Actions;
+namespace Ygg\Filters;
 
 
 use Ygg\Screens\Repository;
 
-trait WithActions
+trait WithFilters
 {
     /**
-     * @return Action[]
+     * @return Filter[]
      */
-    protected function actions(): array
+    protected function filters(): array
     {
         return [];
     }
@@ -20,10 +20,10 @@ trait WithActions
      * @param Repository $repository
      * @return array
      */
-    private function buildActions(Repository $repository): array
+    private function buildFilters(Repository $repository): array
     {
         return collect($this->actions())
-            ->map(static function (ActionInterface $action) use ($repository) {
+            ->map(static function (FilterInterface $action) use ($repository) {
                 return $action->build($repository);
             })->all();
     }
