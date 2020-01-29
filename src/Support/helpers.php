@@ -7,6 +7,51 @@ use Ygg\Support\Facades\Dashboard;
 use Ygg\Filters\HttpFilter;
 
 
+if (! function_exists('revert_sort')) {
+
+    /**
+     * @param string $property
+     *
+     * @return string
+     */
+    function revert_sort(string $property): string
+    {
+        $filter = new HttpFilter();
+
+        return $filter->revertSort($property);
+    }
+}
+
+if (! function_exists('is_sort')) {
+
+    /**
+     * @param string $property
+     *
+     * @return bool
+     */
+    function is_sort(string $property): bool
+    {
+        $filter = new HttpFilter();
+
+        return $filter->isSort($property);
+    }
+}
+
+if (! function_exists('get_sort')) {
+
+    /**
+     * @param null|string $property
+     *
+     * @return string
+     */
+    function get_sort(?string $property): string
+    {
+        $filter = new HttpFilter();
+
+        return $filter->getSort($property);
+    }
+}
+
 if (! function_exists('get_filter')) {
 
     /**
@@ -38,21 +83,6 @@ if (! function_exists('get_filter_string')) {
         }
 
         return $filter;
-    }
-}
-
-if (! function_exists('revert_sort')) {
-
-    /**
-     * @param string $property
-     *
-     * @return string
-     */
-    function revert_sort(string $property): string
-    {
-        $filter = new HttpFilter();
-
-        return $filter->revertSort($property);
     }
 }
 

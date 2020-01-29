@@ -43,16 +43,28 @@ class Kernel
     private $publicDirectories;
 
     /**
+     * @var Collection
+     */
+    private $globalSearch;
+
+    /**
+     * @var Menu
+     */
+    public $menu;
+
+    /**
      * Dashboard constructor.
      */
     public function __construct()
     {
+        $this->menu = new Menu();
         $this->permission = collect([
             'all'     => collect(),
             'removed' => collect(),
         ]);
         $this->resources = collect();
         $this->publicDirectories = collect();
+        $this->globalSearch = collect();
     }
 
     /**
@@ -220,5 +232,35 @@ class Kernel
     public function getPublicDirectory(): Collection
     {
         return $this->publicDirectories;
+    }
+
+    /**
+     * @param array $value
+     *
+     * @return $this
+     */
+    public function registerGlobalSearch(array $value): self
+    {
+        $this->globalSearch = $this->globalSearch->merge($value);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getGlobalSearch(): Collection
+    {
+        return $this->globalSearch->transform(static function ($value) {
+            return is_object($value) ? $value : new $value();
+        });
+    }
+
+    /**
+     * @return Menu
+     */
+    public function menu(): Menu
+    {
+        return $this->menu;
     }
 }

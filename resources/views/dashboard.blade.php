@@ -11,13 +11,18 @@
         </a>
 
         <a class="header-brand order-last">
-            header
+            @includeFirst([config('platform.template.header'), 'platform::header'])
         </a>
     </div>
 
     <nav class="collapse d-md-block w-full" id="headerMenuCollapse">
+
+        @include('platform::partials.search')
+
+        @includeWhen(true, 'platform::partials.profile')
+
         <ul class="nav flex-column m-b">
-            menu
+            {!! Dashboard::menu()->render('Main') !!}
         </ul>
     </nav>
 
@@ -31,7 +36,7 @@
     </div>
 
     <div class="wrapper m-b m-t d-none d-lg-block w-full">
-        footer
+        @includeFirst([config('platform.template.footer'), 'platform::footer'])
     </div>
 @endsection
 
