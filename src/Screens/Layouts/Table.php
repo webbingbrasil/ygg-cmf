@@ -7,7 +7,7 @@ namespace Ygg\Screens\Layouts;
 use Ygg\Screens\Repository;
 use Ygg\Screens\TD;
 
-class Table extends Base
+abstract class Table extends Base
 {
     /**
      * @var string
@@ -24,20 +24,12 @@ class Table extends Base
 
     /**
      * @param string $target
-     * @param array  $columns
+     * @param array  $layouts
      */
-    public function __construct(string $target, array $columns)
+    public function __construct(string $target, array $layouts)
     {
         $this->target = $target;
-        $this->columns = $columns;
-    }
-
-    /**
-     * @return array
-     */
-    public function columns(): array
-    {
-        return $this->columns;
+        $this->layouts = $layouts;
     }
 
     /**
@@ -55,9 +47,14 @@ class Table extends Base
         });
 
         return view($this->view, [
-            'rows'         => $repository->getContent($this->target),
+            'rows'         => $repository->getContent($this->target, []),
             'columns'      => $columns,
             'slug'         => $this->getSlug(),
         ]);
     }
+
+    /**
+     * @return array
+     */
+    abstract protected function columns(): array;
 }

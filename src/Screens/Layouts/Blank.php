@@ -6,7 +6,7 @@ namespace Ygg\Screens\Layouts;
 
 use Ygg\Screens\Repository;
 
-class Blank extends Base
+abstract class Blank extends Base
 {
     /**
      * @var string

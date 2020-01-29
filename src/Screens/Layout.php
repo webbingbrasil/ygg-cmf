@@ -21,12 +21,28 @@ class Layout
 
     public static function table(string $target, array $columns): Table
     {
-        return new class($target, $columns) extends Table {};
+        return new class($target, $columns) extends Table {
+            /**
+             * @return array
+             */
+            public function columns(): array
+            {
+                return $this->layouts;
+            }
+        };
     }
 
-    public static function rows(array $layouts): Rows
+    public static function rows(array $fields): Rows
     {
-        return new class($layouts) extends Rows {};
+        return new class($fields) extends Rows {
+            /**
+             * @return array
+             */
+            public function fields(): array
+            {
+                return $this->layouts;
+            }
+        };
     }
 
     public static function columns(array $layouts): Columns

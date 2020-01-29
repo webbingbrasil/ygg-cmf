@@ -6,7 +6,7 @@ namespace Ygg\Screens\Layouts;
 
 use Ygg\Screens\Repository;
 
-class View extends Base
+abstract class View extends Base
 {
     /**
      * @var array

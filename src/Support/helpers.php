@@ -4,6 +4,57 @@ use Ygg\Old\Exceptions\Auth\AuthorizationException;
 use Symfony\Component\Finder\Finder;
 use Illuminate\Support\Str;
 use Ygg\Support\Facades\Dashboard;
+use Ygg\Filters\HttpFilter;
+
+
+if (! function_exists('get_filter')) {
+
+    /**
+     * @param string $property
+     *
+     * @return string|array
+     */
+    function get_filter(string $property)
+    {
+        $filter = new HttpFilter();
+
+        return $filter->getFilter($property);
+    }
+}
+
+if (! function_exists('get_filter_string')) {
+
+    /**
+     * @param string $property
+     *
+     * @return string
+     */
+    function get_filter_string(string $property): ?string
+    {
+        $filter = get_filter($property);
+
+        if (is_array($filter)) {
+            return implode(', ', $filter);
+        }
+
+        return $filter;
+    }
+}
+
+if (! function_exists('revert_sort')) {
+
+    /**
+     * @param string $property
+     *
+     * @return string
+     */
+    function revert_sort(string $property): string
+    {
+        $filter = new HttpFilter();
+
+        return $filter->revertSort($property);
+    }
+}
 
 if (! function_exists('ygg_mix')) {
     /**

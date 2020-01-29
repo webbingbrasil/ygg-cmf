@@ -4,32 +4,67 @@
 namespace Ygg\Screens\Layouts;
 
 
+use Ygg\Screens\Form\Builder;
 use Ygg\Screens\Repository;
 
-class Rows extends Base
+abstract class Rows extends Base
 {
     /**
      * @var string
      */
-    protected $view = 'platform::layouts.rows';
+    protected $view = 'platform::layouts.row';
+
+    /**
+     * @var int
+     */
+    protected $with = 100;
 
     /**
      * Base constructor.
      *
      * @param Base[] $layouts
      */
-    public function __construct(array $layouts = [])
+    public function __construct(array $fields = [])
     {
-        $this->layouts = $layouts;
+        $this->layouts = $fields;
     }
 
     /**
      * @param Repository $repository
-     *
-     * @return mixed
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed|void
+     * @throws \Throwable
      */
     public function build(Repository $repository)
     {
-        return $this->buildAsDeep($repository);
+        if (! $this->hasPermission($this, $repository)) {
+            return;
+        }
+
+        $this->query = $repository;
+        $form = new Builder($this->fields(), $repository);
+
+        return view($this->view, [
+            'with' => $this->with,
+            'form' => $form->build(),
+        ]);
     }
+
+    /**
+     * @deprecated
+     *
+     * @param int $with
+     *
+     * @return $this
+     */
+    public function with(int $with = 100): self
+    {
+        $this->with = $with;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    abstract protected function fields(): array;
 }
