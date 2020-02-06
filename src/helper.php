@@ -27,6 +27,21 @@ function ygg_admin_base_url()
 }
 
 /**
+ * @return string
+ */
+function ygg_meta_base_url()
+{
+    $base = ygg_admin_base_url();
+    $path = trim(parse_url(url('/'), PHP_URL_PATH), '/');
+
+    if(empty($path)) {
+        return $base;
+    }
+
+    return $path.'/'.$base;
+}
+
+/**
  * @param array $yggMenu
  * @param string|null $entityKey
  * @return string
