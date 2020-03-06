@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Ygg\Screens;
-
 
 trait CanSee
 {

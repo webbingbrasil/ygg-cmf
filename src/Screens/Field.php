@@ -1,6 +1,6 @@
 <?php
 
-namespace Ygg\Screens\Form;
+namespace Ygg\Screens;
 
 use Closure;
 use Illuminate\Contracts\View\Factory;
@@ -9,7 +9,6 @@ use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Throwable;
-use Ygg\Screens\CanSee;
 use Ygg\Screens\Exceptions\FieldRequiredAttributeException;
 
 /**

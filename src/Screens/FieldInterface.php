@@ -1,6 +1,6 @@
 <?php
 
-namespace Ygg\Screens\Form;
+namespace Ygg\Screens;
 
 interface FieldInterface
 {
