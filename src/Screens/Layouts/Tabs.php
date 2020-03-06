@@ -12,7 +12,7 @@ abstract class Tabs extends Base
     /**
      * @var string
      */
-    public $template = 'platform::layouts.tabs';
+    public $view = 'platform::layouts.tabs';
 
     /**
      * Base constructor.

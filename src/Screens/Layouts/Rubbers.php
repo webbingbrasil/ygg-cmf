@@ -9,7 +9,7 @@ class Rubbers extends Base
     /**
      * @var string
      */
-    protected $template = 'platform::layouts.rubbers';
+    protected $view = 'platform::layouts.rubbers';
 
     /**
      * Base constructor.

@@ -12,7 +12,7 @@ abstract class Accordion extends Base
     /**
      * @var string
      */
-    protected $template = 'platform::layouts.accordion';
+    protected $view = 'platform::layouts.accordion';
 
     /**
      * Base constructor.

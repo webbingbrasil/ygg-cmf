@@ -15,7 +15,7 @@ abstract class Collapse extends Base
     /**
      * @var string
      */
-    protected $template = 'platform::layouts.collapse';
+    protected $view = 'platform::layouts.collapse';
 
     /**
      * @var Repository

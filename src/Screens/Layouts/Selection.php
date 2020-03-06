@@ -24,7 +24,7 @@ abstract class Selection extends Base
     /**
      * @var string
      */
-    public $template = self::TEMPLATE_DROP_DOWN;
+    public $view = self::TEMPLATE_DROP_DOWN;
 
     /**
      * @param Repository $repository
@@ -48,7 +48,7 @@ abstract class Selection extends Base
             return app()->make($filter);
         });
 
-        return view($this->template, [
+        return view($this->view, [
             'filters' => $filters,
             'chunk'   => ceil($count / 4),
         ]);
