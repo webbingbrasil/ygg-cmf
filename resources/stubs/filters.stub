@@ -1,0 +1,46 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Database\Eloquent\Builder;
+use Ygg\Filters\Filter;
+use Ygg\Screen\Field;
+
+class DummyClass extends Filter
+{
+    /**
+     * @var array
+     */
+    public $parameters = [];
+
+    /**
+     * @var bool
+     */
+    public $dashboard = false;
+
+    /**
+     * @return string
+     */
+    public function name(): string
+    {
+        return '';
+    }
+
+    /**
+     * @param Builder $builder
+     *
+     * @return Builder
+     */
+    public function run(Builder $builder): Builder
+    {
+        return $builder;
+    }
+
+    /**
+     * @return Field[]
+     */
+    public function display(): array
+    {
+        //
+    }
+}

@@ -1,0 +1,24 @@
+<?php
+
+namespace DummyNamespace;
+
+use Ygg\Screen\Layouts\Table;
+use Ygg\Screen\TD;
+
+class DummyClass extends Table
+{
+    /**
+     * Data source.
+     *
+     * @var string
+     */
+    protected $target = '';
+
+    /**
+     * @return TD[]
+     */
+    protected function columns(): array
+    {
+        return [];
+    }
+}

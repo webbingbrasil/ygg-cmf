@@ -1,0 +1,17 @@
+<?php
+
+namespace DummyNamespace;
+
+use Ygg\Filters\Filter;
+use Ygg\Screen\Layouts\Selection;
+
+class DummyClass extends Selection
+{
+    /**
+     * @return Filter[]
+     */
+    public function filters(): array
+    {
+        return [];
+    }
+}
