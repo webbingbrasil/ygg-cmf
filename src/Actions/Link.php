@@ -54,7 +54,7 @@ class Link extends Action
      *
      * @return self
      */
-    public static function make(string $name = ''): self
+    public static function make(string $name = ''): ActionInterface
     {
         return self::buildInstance($name);
     }

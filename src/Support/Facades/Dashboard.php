@@ -2,7 +2,7 @@
 
 namespace Ygg\Support\Facades;
 
-use Ygg\Platform\Kernel;
+use Ygg\Platform\Dashboard as PlatformDashboard;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
 use Ygg\Platform\Permission;
@@ -18,8 +18,8 @@ use Ygg\Platform\Permission;
  * @method static self registerPermissions(Permission $permission)
  * @method static Collection getPermission()
  * @method static self removePermission(string $key)
- * @method static self registerResource(string $key, $value)
- * @method static mixed getResource(string $key = null)
+ * @method static self registerAsset(string $key, $value)
+ * @method static mixed getAsset(string $key = null)
  * @method static self addPublicDirectory(string $package, string $path)
  * @method static Collection getPublicDirectory()
  */
@@ -33,6 +33,6 @@ class Dashboard extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return Kernel::class;
+        return PlatformDashboard::class;
     }
 }

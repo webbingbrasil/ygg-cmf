@@ -1,12 +1,14 @@
 <?php
 
-
 namespace Ygg\Platform\Providers;
 
 use App\Ygg\PlatformProvider;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Ygg\Platform\Dashboard;
+use Ygg\Platform\Http\Composers\LockMeComposer;
+use Ygg\Platform\Http\Composers\NotificationsComposer;
 use Ygg\Platform\Permission;
-use Ygg\Platform\Kernel as Dashboard;
 
 class PlatformServiceProvider extends ServiceProvider
 {
@@ -24,10 +26,13 @@ class PlatformServiceProvider extends ServiceProvider
     {
         $this->dashboard = $dashboard;
 
+        View::composer('platform::auth.login', LockMeComposer::class);
+        View::composer('platform::partials.notificationProfile', NotificationsComposer::class);
+
         $this->app->booted(function () {
             $this->dashboard
-                ->registerResource('stylesheets', config('platform.resource.stylesheets', null))
-                ->registerResource('scripts', config('platform.resource.scripts', null))
+                ->registerAsset('stylesheets', config('platform.assets.stylesheets', null))
+                ->registerAsset('scripts', config('platform.assets.scripts', null))
                 ->registerPermissions($this->registerPermissionsMain())
                 ->registerPermissions($this->registerPermissionsSystems())
                 ->addPublicDirectory('ygg', Dashboard::path('public/'));

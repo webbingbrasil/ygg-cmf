@@ -4,8 +4,10 @@ namespace Ygg\Platform\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Ygg\Platform\Http\Middleware\AccessMiddleware;
 use Ygg\Platform\MenuActive;
-use Ygg\Support\Facades\Dashboard;
+use Ygg\Platform\Models\Role;
+use Ygg\Platform\Dashboard;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -18,10 +20,12 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         Route::middlewareGroup('platform', [
-            //AccessMiddleware::class,
+            AccessMiddleware::class,
         ]);
 
         $this->binding();
+
+        require Dashboard::path('routes/breadcrumbs.php');
 
         parent::boot();
     }
@@ -31,6 +35,14 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function binding()
     {
+        Route::bind('roles', static function ($value) {
+            $role = Dashboard::modelClass(Role::class);
+
+            return is_numeric($value)
+                ? $role->where('id', $value)->firstOrFail()
+                : $role->where('slug', $value)->firstOrFail();
+        });
+
         $this->app->bind('active', MenuActive::class);
     }
 

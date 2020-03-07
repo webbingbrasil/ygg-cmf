@@ -22,13 +22,13 @@
     <script src="{{ ygg_mix('/js/vendor.js','ygg') }}" type="text/javascript"></script>
     <script src="{{ ygg_mix('/js/ygg.js','ygg') }}" type="text/javascript"></script>
 
-    @foreach(Dashboard::getResource('stylesheets') as $stylesheet)
+    @foreach(Dashboard::getAsset('stylesheets') as $stylesheet)
         <link rel="stylesheet" href="{{  $stylesheet }}">
     @endforeach
 
     @stack('stylesheets')
 
-    @foreach(Dashboard::getResource('scripts') as $scripts)
+    @foreach(Dashboard::getAsset('scripts') as $scripts)
         <script src="{{  $scripts }}" defer type="text/javascript"></script>
     @endforeach
 </head>
@@ -50,6 +50,7 @@
         </div>
     </div>
 
+@include('platform::partials.toast')
 </div>
 
 @stack('scripts')

@@ -4,7 +4,7 @@
 namespace Ygg\Filters;
 
 
-use Ygg\Screens\Repository;
+use Ygg\Screen\Repository;
 
 interface FilterInterface
 {

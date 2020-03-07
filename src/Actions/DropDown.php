@@ -2,7 +2,7 @@
 
 namespace Ygg\Actions;
 
-use Ygg\Screens\Repository;
+use Ygg\Screen\Repository;
 
 /**
  * Class DropDown.
@@ -38,7 +38,7 @@ class DropDown extends Action
      *
      * @return DropDown
      */
-    public static function make(string $name = ''): self
+    public static function make(string $name = ''): ActionInterface
     {
         return self::buildInstance($name);
     }

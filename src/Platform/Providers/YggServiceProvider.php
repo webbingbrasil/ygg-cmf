@@ -3,11 +3,23 @@
 namespace Ygg\Platform\Providers;
 
 use Illuminate\Foundation\Console\PresetCommand;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Routing\Router;
-use Ygg\Platform\Kernel;
-use Ygg\Support\Facades\Dashboard;
+use Ygg\Platform\Commands\AdminCommand;
+use Ygg\Platform\Commands\ChartCommand;
+use Ygg\Platform\Commands\FilterCommand;
+use Ygg\Platform\Commands\InstallCommand;
+use Ygg\Platform\Commands\LinkCommand;
+use Ygg\Platform\Commands\MetricsCommand;
+use Ygg\Platform\Commands\RowsCommand;
+use Ygg\Platform\Commands\ScreenCommand;
+use Ygg\Platform\Commands\SelectionCommand;
+use Ygg\Platform\Commands\TableCommand;
+use Ygg\Platform\Dashboard;
+use Ygg\Presets\Source;
+use Ygg\Presets\Ygg;
 
 /**
  * Class YggServiceProvider
@@ -19,6 +31,16 @@ class YggServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
+        InstallCommand::class,
+        LinkCommand::class,
+        AdminCommand::class,
+        FilterCommand::class,
+        RowsCommand::class,
+        ScreenCommand::class,
+        TableCommand::class,
+        ChartCommand::class,
+        MetricsCommand::class,
+        SelectionCommand::class,
     ];
 
     public function boot(): void
@@ -80,7 +102,7 @@ class YggServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register orchid.
+     * Register Ygg.
      *
      * @return $this
      */
@@ -113,6 +135,33 @@ class YggServiceProvider extends ServiceProvider
      */
     public function registerBlade(): self
     {
+        Blade::directive('attributes', function (string $attributes) {
+            $part = 'function ($attributes) {
+                foreach ($attributes as $name => $value) {
+                    if (is_null($value)) {
+                        continue;
+                    }
+
+                    if (is_bool($value) && $value === false) {
+                        continue;
+                    }
+                    if (is_bool($value)) {
+                        echo e($name)." ";
+                        continue;
+                    }
+
+                    if (is_array($value)) {
+                        echo json_decode($value)." ";
+                        continue;
+                    }
+
+                    echo e($name) . \'="\' . e($value) . \'"\'." ";
+                }
+            }';
+
+            return "<?php call_user_func($part, $attributes); ?>";
+        });
+
         return $this;
     }
 
@@ -161,8 +210,8 @@ class YggServiceProvider extends ServiceProvider
     {
         $this->commands($this->commands);
 
-        $this->app->singleton(Kernel::class, static function () {
-            return new Kernel();
+        $this->app->singleton(Dashboard::class, static function () {
+            return new Dashboard();
         });
 
         if (! Route::hasMacro('screen')) {
@@ -199,15 +248,15 @@ class YggServiceProvider extends ServiceProvider
             ]);
 
             Source::install();
-            $command->warn('Please run "npm install && npm run dev" to compile your fresh scaffolding.');
+            $command->warn('Please run "yarn install && yarn dev" to compile your fresh scaffolding.');
             $command->info('Ygg scaffolding installed successfully.');
         });
 
         PresetCommand::macro('ygg', static function (PresetCommand $command) {
-            Orchid::install();
-            $command->warn('Please run "npm install && npm run dev" to compile your fresh scaffolding.');
+            Ygg::install();
+            $command->warn('Please run "yarn install && yarn dev" to compile your fresh scaffolding.');
             $command->warn("After that, You need to add this line to AppServiceProvider's register method:");
-            $command->warn("app(\Ygg\Platform\Ygg::class)->registerResource('scripts','/js/dashboard.js');");
+            $command->warn("app(\Ygg\Platform\Ygg::class)->registerAsset('scripts','/js/dashboard.js');");
             $command->info('Ygg scaffolding installed successfully.');
         });
     }

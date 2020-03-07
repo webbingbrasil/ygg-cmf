@@ -2,8 +2,8 @@
 
 namespace Ygg\Actions;
 
-use Ygg\Screens\Field;
-use Ygg\Screens\Repository;
+use Ygg\Screen\Field;
+use Ygg\Screen\Repository;
 use Ygg\Support\Color;
 
 abstract class Action extends Field implements ActionInterface
@@ -84,7 +84,7 @@ abstract class Action extends Field implements ActionInterface
      *
      * @return ModalToggle
      */
-    abstract static function make(string $name = ''): self;
+    abstract static function make(string $name = ''): ActionInterface;
 
     protected static function buildInstance(string $name, callable $beforeRender = null): self
     {

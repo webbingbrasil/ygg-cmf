@@ -10,7 +10,7 @@
             <span class="ml-2">@yield('title')</span>
         </a>
 
-        <a class="header-brand order-last">
+        <a class="header-brand order-last" href="{{route('platform.index')}}">
             @includeFirst([config('platform.template.header'), 'platform::header'])
         </a>
     </div>
@@ -19,7 +19,7 @@
 
         @include('platform::partials.search')
 
-        @includeWhen(true, 'platform::partials.profile')
+        @includeWhen(Auth::check(), 'platform::partials.profile')
 
         <ul class="nav flex-column m-b">
             {!! Dashboard::menu()->render('Main') !!}
@@ -55,8 +55,13 @@
         </div>
     </div>
 
+    @if (Breadcrumbs::exists())
+        {{ Breadcrumbs::view('platform::partials.breadcrumbs') }}
+    @endif
+
     <div class="d-flex">
         <div class="app-content-body" id="app-content-body">
+            @include('platform::partials.alert')
             @yield('content')
         </div>
     </div>

@@ -4,7 +4,7 @@
 namespace Ygg\Filters;
 
 
-use Ygg\Screens\Repository;
+use Ygg\Screen\Repository;
 
 trait WithFilters
 {
@@ -22,9 +22,9 @@ trait WithFilters
      */
     private function buildFilters(Repository $repository): array
     {
-        return collect($this->actions())
-            ->map(static function (FilterInterface $action) use ($repository) {
-                return $action->build($repository);
+        return collect($this->filters())
+            ->map(static function (FilterInterface $filter) use ($repository) {
+                return $filter->build($repository);
             })->all();
     }
 }

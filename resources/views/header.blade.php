@@ -7,7 +7,6 @@
 @endpush
 
 <p class="h2 n-m font-thin v-center">
-    <i class="icon-orchid"></i>
     <span class="m-l d-none d-sm-block">
         Ygg
     <small class="v-top opacity">Platform</small>

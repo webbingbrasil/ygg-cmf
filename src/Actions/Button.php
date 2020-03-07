@@ -46,7 +46,7 @@ class Button extends Action
      *
      * @return Button $name
      */
-    public static function make(string $name = ''): self
+    public static function make(string $name = ''): ActionInterface
     {
         return self::buildInstance($name, function () use ($name) {
             $url = url()->current();

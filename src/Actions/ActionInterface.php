@@ -4,7 +4,7 @@
 namespace Ygg\Actions;
 
 
-use Ygg\Screens\Repository;
+use Ygg\Screen\Repository;
 
 interface ActionInterface
 {

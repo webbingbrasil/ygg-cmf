@@ -47,7 +47,7 @@ class ModalToggle extends Action
      *
      * @return ModalToggle
      */
-    public static function make(string $name = ''): self
+    public static function make(string $name = ''): ActionInterface
     {
         return self::buildInstance($name, function () use ($name) {
             $url = url()->current();
