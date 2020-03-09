@@ -3,7 +3,7 @@
 
 namespace Ygg\Screen\Layouts;
 
-
+use Illuminate\Contracts\View\Factory;
 use Ygg\Screen\Repository;
 use Ygg\Screen\TD;
 
@@ -13,28 +13,21 @@ abstract class Table extends Base
      * @var string
      */
     protected $view = 'platform::layouts.table';
+
     /**
+     * Data source.
+     *
+     * The name of the key to fetch it from the query.
+     * The results of which will be elements of the table.
+     *
      * @var string
      */
     protected $target;
-    /**
-     * @var array
-     */
-    protected $columns;
-
-    /**
-     * @param string $target
-     * @param array  $layouts
-     */
-    public function __construct(string $target, array $layouts)
-    {
-        $this->target = $target;
-        $this->layouts = $layouts;
-    }
 
     /**
      * @param Repository $repository
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed|void
+     *
+     * @return Factory|\Illuminate\View\View|void
      */
     public function build(Repository $repository)
     {
@@ -47,10 +40,46 @@ abstract class Table extends Base
         });
 
         return view($this->view, [
-            'rows'         => $repository->getContent($this->target, []),
+            'rows'         => $repository->getContent($this->target),
             'columns'      => $columns,
+            'iconNotFound' => $this->iconNotFound(),
+            'textNotFound' => $this->textNotFound(),
+            'subNotFound'  => $this->subNotFound(),
+            'striped'      => $this->striped(),
             'slug'         => $this->getSlug(),
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    protected function iconNotFound(): string
+    {
+        return 'icon-table';
+    }
+
+    /**
+     * @return string
+     */
+    protected function textNotFound(): string
+    {
+        return __('There are no records in this view');
+    }
+
+    /**
+     * @return string
+     */
+    protected function subNotFound(): string
+    {
+        return '';
+    }
+
+    /**
+     * @return bool
+     */
+    protected function striped(): bool
+    {
+        return false;
     }
 
     /**

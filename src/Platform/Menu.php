@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Ygg\Platform;
 
 use Illuminate\Support\Collection;
@@ -189,6 +188,6 @@ class Menu
      */
     public function showCountElement(string $slug): bool
     {
-        return $this->container->where('location', $slug)->count() > 0;
+        return $this->container->where('location', $slug)->isNotEmpty();
     }
 }

@@ -45,7 +45,7 @@ class Dashboard
     /**
      * @var Collection
      */
-    private $globalSearch;
+    private $search;
 
     /**
      * @var Menu
@@ -64,7 +64,7 @@ class Dashboard
         ]);
         $this->assets = collect();
         $this->publicDirectories = collect();
-        $this->globalSearch = collect();
+        $this->search = collect();
     }
 
     /**
@@ -284,9 +284,9 @@ class Dashboard
      *
      * @return $this
      */
-    public function registerGlobalSearch(array $value): self
+    public function registerSearch(array $value): self
     {
-        $this->globalSearch = $this->globalSearch->merge($value);
+        $this->search = $this->search->merge($value);
 
         return $this;
     }
@@ -294,9 +294,9 @@ class Dashboard
     /**
      * @return Collection
      */
-    public function getGlobalSearch(): Collection
+    public function getSearch(): Collection
     {
-        return $this->globalSearch->transform(static function ($value) {
+        return $this->search->transform(static function ($value) {
             return is_object($value) ? $value : new $value();
         });
     }

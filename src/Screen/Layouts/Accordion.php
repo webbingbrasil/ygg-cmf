@@ -2,7 +2,7 @@
 
 namespace Ygg\Screen\Layouts;
 
-use Ygg\ScreenS\Repository;
+use Ygg\Screen\Repository;
 
 /**
  * Class Accordion.

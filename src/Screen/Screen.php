@@ -77,11 +77,6 @@ abstract class Screen extends Controller
     /**
      * @return array
      */
-    abstract public function query(): array;
-
-    /**
-     * @return array
-     */
     abstract public function layout(): array;
 
     /**

@@ -19,25 +19,28 @@ class Layout
 {
     use Macroable;
 
-    public static function view(string $view, array $data = []): View
+    /**
+     * @var array
+     */
+    public $layouts = [];
+
+    /**
+     * @param string                                        $view
+     * @param \Illuminate\Contracts\Support\Arrayable|array $data
+     *
+     * @return View
+     */
+    public static function view(string $view, $data = []): View
     {
         return new class($view, $data) extends View {
         };
     }
 
-    public static function table(string $target, array $columns): Table
-    {
-        return new class($target, $columns) extends Table {
-            /**
-             * @return array
-             */
-            public function columns(): array
-            {
-                return $this->layouts;
-            }
-        };
-    }
-
+    /**
+     * @param array $fields
+     *
+     * @return Rows
+     */
     public static function rows(array $fields): Rows
     {
         return new class($fields) extends Rows {
@@ -51,6 +54,40 @@ class Layout
         };
     }
 
+    /**
+     * @param string $target
+     * @param array  $columns
+     *
+     * @return Table
+     */
+    public static function table(string $target, array $columns): Table
+    {
+        return new class($target, $columns) extends Table {
+            /**
+             * @param string $target
+             * @param array  $columns
+             */
+            public function __construct(string $target, array $columns)
+            {
+                $this->target = $target;
+                $this->columns = $columns;
+            }
+
+            /**
+             * @return array
+             */
+            public function columns(): array
+            {
+                return $this->columns;
+            }
+        };
+    }
+
+    /**
+     * @param array $layouts
+     *
+     * @return Columns
+     */
     public static function columns(array $layouts): Columns
     {
         return new class($layouts) extends Columns {
@@ -70,7 +107,7 @@ class Layout
 
     /**
      * @param string $key
-     * @param array $layouts
+     * @param array  $layouts
      *
      * @return Modal
      */
@@ -80,6 +117,11 @@ class Layout
         };
     }
 
+    /**
+     * @param array $layouts
+     *
+     * @return Blank
+     */
     public static function blank(array $layouts): Blank
     {
         return new class($layouts) extends Blank {
@@ -106,7 +148,7 @@ class Layout
 
     /**
      * @param string $template
-     * @param array $layouts
+     * @param array  $layouts
      *
      * @return Wrapper
      */

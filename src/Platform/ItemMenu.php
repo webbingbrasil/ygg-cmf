@@ -5,6 +5,7 @@ namespace Ygg\Platform;
 use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Ygg\Support\Color;
 
 class ItemMenu
 {
@@ -175,7 +176,7 @@ class ItemMenu
     {
         $this->route = route($name, $parameters, $absolute);
 
-        $this->active([$this->route, $this->route.'/*']);
+        $this->active([$name, $this->route.'/*']);
 
         return $this;
     }
@@ -244,14 +245,14 @@ class ItemMenu
 
     /**
      * @param Closure $badge
-     * @param string  $class
+     * @param Color   $color
      *
      * @return ItemMenu
      */
-    public function badge(Closure $badge, string $class = 'bg-primary'): self
+    public function badge(Closure $badge, Color $color = null): self
     {
         $this->badge = [
-            'class' => $class,
+            'class' => $color ?? Color::PRIMARY(),
             'data'  => $badge,
         ];
 

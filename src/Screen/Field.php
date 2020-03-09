@@ -8,8 +8,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
-use Throwable;
 use Ygg\Screen\Exceptions\FieldRequiredAttributeException;
+use Throwable;
 
 /**
  * Class Field.
@@ -181,16 +181,16 @@ class Field implements FieldInterface
             return;
         }
 
-        $this->runBeforeRender()
+        $this
             ->checkRequired()
+            ->modifyName()
+            ->modifyValue()
+            ->runBeforeRender()
             ->translate()
             ->checkError();
 
         $id = $this->getId();
         $this->set('id', $id);
-
-        $this->modifyName();
-        $this->modifyValue();
 
         $errors = $this->getErrorsMessage();
 

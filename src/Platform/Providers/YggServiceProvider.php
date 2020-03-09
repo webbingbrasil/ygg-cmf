@@ -2,7 +2,8 @@
 
 namespace Ygg\Platform\Providers;
 
-use Illuminate\Foundation\Console\PresetCommand;
+use Laravel\Ui\UiCommand;
+use Laravel\Ui\UiServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -28,6 +29,8 @@ use Ygg\Presets\Ygg;
 class YggServiceProvider extends ServiceProvider
 {
     /**
+     * The available command shortname.
+     *
      * @var array
      */
     protected $commands = [
@@ -43,6 +46,9 @@ class YggServiceProvider extends ServiceProvider
         SelectionCommand::class,
     ];
 
+    /**
+     * Boot the application events.
+     */
     public function boot(): void
     {
         $this
@@ -63,12 +69,8 @@ class YggServiceProvider extends ServiceProvider
      */
     protected function registerDatabase(): self
     {
-        $path = Dashboard::path('database/migrations');
-
-        $this->loadMigrationsFrom($path);
-
         $this->publishes([
-            $path => database_path('migrations'),
+            Dashboard::path('database/migrations') => database_path('migrations'),
         ], 'migrations');
 
         return $this;
@@ -86,7 +88,6 @@ class YggServiceProvider extends ServiceProvider
         return $this;
     }
 
-
     /**
      * Register config.
      *
@@ -102,7 +103,7 @@ class YggServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register Ygg.
+     * Register ygg.
      *
      * @return $this
      */
@@ -130,6 +131,7 @@ class YggServiceProvider extends ServiceProvider
 
         return $this;
     }
+
     /**
      * @return $this
      */
@@ -141,7 +143,6 @@ class YggServiceProvider extends ServiceProvider
                     if (is_null($value)) {
                         continue;
                     }
-
                     if (is_bool($value) && $value === false) {
                         continue;
                     }
@@ -149,12 +150,10 @@ class YggServiceProvider extends ServiceProvider
                         echo e($name)." ";
                         continue;
                     }
-
                     if (is_array($value)) {
                         echo json_decode($value)." ";
                         continue;
                     }
-
                     echo e($name) . \'="\' . e($value) . \'"\'." ";
                 }
             }';
@@ -173,6 +172,7 @@ class YggServiceProvider extends ServiceProvider
     public function registerViews(): self
     {
         $path = Dashboard::path('resources/views');
+
         $this->loadViewsFrom($path, 'platform');
 
         $this->publishes([
@@ -200,12 +200,16 @@ class YggServiceProvider extends ServiceProvider
     public function provides(): array
     {
         return [
+            UiServiceProvider::class,
             RouteServiceProvider::class,
             EventServiceProvider::class,
             PlatformServiceProvider::class,
         ];
     }
 
+    /**
+     * Register bindings the service provider.
+     */
     public function register(): void
     {
         $this->commands($this->commands);
@@ -222,25 +226,15 @@ class YggServiceProvider extends ServiceProvider
             });
         }
 
-        if (! defined('YGG_PATH')) {
-            /*
-             * @deprecated
-             *
-             * Get the path to ygg folder.
-             */
-            define('YGG_PATH', Dashboard::path());
-        }
-
-
         $this->mergeConfigFrom(
             Dashboard::path('config/platform.php'), 'platform'
         );
 
-
         /*
-         * Add ygg preset
+         * Adds Ygg source preset to Laravel's default preset command.
          */
-        PresetCommand::macro('ygg-source', static function (PresetCommand $command) {
+
+        UiCommand::macro('ygg-source', static function (UiCommand $command) {
             $command->call('vendor:publish', [
                 '--provider' => self::class,
                 '--tag'      => 'ygg-assets',
@@ -248,15 +242,18 @@ class YggServiceProvider extends ServiceProvider
             ]);
 
             Source::install();
-            $command->warn('Please run "yarn install && yarn dev" to compile your fresh scaffolding.');
+            $command->warn('Please run "npm install && npm run dev" to compile your fresh scaffolding.');
             $command->info('Ygg scaffolding installed successfully.');
         });
 
-        PresetCommand::macro('ygg', static function (PresetCommand $command) {
+        /*
+         * Adds Ygg preset to Laravel's default preset command.
+         */
+        UiCommand::macro('ygg', static function (UiCommand $command) {
             Ygg::install();
-            $command->warn('Please run "yarn install && yarn dev" to compile your fresh scaffolding.');
+            $command->warn('Please run "npm install && npm run dev" to compile your fresh scaffolding.');
             $command->warn("After that, You need to add this line to AppServiceProvider's register method:");
-            $command->warn("app(\Ygg\Platform\Ygg::class)->registerAsset('scripts','/js/dashboard.js');");
+            $command->warn("app(\Ygg\Platform\Dashboard::class)->registerResource('scripts','/js/dashboard.js');");
             $command->info('Ygg scaffolding installed successfully.');
         });
     }

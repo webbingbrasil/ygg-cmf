@@ -2,13 +2,12 @@
 
 namespace Ygg\Screen\Form;
 
-use Illuminate\Contracts\View\Factory;
-use Illuminate\View\View;
+use Closure;
+use Illuminate\Database\Eloquent\Model;
+use Throwable;
 use Ygg\Screen\Field;
 use Ygg\Screen\FieldInterface;
 use Ygg\Screen\Repository;
-use Closure;
-use Throwable;
 
 class Builder
 {
@@ -22,7 +21,7 @@ class Builder
     /**
      * Transmitted values for display in a form.
      *
-     * @var Repository
+     * @var Model|Repository
      */
     public $data;
 
@@ -49,14 +48,40 @@ class Builder
 
     /**
      * Builder constructor.
-     * @param array $fields
-     * @param null $data
+     *
+     * @param FieldInterface[] $fields
+     * @param Repository      $data
      */
     public function __construct(array $fields, $data = null)
     {
         $this->fields = $fields;
         $this->data = $data ?? new Repository();
     }
+
+    /**
+     * @param string $language
+     *
+     * @return $this
+     */
+    public function setLanguage(string $language = null)
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * @param string $prefix
+     *
+     * @return $this
+     */
+    public function setPrefix(string $prefix = null): self
+    {
+        $this->prefix = $prefix;
+
+        return $this;
+    }
+
     /**
      * Generate a ready-made html form for display to the user.
      *
@@ -78,7 +103,7 @@ class Builder
     /**
      * @param Field[] $groupField
      *
-     * @throws Throwable
+     * @throws \Throwable
      *
      * @return array|string
      */
@@ -94,9 +119,13 @@ class Builder
     }
 
     /**
+     * Render field for forms.
+     *
      * @param Field $field
-     * @return Factory|View|mixed
+     *
      * @throws Throwable
+     *
+     * @return mixed
      */
     private function render(Field $field)
     {

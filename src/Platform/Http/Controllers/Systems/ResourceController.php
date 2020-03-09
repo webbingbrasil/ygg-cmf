@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Ygg\Platform\Http\Controllers\Systems;
 
 use Mimey\MimeTypes;
-use Ygg\Platform\Dashboard as Dashboard;
+use Ygg\Platform\Dashboard;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
