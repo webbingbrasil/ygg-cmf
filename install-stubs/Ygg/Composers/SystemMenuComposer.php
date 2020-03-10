@@ -51,7 +51,7 @@ class SystemMenuComposer
                     ->route('platform.systems.roles')
                     ->permission('platform.systems.roles')
                     ->sort(1000)
-                    ->title(__('A Role defines a set of tasks a user assigned the role is allowed to perform. '))
+                    ->title(__('A Role defines a set of tasks a user assigned the role is allowed to perform.'))
             );
     }
 }

@@ -6,9 +6,12 @@ namespace Ygg\Screen\Layouts;
 use Illuminate\Contracts\View\Factory;
 use Ygg\Screen\Repository;
 use Ygg\Screen\TD;
+use Ygg\Screen\WithContextualColors;
 
 abstract class Table extends Base
 {
+    use WithContextualColors;
+
     /**
      * @var string
      */
@@ -47,7 +50,22 @@ abstract class Table extends Base
             'subNotFound'  => $this->subNotFound(),
             'striped'      => $this->striped(),
             'slug'         => $this->getSlug(),
+            'rowAttributes' => $this->getRowAttributes()
         ]);
+    }
+
+    protected function getRowAttributes()
+    {
+        return function ($source) {
+            return [
+                'class' => implode(' ', $this->buildContextClass($source))
+            ];
+        };
+    }
+
+    protected function rowStyle($source)
+    {
+        return '';
     }
 
     /**

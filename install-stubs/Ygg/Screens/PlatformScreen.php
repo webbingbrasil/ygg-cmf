@@ -41,7 +41,7 @@ class PlatformScreen extends Screen
      *
      * @return Action[]
      */
-    public function commandBar(): array
+    public function actions(): array
     {
         return [
             Link::make('Website')

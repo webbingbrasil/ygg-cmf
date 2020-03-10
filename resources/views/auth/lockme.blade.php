@@ -1,16 +1,16 @@
 <div class="form-group v-center">
     <span class="thumb-sm avatar mr-3">
-        <img src="{{ $lockUser->getAvatar() }}" class="b bg-light" alt="test">
+        <img src="{{ $lockUser->presenter()->image() }}" class="b bg-light" alt="test">
     </span>
     <span style="width:125px;font-size: 0.85em;">
-        <span class="text-ellipsis">{{ $lockUser->getNameTitle() }}</span>
-        <span class="text-muted d-block text-ellipsis">{{ $lockUser->getSubTitle() }}</span>
+        <span class="text-ellipsis">{{ $lockUser->presenter()->title() }}</span>
+        <span class="text-muted d-block text-ellipsis">{{ $lockUser->presenter()->subTitle() }}</span>
     </span>
     <input type="hidden" name="email" required value="{{ $lockUser->email }}">
 </div>
 
 @error('email')
-    <span class="d-block invalid-feedback text-danger">
+<span class="d-block invalid-feedback text-danger">
             {{ $errors->first('email') }}
     </span>
 @enderror
@@ -36,7 +36,7 @@
     </div>
 
     @error('password')
-        <span class="invalid-feedback text-danger">
+    <span class="invalid-feedback text-danger">
             {{ $errors->first('password') }}
         </span>
     @enderror

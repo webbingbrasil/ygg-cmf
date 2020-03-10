@@ -286,7 +286,7 @@ class TD
      *
      * @return $this
      */
-    public function canHide($hidden = false): self
+    public function canHide($hidden = true): self
     {
         $this->allowUserHidden = $hidden;
 

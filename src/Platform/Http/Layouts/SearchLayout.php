@@ -20,7 +20,7 @@ class SearchLayout extends Rows
      */
     public function canSee(Repository $query): bool
     {
-        return Dashboard::getGlobalSearch()->count() > 0;
+        return Dashboard::getSearch()->count() > 0;
     }
 
     /**
@@ -32,7 +32,7 @@ class SearchLayout extends Rows
     {
         $searchModel = $this->query->get('model');
 
-        $layouts = Dashboard::getGlobalSearch()
+        $layouts = Dashboard::getSearch()
             ->map(static function (Model $model) use ($searchModel) {
                 $radio = Radio::make('type')
                     ->value(get_class($model))

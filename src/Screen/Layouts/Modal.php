@@ -55,7 +55,7 @@ class Modal extends Base
             'key'        => $key,
             'title'      => $key,
             'turbolinks' => true,
-            'commandBar' => [],
+            'actions' => [],
         ];
 
         $this->layouts = $layouts;

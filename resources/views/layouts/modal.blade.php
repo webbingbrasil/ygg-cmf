@@ -42,7 +42,7 @@
                             {{ $close }}
                         </button>
 
-                        @empty($commandBar)
+                        @empty($actions)
                             <button type="submit"
                                     id="submit-modal-{{$key}}"
                                     data-turbolinks="{{ var_export($turbolinks) }}"
@@ -50,7 +50,7 @@
                                 {{ $apply }}
                             </button>
                         @else
-                            {!! $commandBar !!}
+                            {!! $actions !!}
                         @endempty
 
 

@@ -95,10 +95,10 @@ abstract class Base implements JsonSerializable
             ->map(static function ($layout) {
                 return is_object($layout) ? $layout : app()->make($layout);
             })
-            ->filter(function (self $layout) use ($repository) {
+            ->filter(function ($layout) use ($repository) {
                 return $this->hasPermission($layout, $repository);
             })
-            ->reduce(static function (array $build, self $layout) use ($key, $repository) {
+            ->reduce(static function (array $build, $layout) use ($key, $repository) {
                 $build[$key][] = $layout->build($repository);
 
                 return $build;
@@ -132,9 +132,9 @@ abstract class Base implements JsonSerializable
         return true;
     }
 
-    protected function hasPermission(self $layout, Repository $repository): bool
+    protected function hasPermission($layout, Repository $repository): bool
     {
-        return method_exists($layout, 'canSee') && $layout->canSee($repository);
+        return method_exists($layout, 'canSee') ? $layout->canSee($repository) : true;
     }
 
     public function getSlug(): string

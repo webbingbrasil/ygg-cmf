@@ -90,6 +90,11 @@ abstract class Filter
         });
     }
 
+    public function build(): string
+    {
+        return $this->render();
+    }
+
     /**
      * @return int
      */
@@ -107,14 +112,22 @@ abstract class Filter
     }
 
     /**
+     * @param array $values
+     * @return string
+     */
+    protected function displayValue(array $values): string
+    {
+        return collect($values)->flatten()->implode(static::$delimiter);
+    }
+
+    /**
      * @return string
      */
     public function value(): string
     {
         $params = $this->request->only($this->parameters, []);
-        $values = collect($params)->flatten()->implode(static::$delimiter);
 
-        return $this->name().': '.$values;
+        return $this->name().': '.$this->displayValue($params);
     }
 
     /**

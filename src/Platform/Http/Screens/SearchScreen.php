@@ -76,7 +76,7 @@ class SearchScreen extends Screen
     /**
      * @return array
      */
-    public function commandBar(): array
+    public function actions(): array
     {
         return [
             Button::make(__('Apply'))

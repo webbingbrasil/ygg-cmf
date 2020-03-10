@@ -5,15 +5,15 @@
     <div class="w-full table-responsive-lg">
         <table class="table">
             <thead>
-                <tr>
-                    @foreach($columns as $column)
-                        {!! $column->buildTh() !!}
-                    @endforeach
-                </tr>
+            <tr>
+                @foreach($columns as $column)
+                    {!! $column->buildTh() !!}
+                @endforeach
+            </tr>
             </thead>
             <tbody>
             @foreach($rows as $source)
-                <tr>
+                <tr @attributes($rowAttributes($source))>
                     @foreach($columns as $column)
                         {!! $column->buildTd($source) !!}
                     @endforeach
