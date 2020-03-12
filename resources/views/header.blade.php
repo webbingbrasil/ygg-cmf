@@ -6,7 +6,7 @@
     >
 @endpush
 
-<p class="h2 n-m font-thin v-center">
+<p class="h2 n-m font-thin">
     <span class="m-l d-none d-sm-block">
         Ygg
     <small class="v-top opacity">Platform</small>

@@ -20,7 +20,7 @@
 
 @section('content')
 
-    <div class="admin-wrapper padder-v">
+    <div class="admin-wrapper bg-white padder-v">
             <div class="row">
 
                 @php

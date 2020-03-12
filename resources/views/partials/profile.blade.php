@@ -1,4 +1,4 @@
-<div class="wrapper v-center">
+<div class="wrapper b-t b-b v-center">
     <div class="dropdown col no-padder">
         <a href="#" class="nav-link p-0 v-center" data-toggle="dropdown">
                     <span class="thumb-sm avatar mr-3">

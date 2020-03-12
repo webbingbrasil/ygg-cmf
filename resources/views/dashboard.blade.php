@@ -2,7 +2,7 @@
 
 @section('body-left')
 
-    <div class="d-sm-flex d-md-block wrapper mt-md-4 w-full v-center">
+    <div class="d-sm-flex d-md-block wrapper bg-mh w-full v-center">
         <a href="#" class="header-toggler d-md-none mr-auto order-first"
            data-toggle="collapse"
            data-target="#headerMenuCollapse">
@@ -41,11 +41,11 @@
 @endsection
 
 @section('body-right')
-    <div class="wrapper mt-md-4 @hasSection('navbar') @else d-none d-md-block @endif">
+    <div class="wrapper bg-nh @hasSection('navbar') @else d-none d-md-block @endif">
         <div class="v-md-center">
             <div class="d-none d-md-block col-xs-12 col-md-4 no-padder">
-                <h1 class="m-n font-thin h3 text-black">@yield('title')</h1>
-                <small class="text-muted text-ellipsis" title="@yield('description')">@yield('description')</small>
+                <h1 class="m-n font-thin h3 text-white">@yield('title')</h1>
+                <small class="text-white text-ellipsis" title="@yield('description')">@yield('description')</small>
             </div>
             <div class="col-xs-12 col-md-8 no-padder">
                 <ul class="nav command-bar justify-content-sm-end justify-content-start v-center">
@@ -60,7 +60,7 @@
     @endif
 
     <div class="d-flex">
-        <div class="app-content-body" id="app-content-body">
+        <div class="app-content-body wrapper" id="app-content-body">
             @include('platform::partials.alert')
             @yield('content')
         </div>

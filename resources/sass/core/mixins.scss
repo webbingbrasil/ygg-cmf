@@ -428,3 +428,25 @@
   }
   // Fallback
 }
+
+@mixin list-row-variant($state, $background, $border: null) {
+    &.row-#{$state} {
+        background-color: $background;
+
+        @if $border != null {
+            border-color: $border;
+        }
+    }
+
+    // Hover states for `.table-hover`
+    // Note: this is not available for cells or rows within `thead` or `tfoot`.
+    &.row-hover {
+        $hover-background: darken($background, 5%);
+
+        &.row-#{$state} {
+            @include hover {
+                background-color: $hover-background;
+            }
+        }
+    }
+}

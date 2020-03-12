@@ -25,16 +25,16 @@ trait WithContextualColors
      * @var array
      */
     static protected $contextClasses = [
-        'active' => ['bg-active'],
-        'default' => ['bg-default'],
-        'primary' => ['bg-primary'],
-        'secondary' => ['bg-secondary'],
-        'success' => ['bg-success'],
-        'danger' => ['bg-danger'],
-        'warning' => ['bg-warning'],
-        'info' => ['bg-info'],
-        'light' => ['bg-light'],
-        'dark' => ['bg-dark'],
+        'active' => ['row-active'],
+        'default' => ['row-default'],
+        'primary' => ['row-primary'],
+        'secondary' => ['row-secondary'],
+        'success' => ['row-success'],
+        'danger' => ['row-danger'],
+        'warning' => ['row-warning'],
+        'info' => ['row-info'],
+        'light' => ['row-light'],
+        'dark' => ['row-dark'],
     ];
     /**
      * @var array

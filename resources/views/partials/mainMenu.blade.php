@@ -5,7 +5,7 @@
         <div class="hidden-folded padder mt-1 mb-1 text-muted text-xs m-l">{{ __($title) }}</div>
     </li>
 @endisset
-<li class="nav-item @isset($active) {{active($active)}} @endisset">
+<li class="nav-item b-b pt-2 pb-2 @isset($active) {{active($active)}} @endisset">
     <a class="nav-link"
        @if (!empty($childs))
        href="#menu-{{$slug}}" data-toggle="collapse"

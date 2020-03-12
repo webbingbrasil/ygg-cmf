@@ -7,6 +7,12 @@ $base-img-url: '../img/';
 $icon-font-path: '../fonts/';
 $ygg-font-path: '../fonts';
 
+$ui-01: #FFFFFF;
+$ui-02: #EBF0F7;
+$ui-03: #DAE3EE;
+$ui-04: #68829e;
+$text-01: #152935;
+
 /*
 $grid-breakpoints: (
         xs: 600px,
@@ -28,11 +34,11 @@ $container-max-widths: (
 
 
 // Colors
-$ygg-color: #007bff;//#ac5ca0;
+$ygg-color: #314255;//#ac5ca0;
 
 $white : #ffffff;
 $black : #000000;
-$gray-100 : #f8f9fa;
+$gray-100 : #dae3ee;
 $gray-200 : #e9ecef;
 $gray-300 : #dee2e6;
 $gray-400 : #ced4da;
@@ -76,7 +82,7 @@ $dark:          #212529 !default;
 
 $brand-grey-light : mix($brand-grey, #ffffff, 10%);
 
-$body-bg : #f6f8fa;//lighten($brand-light, 1%);
+$body-bg : #ebf0f7;//lighten($brand-light, 1%);
 $text-color : #58666e;
 $text-muted : lighten($text-color, 25%);
 
@@ -96,8 +102,8 @@ $border-color : darken($brand-light, 5%);
 // Buttons
 // -------------------------
 
-$btn-default-color : $text-color;
-$btn-default-bg : lighten($brand-light, 5%);
+$btn-default-color : $brand-white;//$text-color;
+$btn-default-bg : $primary;//lighten($brand-light, 5%);
 $btn-default-border : $border-color;
 $btn-border-radius : $border-radius-base;
 

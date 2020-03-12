@@ -1,51 +1,59 @@
 const mix = require('laravel-mix');
-const webpack = require('webpack');
-const path = require('path');
 
-mix.js('resources/assets/js/ygg.js', 'resources/assets/dist/ygg.js')
-    .js('resources/assets/js/client-api.js', 'resources/assets/dist/client-api.js')
-    .sass('resources/assets/sass/ygg.scss', 'resources/assets/dist/ygg.css')
-    .sass('resources/assets/sass/cms.scss', 'resources/assets/dist/ygg-cms.css')
-    .copy('node_modules/element-ui/packages/theme-chalk/lib/fonts', 'resources/assets/dist/fonts')
-    .copy('node_modules/font-awesome/fonts','resources/assets/dist/fonts')
-    .copy('node_modules/leaflet/dist/images/*','resources/assets/dist/images')
-    .options({
-        processCssUrls: false
-    })
-    .version()
-    .extract()
-    .setPublicPath('resources/assets/dist')
-    .webpackConfig({
-        plugins: [
-            new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-            new webpack.NormalModuleReplacementPlugin(/element-ui[\/\\]lib[\/\\]locale[\/\\]lang[\/\\]zh-CN/, 'element-ui/lib/locale/lang/en'),
-            // new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
-        ],
-        // transpile vue-clip package
-        module: {
-            rules: [
-                {
-                    test: /\.js$/,
-                    include: [
-                        path.resolve(__dirname, 'node_modules/vue-clip'),
-                        path.resolve(__dirname, 'node_modules/vue2-timepicker')
-                    ],
-                    use: [
-                        {
-                            loader: 'babel-loader',
-                            options: Config.babel()
-                        }
-                    ]
-                }
-            ]
+/*
+ |--------------------------------------------------------------------------
+ | Mix Asset Management
+ |--------------------------------------------------------------------------
+ |
+ | Mix provides a clean, fluent API for defining some Webpack build steps
+ | for your Laravel application. By default, we are compiling the Sass
+ | file for the application as well as bundling up all the JS files.
+ |
+ */
+
+if (!mix.inProduction()) {
+    mix
+        .webpackConfig({
+            devtool: 'source-map',
+        })
+        .sourceMaps();
+} else {
+    mix.options({
+        clearConsole: true,
+        terser: {
+            terserOptions: {
+                compress: {
+                    drop_console: true,
+                },
+            },
         },
-        resolve: {
-            alias: {
-                // resolve core-js@2.0 polyfills (now 3.0)
-                'core-js/fn': 'core-js/features'
-            }
-        }
     });
+}
 
-
-
+mix
+    .copy('resources/fonts/', 'public/fonts')
+    .copyDirectory('./node_modules/tinymce/plugins', 'public/js/tinymce/plugins')
+    .copyDirectory('./node_modules/tinymce/themes', 'public/js/tinymce/themes')
+    .copyDirectory('./node_modules/tinymce/skins', 'public/js/tinymce/skins')
+    .sass('resources/sass/app.scss', 'css/ygg.css', {
+        implementation: require('node-sass'),
+    })
+    .options({
+        processCssUrls: false,
+    })
+    .js('resources/js/app.js', 'js/ygg.js')
+    .extract([
+        'stimulus', 'turbolinks', 'stimulus/webpack-helpers',
+        'jquery', 'popper.js', 'bootstrap',
+        'dropzone', 'select2', 'cropperjs', 'frappe-charts', 'inputmask',
+        'simplemde', 'tinymce', 'axios', 'leaflet', 'codeflask', 'stimulus-flatpickr',
+        'flatpickr', 'quill', 'codemirror', 'typo-js', 'sortablejs',
+    ])
+    .autoload({
+        jquery: [
+            '$', 'window.jQuery', 'jQuery', 'jquery',
+            'bootstrap', 'select2',
+        ],
+    })
+    .setPublicPath('public')
+    .version();

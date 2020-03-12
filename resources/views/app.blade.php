@@ -37,14 +37,16 @@
 
 
 <div class="app row m-n" id="app" data-controller="@yield('controller')" @yield('controller-data')>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="aside col-xs-12 col-md-2 offset-xxl-0 col-xl-2 col-xxl-3 no-padder bg-dark">
+            @if(!isset($displaySidebar) || $displaySidebar)
+            <div class="aside col-xs-12 col-md-2 offset-xxl-0 col-xl-2 col-xxl-3 no-padder bg-white shadow-sm">
                 <div class="d-md-flex align-items-start flex-column d-sm-block h-full">
                     @yield('body-left')
                 </div>
             </div>
-            <div class="col-md col-xl col-xxl-9 bg-white b-r box-shadow-lg no-padder min-vh-100">
+            @endif
+            <div class="col-md col-xl col-xxl-9 no-padder min-vh-100">
                 @yield('body-right')
             </div>
         </div>

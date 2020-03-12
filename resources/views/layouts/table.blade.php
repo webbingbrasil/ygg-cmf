@@ -3,13 +3,13 @@
      data-layouts--table-slug="{{$slug}}"
 >
     <div class="w-full table-responsive-lg">
-        <table class="table">
+        <table class="table bg-white">
             <thead>
-            <tr>
-                @foreach($columns as $column)
-                    {!! $column->buildTh() !!}
-                @endforeach
-            </tr>
+                <tr>
+                    @foreach($columns as $column)
+                        {!! $column->buildTh() !!}
+                    @endforeach
+                </tr>
             </thead>
             <tbody>
             @foreach($rows as $source)

@@ -1,4 +1,4 @@
-<div class="row admin-wrapper b-t">
+<div class="row admin-wrapper bg-white b-t">
     <div class="wrapper-lg">
         <div class="mb-5">
             <h1 class="text-dark font-thin m-b-sm"><i class="icon-directions mr-2"></i> Get Started</h1>
