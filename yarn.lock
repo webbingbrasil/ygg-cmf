@@ -6903,11 +6903,6 @@ optionator@^0.8.3:
     type-check "~0.3.2"
     word-wrap "~1.2.3"
 
-orchid-icons@^1.0.10:
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/orchid-icons/-/orchid-icons-1.0.10.tgz#07401617b0f979603cb284012d0e192ba33519db"
-  integrity sha512-Dl4ijLo10dQO21YeQ02WZQqjyn/jSU/FETPV5R+LfYETwTV7mv1jh1g14xG7LiaP0DCVtN+QqLUe+3LSrsV/IA==
-
 original@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/original/-/original-1.0.2.tgz#e442a61cffe1c5fd20a65f3261c26663b303f25f"
