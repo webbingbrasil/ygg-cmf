@@ -150,11 +150,12 @@ if (! function_exists('ygg_mix')) {
             }
         }
 
-        throw_if($manifest === null, \Exception::class, 'mix-manifest.json file not found');
+        $mixPath = $file;
+        if($manifest !== null) {
+            $manifest = json_decode($manifest->getContents(), true);
 
-        $manifest = json_decode($manifest->getContents(), true);
-
-        $mixPath = $manifest[$file];
+            $mixPath = $manifest[$file];
+        }
 
         if (Str::startsWith($mixPath, '/')) {
             $mixPath = ltrim($mixPath, '/');
