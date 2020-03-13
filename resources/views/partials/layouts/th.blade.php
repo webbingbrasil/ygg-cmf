@@ -1,4 +1,4 @@
-<th width="{{$width}}" class="text-{{$align}}" data-column="{{ $slug }}">
+<th width="{{$width}}" style="{{$style}}" class="text-{{$align}}" data-column="{{ $slug }}">
     <div>
         @if($sort)
             <a href="{{ $sortUrl }}"

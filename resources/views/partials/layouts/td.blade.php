@@ -1,6 +1,12 @@
-<td class="text-{{$align}}" data-column="{{ $slug }}">
+<td class="text-{{$align}}" style="{{$style}}"  data-column="{{ $slug }}">
     @isset($render)
-        {!! $value !!}
+        @if(is_array($value))
+            @foreach($value as $item)
+                {!! $item !!}
+            @endforeach
+        @else
+            {!! $value !!}
+        @endif
     @else
         {{ $value }}
     @endisset

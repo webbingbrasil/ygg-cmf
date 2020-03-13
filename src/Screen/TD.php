@@ -42,6 +42,11 @@ class TD
     /**
      * @var string
      */
+    protected $style;
+
+    /**
+     * @var string
+     */
     protected $filter;
 
     /**
@@ -120,6 +125,18 @@ class TD
     }
 
     /**
+     * @param string $width
+     *
+     * @return $this
+     */
+    public function style(string $style): self
+    {
+        $this->style = $style;
+
+        return $this;
+    }
+
+    /**
      * @param string $filter
      *
      * @return $this
@@ -186,6 +203,7 @@ class TD
     {
         return view('platform::partials.layouts.th', [
             'width' => $this->width,
+            'style' => $this->style,
             'align' => $this->align,
             'sort' => $this->sort,
             'sortUrl' => $this->buildSortUrl(),
@@ -208,6 +226,7 @@ class TD
     {
         return view('platform::partials.layouts.td', [
             'align' => $this->align,
+            'style' => $this->style,
             'value' => $this->getTdValue($data),
             'render' => $this->render,
             'slug' => $this->sluggable(),
