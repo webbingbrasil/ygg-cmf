@@ -14,6 +14,13 @@ abstract class Columns extends Base
     protected $view = 'platform::layouts.columns';
 
     /**
+     * @var array
+     */
+    protected $variables = [
+        'wrapper' => true
+    ];
+
+    /**
      * Base constructor.
      *
      * @param Base[] $layouts
@@ -31,5 +38,14 @@ abstract class Columns extends Base
     public function build(Repository $repository)
     {
         return $this->buildAsDeep($repository);
+    }
+
+    /**
+     * @return $this
+     */
+    public function notWrapper()
+    {
+        $this->variables['wrapper'] = false;
+        return $this;
     }
 }

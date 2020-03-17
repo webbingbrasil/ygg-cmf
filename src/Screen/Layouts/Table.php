@@ -4,6 +4,7 @@
 namespace Ygg\Screen\Layouts;
 
 use Illuminate\Contracts\View\Factory;
+use Ygg\Screen\Layout;
 use Ygg\Screen\Repository;
 use Ygg\Screen\TD;
 use Ygg\Screen\WithContextualColors;
@@ -42,9 +43,14 @@ abstract class Table extends Base
             return $column->isSee();
         });
 
+        $filters = Layout::blank([
+            $this->filters()
+        ])->build($repository);
+
         return view($this->view, [
             'rows'         => $repository->getContent($this->target),
             'columns'      => $columns,
+            'filters'      => $filters,
             'iconNotFound' => $this->iconNotFound(),
             'textNotFound' => $this->textNotFound(),
             'subNotFound'  => $this->subNotFound(),
@@ -52,6 +58,11 @@ abstract class Table extends Base
             'slug'         => $this->getSlug(),
             'rowAttributes' => $this->getRowAttributes()
         ]);
+    }
+
+    protected function filters()
+    {
+        return [];
     }
 
     protected function getRowAttributes()
