@@ -72,7 +72,6 @@ class UserListScreen extends Screen
     public function layout(): array
     {
         return [
-            UserFiltersLayout::class,
             UserListLayout::class,
 
             Layout::modal('oneAsyncModal', [

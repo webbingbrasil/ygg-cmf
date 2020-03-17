@@ -17,6 +17,13 @@ class UserListLayout extends Table
      */
     public $target = 'users';
 
+    protected function filters()
+    {
+        return [
+            UserFiltersLayout::class,
+        ];
+    }
+
     /**
      * @return array
      */
