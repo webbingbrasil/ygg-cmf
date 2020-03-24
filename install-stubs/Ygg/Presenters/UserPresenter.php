@@ -28,7 +28,7 @@ class UserPresenter extends Presenter implements Searchable
      */
     public function subTitle(): string
     {
-        return 'Administrator';
+        return $this->entity->getRoles()->pluck('name')->join(', ');
     }
 
     /**

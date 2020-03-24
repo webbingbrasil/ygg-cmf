@@ -40,19 +40,19 @@
     <div class="container-fluid">
         <div class="row">
             @if(!isset($displaySidebar) || $displaySidebar)
-            <div class="aside col-xs-12 col-md-2 offset-xxl-0 col-xl-2 col-xxl-3 no-padder bg-white shadow-sm">
-                <div class="d-md-flex align-items-start flex-column d-sm-block h-full">
-                    @yield('body-left')
+                <div class="aside col-xs-12 col-md-2 offset-xxl-0 col-xl-2 col-xxl-3 no-padder bg-white shadow-sm">
+                    <div class="d-md-flex align-items-start flex-column d-sm-block h-full">
+                        @yield('body-left')
+                    </div>
                 </div>
-            </div>
             @endif
-            <div class="col-md col-xl col-xxl-9 no-padder min-vh-100">
+            <div class="col-md-10 col-xl-10 col-xxl-9 no-padder min-vh-100">
                 @yield('body-right')
             </div>
         </div>
     </div>
 
-@include('platform::partials.toast')
+    @include('platform::partials.toast')
 </div>
 
 @stack('scripts')
