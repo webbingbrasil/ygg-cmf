@@ -14,6 +14,8 @@ use Ygg\Platform\Permission;
  * @method static string prefix(string $path = '')
  * @method static void configure(array $options)
  * @method static mixed option(string $key, $default = null)
+ * @method static modelClass(string $key, string $default = null)
+ * @method static model(string $key, string $default = null)
  * @method static string path(string $path = '')
  * @method static self registerPermissions(Permission $permission)
  * @method static Collection getPermission()
