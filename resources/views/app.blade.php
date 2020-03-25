@@ -45,15 +45,17 @@
                         @yield('body-left')
                     </div>
                 </div>
-            @endif
-            <div class="col-md-10 col-xl-10 col-xxl-9 no-padder min-vh-100">
-                @yield('body-right')
-            </div>
+                <div class="col-md-10 col-xxl-9 no-padder min-vh-100">
+                    @else
+                        <div class="col-12 no-padder min-vh-100">
+                            @endif
+                            @yield('body-right')
+                        </div>
+                </div>
         </div>
-    </div>
 
-    @include('platform::partials.toast')
-</div>
+        @include('platform::partials.toast')
+    </div>
 
 @stack('scripts')
 
