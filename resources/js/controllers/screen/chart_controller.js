@@ -7,7 +7,6 @@ export default class extends Controller {
      *
      */
     connect() {
-        let formatTooltip = this.data.get('formatTooltip');
         let regions = JSON.parse(this.data.get('regions'));
         let markers = JSON.parse(this.data.get('markers'));
 
@@ -34,12 +33,19 @@ export default class extends Controller {
             barOptions: JSON.parse(this.data.get('barOptions')),
             lineOptions: JSON.parse(this.data.get('lineOptions')),
             tooltipOptions: {
-                formatTooltipX: d => formatTooltip.replace('{d}', d).toUpperCase(),
-                formatTooltipY: d => formatTooltip.replace('{d}', d),
+                formatTooltipX: d => this.formatTooltip(d, this.data.get('formatTooltipX')).toUpperCase(),
+                formatTooltipY: d => this.formatTooltip(d, this.data.get('formatTooltipY')),
             }
         });
 
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', this.drawEvent());
+    }
+
+    formatTooltip(value, format) {
+        if (value === undefined) {
+            value = 0;
+        }
+        return format.replace('{d}', value)
     }
 
     /**

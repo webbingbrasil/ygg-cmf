@@ -12,7 +12,8 @@
     data-screen--chart-line-options="{{$lineOptions}}"
     data-screen--chart-markers="{{$markers}}"
     data-screen--chart-regions="{{$regions}}"
-    data-screen--chart-format-tooltip="{{$formatTooltip}}"
+    data-screen--chart-format-tooltip-x="{{$formatTooltipX}}"
+    data-screen--chart-format-tooltip-y="{{$formatTooltipY}}"
 >
     <div class="row padder-v">
         <div class="pos-rlt w-full">

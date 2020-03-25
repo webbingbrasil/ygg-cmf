@@ -94,11 +94,17 @@ abstract class Chart extends Base
     protected $regions = [];
 
     /**
-     * Tooltip format configuration
+     * Tooltip format configuration for axis x
      *
      * @var array
      */
-    protected $formatTooltip = '{d}';
+    protected $formatTooltipX = '{d}';
+    /**
+     * Tooltip format configuration for axis y
+     *
+     * @var array
+     */
+    protected $formatTooltipY = '{d}';
 
     /**
      * Determines whether to display the export button.
@@ -131,7 +137,8 @@ abstract class Chart extends Base
             'lineOptions' => json_encode($this->lineOptions),
             'markers' => json_encode($this->markers),
             'regions' => json_encode($this->regions),
-            'formatTooltip' => $this->formatTooltip,
+            'formatTooltipX' => $this->formatTooltipX,
+            'formatTooltipY' => $this->formatTooltipY,
         ]);
     }
 }
