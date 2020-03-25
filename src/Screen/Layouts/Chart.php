@@ -59,6 +59,48 @@ abstract class Chart extends Base
     ];
 
     /**
+     * Axis configurations.
+     *
+     * @var array
+     */
+    protected $axisOptions = [];
+
+    /**
+     * Bar configurations.
+     *
+     * @var array
+     */
+    protected $barOptions = [];
+
+    /**
+     * Line configurations.
+     *
+     * @var array
+     */
+    protected $lineOptions = [];
+
+    /**
+     * Marker configurations.
+     *
+     * @var array
+     */
+    protected $markers = [];
+
+    /**
+     * Region configurations.
+     *
+     * @var array
+     */
+    protected $regions = [];
+
+    /**
+     * Tooltip format configuration
+     *
+     * @var array
+     */
+    protected $formatTooltip = '{d}';
+
+    /**
      * Determines whether to display the export button.
      *
      * @var bool
@@ -84,6 +126,12 @@ abstract class Chart extends Base
             'labels' => json_encode(collect($this->labels)),
             'data'   => json_encode($repository->getContent($this->target)),
             'colors' => json_encode($this->colors),
+            'axisOptions' => json_encode($this->axisOptions),
+            'barOptions' => json_encode($this->barOptions),
+            'lineOptions' => json_encode($this->lineOptions),
+            'markers' => json_encode($this->markers),
+            'regions' => json_encode($this->regions),
+            'formatTooltip' => $this->formatTooltip,
         ]);
     }
 }

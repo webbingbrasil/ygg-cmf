@@ -26,6 +26,9 @@ class PlatformProvider extends ServiceProvider
         $dashboard->registerSearch([
             //...Models
         ]);
+
+        //$dashboard->registerResource('scripts','dashboard.js');
+        //$dashboard->registerResource('stylesheets','dashboard.css');
     }
 
     /**

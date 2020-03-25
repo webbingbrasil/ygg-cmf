@@ -1,12 +1,18 @@
 <div
-     data-controller="screen--chart"
-     data-screen--chart-parent="#{{$slug}}"
-     data-screen--chart-title="{{$title}}"
-     data-screen--chart-labels="{{$labels}}"
-     data-screen--chart-datasets="{{$data}}"
-     data-screen--chart-type="{{$type}}"
-     data-screen--chart-height="{{$height}}"
-     data-screen--chart-colors="{{$colors}}"
+    data-controller="screen--chart"
+    data-screen--chart-parent="#{{$slug}}"
+    data-screen--chart-title="{{$title}}"
+    data-screen--chart-labels="{{$labels}}"
+    data-screen--chart-datasets="{{$data}}"
+    data-screen--chart-type="{{$type}}"
+    data-screen--chart-height="{{$height}}"
+    data-screen--chart-colors="{{$colors}}"
+    data-screen--chart-axis-options="{{$axisOptions}}"
+    data-screen--chart-bar-options="{{$barOptions}}"
+    data-screen--chart-line-options="{{$lineOptions}}"
+    data-screen--chart-markers="{{$markers}}"
+    data-screen--chart-regions="{{$regions}}"
+    data-screen--chart-format-tooltip="{{$formatTooltip}}"
 >
     <div class="row padder-v">
         <div class="pos-rlt w-full">
