@@ -150,5 +150,8 @@
     "Upload file": "Enviar arquivo",
     "Media catalog": "Catálogo de mídia",
     "Are you sure you want to delete the user?": "Tem certeza de que deseja excluir o usuário?",
-    "Configure columns": "Configurar colunas"
+    "Configure columns": "Configurar colunas",
+    "Export": "Exportar",
+    "File format": "Formato do arquivo",
+    "Data export": "Exportar dados"
 }
