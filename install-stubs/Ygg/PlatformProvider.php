@@ -27,8 +27,8 @@ class PlatformProvider extends ServiceProvider
             //...Models
         ]);
 
-        //$dashboard->registerAsset('scripts','dashboard.js');
-        //$dashboard->registerAsset('stylesheets','dashboard.css');
+        //$dashboard->registerAsset('scripts',mix('js/dashboard.js'));
+        //$dashboard->registerAsset('stylesheets',mix('css/dashboard.css'));
     }
 
     /**
