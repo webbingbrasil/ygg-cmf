@@ -49,7 +49,7 @@ class MenuActive
 
         list($routes, $ignoredRoutes) = $this->parseIgnoredRoutes($routes);
 
-        if ($this->isPath($routes) || $this->isFullPath($routes) || $this->isRoute($routes)) {
+        if ($this->isPath($routes) || $this->isFullPath($routes)) {
             if (count($ignoredRoutes) && ($this->isPath($ignoredRoutes) || $this->isFullPath($routes) || $this->isRoute($ignoredRoutes))) {
                 return false;
             }

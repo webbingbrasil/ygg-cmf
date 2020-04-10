@@ -2,9 +2,12 @@
 
 namespace Ygg\Screen\Fields;
 
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Arr;
+use Illuminate\View\View;
 use Ygg\Attachment\Models\Attachment;
 use Ygg\Platform\Dashboard;
+use Ygg\Screen\Exceptions\FieldRequiredAttributeException;
 use Ygg\Screen\Field;
 use Ygg\Support\Assert;
 use Ygg\Support\Init;
@@ -139,18 +142,31 @@ class Upload extends Field
 
         // set load relation attachment
         $this->addBeforeRender(function () {
+            $groups = $this->get('groups');
             $value = Arr::wrap($this->get('value'));
 
             if (! Assert::isIntArray($value)) {
+                if(!empty($groups)) {
+                    $value = array_filter($value, function ($attachment) use ($groups) {
+                        return Arr::get($attachment, 'group') === $groups;
+                    });
+                    $this->set('value', $value);
+                }
                 return;
             }
 
             /** @var Attachment $attach */
-            $attach = Dashboard::model(Attachment::class);
+            $attach = Dashboard::model(Attachment::class)::query();
+            $attach->whereIn('id', $value)->orderBy('sort');
 
-            $value = $attach::whereIn('id', $value)->orderBy('sort')->get()->toArray();
+            if(!empty($groups)) {
+                $attach->where('group', $groups);
+            }
+
+            $value = $attach->get()->toArray();
 
             $this->set('value', $value);
         });
     }
+
 }

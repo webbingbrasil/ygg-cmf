@@ -37,10 +37,15 @@ trait AsMultiSource
     {
         $jsonContent = (array) $this->getAttribute($this->jsonColumnName);
         $fullName = ($locale ?? app()->getLocale()).'.'.$field;
-        if (Arr::has($jsonContent, $fullName)) {
-            return Arr::get($jsonContent, $fullName);
+
+        if (!Arr::has($jsonContent, $fullName)) {
+            $fullName = config('app.fallback_locale').'.'.$field;
         }
 
-        return Arr::get($jsonContent, config('app.fallback_locale').'.'.$field);
+        if (!Arr::has($jsonContent, $fullName)) {
+            $fullName = $field;
+        }
+
+        return Arr::get($jsonContent, $fullName);
     }
 }

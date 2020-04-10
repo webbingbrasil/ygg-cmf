@@ -302,6 +302,16 @@ class Dashboard
     }
 
     /**
+     * @return Collection
+     */
+    public function getResources(): Collection
+    {
+        return collect($this->getAsset('resources'))->transform(function ($value) {
+            return is_object($value) ? $value : new $value();
+        });
+    }
+
+    /**
      * @return Menu
      */
     public function menu(): Menu

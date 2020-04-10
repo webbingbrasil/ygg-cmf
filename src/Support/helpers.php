@@ -5,6 +5,34 @@ use Illuminate\Support\Str;
 use Ygg\Support\Facades\Dashboard;
 use Ygg\Filters\HttpFilter;
 use Illuminate\Support\Facades\App;
+use Ygg\Screen\Form\Builder;
+use Ygg\Screen\Repository;
+
+if (!function_exists('generate_form')) {
+    /**
+     * Generate a ready-made html form for display to the user.
+     *
+     * @param array                 $fields
+     * @param array|Repository|null $data
+     * @param string|null           $language
+     * @param string|null           $prefix
+     *
+     *@throws \Throwable
+     *
+     * @return string
+     */
+    function generate_form(array $fields, $data = [], string $language = null, string $prefix = null)
+    {
+        if (is_array($data)) {
+            $data = new Repository($data);
+        }
+
+        return (new Builder($fields, $data))
+            ->setLanguage($language)
+            ->setPrefix($prefix)
+            ->build();
+    }
+}
 
 if ( ! function_exists('active')) {
     /**

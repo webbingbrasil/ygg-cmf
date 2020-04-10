@@ -239,7 +239,7 @@ class TD
             return $this->handler($data);
         }
 
-        return data_get($data, $this->name);
+        return data_get($data, $this->column);
     }
 
     /**

@@ -176,7 +176,7 @@ class ItemMenu
     {
         $this->route = route($name, $parameters, $absolute);
 
-        $this->active([$name, $this->route.'/*']);
+        $this->active([$name, $this->route.'*']);
 
         return $this;
     }
