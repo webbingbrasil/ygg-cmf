@@ -1,0 +1,85 @@
+<?php
+
+namespace DummyNamespace;
+
+use Ygg\Resource\Entities\SingleResource;
+use Ygg\Screen\Fields\Input;
+use Ygg\Screen\Fields\TinyMCE;
+
+class DummyClass extends SingleResource
+{
+    /**
+     * @var string
+     */
+    public $name = '{{title}}';
+
+    /**
+     * @var string
+     */
+    public $description = '{{description}}';
+
+    /**
+     * @var string
+     */
+    public $slug = '{{slug}}';
+
+    /**
+     * Slug url /news/{name}.
+     *
+     * @var string
+     */
+    public $slugFields = 'title';
+
+    /**
+     * Menu title name.
+     *
+     * @var null
+     */
+    public $title = '{{menu}}';
+
+    /**
+     * Rules Validation.
+     *
+     * @return array
+     */
+    public function rules(): array
+    {
+        return [
+            'id'             => 'sometimes|integer|unique:posts',
+            'content.title' => 'required|string',
+            'content.body' => 'required|string',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function fields(): array
+    {
+        return [
+
+            Input::make('title')
+                ->type('text')
+                ->max(255)
+                ->required()
+                ->title('Title')
+                ->help('Page title'),
+
+
+            TinyMCE::make('body')
+                ->required()
+                ->title('Name Articles')
+                ->help('Article title'),
+        ];
+    }
+
+    /**
+     * @throws \Throwable
+     *
+     * @return array
+     */
+    public function options(): array
+    {
+        return [];
+    }
+}

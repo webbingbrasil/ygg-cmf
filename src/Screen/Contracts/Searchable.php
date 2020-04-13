@@ -7,6 +7,11 @@ interface Searchable
     /**
      * @return string
      */
+    public function typeIdentify(): string;
+
+    /**
+     * @return string
+     */
     public function label(): string;
 
     /**

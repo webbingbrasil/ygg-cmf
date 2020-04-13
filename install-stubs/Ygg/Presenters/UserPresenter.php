@@ -7,6 +7,15 @@ use Ygg\Support\Presenter;
 
 class UserPresenter extends Presenter implements Searchable
 {
+
+    /**
+     * @return string
+     */
+    public function typeIdentify(): string
+    {
+        return get_class($this->entity);
+    }
+
     /**
      * @return string
      */

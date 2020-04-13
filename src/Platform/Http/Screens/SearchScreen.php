@@ -169,11 +169,11 @@ class SearchScreen extends Screen
      */
     private function getSearchModel(Collection $searchModels)
     {
-        $class = get_class($searchModels->first());
-        $type = $this->request->session()->get(self::SESSION_NAME, $class);
+        $class = $searchModels->first();
+        $type = $this->request->session()->get(self::SESSION_NAME, $class->searchTypeIdentify());
 
         $model = $searchModels->filter(static function ($model) use ($type) {
-            return $model instanceof $type;
+            return $model->searchTypeIdentify() === $type;
         })->first();
 
         abort_if(is_null($model), 404, 'Required search type not found');

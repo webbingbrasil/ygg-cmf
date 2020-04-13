@@ -33,4 +33,13 @@ trait Attachable
         return $query
             ->orderBy('sort', 'asc');
     }
+
+    public function getAttachments($group = null)
+    {
+        if($group !== null) {
+            return $this->attachment->where('group', $group);
+        }
+
+        return $this->attachment;
+    }
 }

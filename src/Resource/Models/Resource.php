@@ -11,13 +11,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\PostgresConnection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Laravel\Scout\Searchable;
 use Ygg\Attachment\Attachable;
 use Ygg\Filters\Filterable;
 use Ygg\Platform\Models\User;
+use Ygg\Platform\Searchable;
 use Ygg\Resource\Exceptions\EntityTypeException;
+use Ygg\Resource\ResourcePresenter;
 use Ygg\Resource\Traits\Taggable;
 use Ygg\Resource\AsMultiSource;
 use Ygg\Support\Facades\Dashboard;
@@ -41,6 +43,11 @@ class Resource extends Model
     use Searchable;
     use Attachable;
     use Filterable;
+
+    /**
+     * @var string
+     */
+    protected $resourceType = null;
 
     /**
      * Prefix for permission.
@@ -163,12 +170,11 @@ class Resource extends Model
     public function toSearchableArray(): array
     {
         $entity = $this->getEntityObject();
-
         if (method_exists($entity, 'toSearchableArray')) {
             return $entity->toSearchableArray($this->toArray());
         }
 
-        return [];
+        return $this->toArray();
     }
 
     /**
@@ -310,6 +316,19 @@ class Resource extends Model
         return $terms ?? [];
     }
 
+    public function pluckTaxonomies($value, $key= null, $taxonomy = null)
+    {
+        $taxonomies = $this->taxonomies;
+        $termMap = function ($item) {
+            return ['name' => $item->term->getContent('name')];
+        };
+
+        if ($taxonomy !== null) {
+            $taxonomies = $taxonomies->where('taxonomy', $taxonomy);
+        }
+        return $taxonomies->map($termMap)->pluck($value, $key);
+    }
+
     /**
      * Taxonomy relationship.
      *
@@ -399,7 +418,7 @@ class Resource extends Model
     {
         if (!is_null($entity)) {
             try {
-                $this->getEntity($entity);
+                $this->getEntityObject($entity);
             } catch (EntityTypeException $e) {
             }
         }
@@ -434,7 +453,7 @@ class Resource extends Model
     public function scopeFiltersApplyDashboard(Builder $query, $entity = null): Builder
     {
         if ($entity !== null) {
-            $this->getEntity($entity);
+            $this->getEntityObject($entity);
         }
 
         return $this->filter($query);
@@ -476,5 +495,42 @@ class Resource extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    /**
+     * @return UserPresenter
+     */
+    public function presenter()
+    {
+        return new ResourcePresenter($this);
+    }
+
+    /**
+     * @param string $type
+     * @return Resource
+     * @throws EntityTypeException
+     * @throws \Throwable
+     */
+    public static function make(string $type)
+    {
+        return (new static)->getEntity($type);
+    }
+
+    /**
+     * Perform a search against the model's indexed data.
+     *
+     * @param  string  $query
+     * @param  \Closure  $callback
+     * @return \Laravel\Scout\Builder
+     */
+    public function scopeSearch(Builder $builder, $query = '')
+    {
+        $entity = $this->getEntityObject();
+        //dd($entity->slug);
+        if ($builder->getQuery()->getConnection() instanceof PostgresConnection) {
+            return $builder->type($entity->slug)->whereRaw('content::TEXT ILIKE ?', '%'.$query.'%');
+        }
+
+        return $builder->type($entity->slug)->where('content', 'LIKE', '%'.$query.'%');;
     }
 }

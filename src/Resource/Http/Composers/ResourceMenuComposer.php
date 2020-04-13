@@ -2,6 +2,7 @@
 
 namespace Ygg\Resource\Http\Composers;
 
+use Illuminate\Support\Collection;
 use Ygg\Platform\Dashboard;
 use Ygg\Platform\ItemMenu;
 use Ygg\Platform\Menu;
@@ -33,20 +34,29 @@ class ResourceMenuComposer
         $this->dashboard->getResources()
             ->where('display', true)
             ->sortBy('sort')
-            ->each(function ($page) {
-                $route = is_a($page, SingleResource::class) ? 'platform.resource.type.page' : 'platform.resource.type';
-                $params = [$page->slug];
+            ->groupBy('title')
+            ->each(function (Collection $group) {
+                $menuTitle = null;
+                $group->each(function ($page) use (&$menuTitle) {
+                    $route = is_a($page, SingleResource::class) ? 'platform.resource.type.page' : 'platform.resource.type';
+                    $params = [$page->slug];
+                    $url = route($route, $params, true).'/*';
 
-                $this->dashboard->menu->add(Menu::MAIN,
-                    ItemMenu::label($page->name)
+                    $itemMenu = ItemMenu::label($page->name)
                         ->slug($page->slug)
                         ->icon($page->icon)
-                        ->title($page->title)
                         ->route($route, $params)
                         ->permission('platform.resource.type.'.$page->slug)
                         ->sort($page->sort)
-                        ->canSee($page->display)
-                );
+                        ->canSee($page->display);
+
+                    if($menuTitle !== $page->title) {
+                        $menuTitle = $page->title;
+                        $itemMenu->title($menuTitle);
+                    }
+
+                    $this->dashboard->menu->add(Menu::MAIN, $itemMenu);
+                });
             });
 
         return $this;

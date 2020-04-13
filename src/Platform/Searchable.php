@@ -2,12 +2,8 @@
 
 namespace Ygg\Platform;
 
-use Laravel\Scout\Builder;
-use Laravel\Scout\Searchable as ScoutSearchable;
-
 trait Searchable
 {
-    use ScoutSearchable;
 
     /**
      * The number of models to return for show compact search result.
@@ -16,12 +12,21 @@ trait Searchable
      */
     public $perSearchShow = 3;
 
+
+    /**
+     * @return string
+     */
+    public function searchTypeIdentify(): ?string
+    {
+        return $this->presenter()->typeIdentify() ?? static::class;
+    }
+
     /**
      * @return string
      */
     public function searchLabel(): ?string
     {
-        return $this->getAttribute('label') ?? static::class;
+        return $this->presenter()->label() ?? static::class;
     }
 
     /**
@@ -29,7 +34,7 @@ trait Searchable
      */
     public function searchTitle(): ?string
     {
-        return $this->getAttribute('title')
+        return $this->presenter()->title()
             ?? 'See documentation method search* in Ygg\Platform\Searchable';
     }
 
@@ -38,7 +43,7 @@ trait Searchable
      */
     public function searchSubTitle(): ?string
     {
-        return $this->getAttribute('subTitle');
+        return $this->presenter()->subTitle();
     }
 
     /**
@@ -46,7 +51,7 @@ trait Searchable
      */
     public function searchUrl(): ?string
     {
-        return $this->getAttribute('url') ?? '#';
+        return $this->presenter()->url() ?? '#';
     }
 
     /**
@@ -54,15 +59,13 @@ trait Searchable
      */
     public function searchAvatar(): ?string
     {
-        return $this->getAttribute('avatar');
+        return $this->presenter()->image();
     }
 
     /**
-     * @param string $query
-     *
-     * @return Builder
+     * @param string|null $query
      */
-    public function searchQuery(string $query = null): Builder
+    public function searchQuery(string $query = null)
     {
         return $this->search($query);
     }

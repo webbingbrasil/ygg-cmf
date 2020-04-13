@@ -30,16 +30,16 @@ class SearchLayout extends Rows
      */
     public function fields(): array
     {
-        $searchModel = $this->query->get('model');
+        $searchType = $this->query->get('model')->searchTypeIdentify();
 
         $layouts = Dashboard::getSearch()
-            ->map(static function (Model $model) use ($searchModel) {
+            ->map(static function (Model $model) use ($searchType) {
                 $radio = Radio::make('type')
-                    ->value(get_class($model))
+                    ->value($model->searchTypeIdentify())
                     ->horizontal()
                     ->placeholder($model->searchLabel());
 
-                if ($model instanceof $searchModel) {
+                if ($model->searchTypeIdentify() === $searchType) {
                     $radio->checked();
                 }
 

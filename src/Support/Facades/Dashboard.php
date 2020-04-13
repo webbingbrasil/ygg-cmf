@@ -26,7 +26,6 @@ use Ygg\Platform\Permission;
  * @method static self addPublicDirectory(string $package, string $path)
  * @method static Collection getPublicDirectory()
  * @method static Collection getSearch()
- * @method static modelClass(string $key, string $default = null)
  */
 class Dashboard extends Facade
 {
