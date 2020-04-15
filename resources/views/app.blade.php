@@ -40,7 +40,7 @@
     <div class="container-fluid">
         <div class="row">
             @if(!isset($displaySidebar) || $displaySidebar)
-                <div class="aside col-xs-12 col-md-2 offset-xxl-0 col-xl-2 col-xxl-3 no-padder bg-white shadow-sm">
+                <div class="col-xs-12 col-md-2 offset-xxl-0 col-xl-2 col-xxl-3 no-padder bg-white shadow-sm">
                     <div class="d-md-flex align-items-start flex-column d-sm-block h-full">
                         @yield('body-left')
                     </div>
