@@ -4,7 +4,7 @@
                     <span class="thumb-sm avatar mr-3">
                         <img src="{{Auth::user()->presenter()->image()}}" class="b b-dark bg-light">
                     </span>
-            <span style="width:11em;font-size: 0.85em;">
+            <span style="font-size: 0.85em;">
                 <span class="text-ellipsis">{{Auth::user()->presenter()->title()}}</span>
                 <span class="text-muted d-block text-ellipsis">{{Auth::user()->presenter()->subTitle()}}</span>
             </span>
