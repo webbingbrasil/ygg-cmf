@@ -39,6 +39,13 @@ mix
         implementation: require('node-sass'),
     })
     .options({
+        autoprefixer: {
+            options: {
+                browsers: [
+                    'last 6 versions',
+                ]
+            }
+        },
         processCssUrls: false,
     })
     .js('resources/js/app.js', 'js/ygg.js')

@@ -2,11 +2,11 @@
 
 @section('title', __('Menu'))
 @section('description', __($availableMenus[$name]))
-@section('controller','components--menu')
+@section('controller','layouts--menu')
 @section('controller-data',"
          data-content-loader-url='$name'
-         data-components--menu-count='0'
-         data-components--menu-id=''
+         data-layouts--menu-count='0'
+         data-layouts--menu-id=''
 ")
 
 @section('navbar')
@@ -50,7 +50,7 @@
 
             <li class="dropdown nav-item">
                 <button class="btn btn-link dropdown-item" type="button"
-                        data-action="components--menu#clear"
+                        data-action="layouts--menu#clear"
                         data-toggle="modal"
                         data-target="#menuModal">
                     <i class="icon-plus m-r-xs"></i> {{ __('Add element') }}
@@ -90,7 +90,7 @@
                                             class="text-danger">*</span></label>
                                 <input type="text"
                                        class="form-control"
-                                       data-target="components--menu.label"
+                                       data-target="layouts--menu.label"
                                        required
                                        placeholder="{{ __('About us') }}">
 
@@ -100,7 +100,7 @@
                             <div class="form-group">
                                 <label>{{ __('Alternative text') }} <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control"
-                                       data-target="components--menu.title"
+                                       data-target="layouts--menu.title"
                                        required
                                        placeholder="{{ __('History of the company') }}">
                                 <small class="form-text text-danger none"
@@ -110,7 +110,7 @@
                                 <label>{{ __('URL') }} <span class="text-danger">*</span></label>
                                 <input type="text"
                                        class="form-control"
-                                       data-target="components--menu.slug"
+                                       data-target="layouts--menu.slug"
                                        required
                                        placeholder="{{ __('/about') }}">
                                 <small class="form-text text-danger none"
@@ -119,7 +119,7 @@
 
                             <div class="form-group">
                                 <label>{{ __('Display') }}</label>
-                                <select class="form-control" data-target="components--menu.auth">
+                                <select class="form-control" data-target="layouts--menu.auth">
                                     <option value="0"
                                             selected>{{ __('Visible to everyone') }}</option>
                                     <option value="1">{{ __('Only identified users') }}</option>
@@ -129,7 +129,7 @@
                             <div class="form-group">
                                 <label>{{ __('Relations') }}</label>
 
-                                <select class="form-control" data-target="components--menu.robot">
+                                <select class="form-control" data-target="layouts--menu.robot">
                                     <option value=""></option>
                                     <option value="answer">{{ __('Answer to the question') }}</option>
                                     <option value="chapter">{{ __('Section or chapter of the current document') }}</option>
@@ -162,12 +162,12 @@
                             </div>
                             <div class="form-group">
                                 <label>{{ __('Class') }}</label>
-                                <input type="text" class="form-control" data-target="components--menu.style"
+                                <input type="text" class="form-control" data-target="layouts--menu.style"
                                        placeholder="red">
                             </div>
                             <div class="form-group">
                                 <label>{{ __('Link target') }}</label>
-                                <select class="form-control" data-target="components--menu.target">
+                                <select class="form-control" data-target="layouts--menu.target">
                                     <option value="_self" selected>{{ __('In the current window') }}</option>
                                     <option value="_blank">{{ __('In a new window') }}</option>
                                 </select>
@@ -175,22 +175,22 @@
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" data-action="components--menu#remove"
+                    <button type="button" data-action="layouts--menu#remove"
                             class="btn btn-link" id="menu.remove">
                         {{ __('Remove') }}
                     </button>
 
-                    <button type="button" data-action="components--menu#clear"
+                    <button type="button" data-action="layouts--menu#clear"
                             class="btn btn-link" id="menu.reset">
                         {{ __('Close') }}
                     </button>
 
-                    <button type="button" data-action="components--menu#add"
+                    <button type="button" data-action="layouts--menu#add"
                             class="btn btn-default" id="menu.create">
                         {{ __('Create') }}
                     </button>
 
-                    <button type="button" data-action="components--menu#save"
+                    <button type="button" data-action="layouts--menu#save"
                             class="btn btn-default" id="menu.save">
                         {{ __('Save') }}
                     </button>

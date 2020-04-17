@@ -51,12 +51,6 @@ class ResourceServiceProvider extends ServiceProvider
                 ->registerPermissions($this->registerPermissions());
         });
 
-        View::composer('platform::app', function () use ($dashboard) {
-            $dashboard
-                ->registerAsset('scripts', ygg_mix('/js/resource.js', 'ygg'))
-                ->registerAsset('stylesheets', ygg_mix('/css/resource.css', 'ygg'));
-        });
-
         $this->registerMigrations()
             ->registerCommands()
             ->registerMacros();
