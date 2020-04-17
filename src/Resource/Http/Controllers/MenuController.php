@@ -33,7 +33,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $availableMenus = collect(config('platform.resource.menu'));
+        $availableMenus = collect(config('platform.menu'));
 
         if ($availableMenus->count() > 0) {
             return redirect()->route('platform.systems.menu.show', $availableMenus->keys()->first());
@@ -50,7 +50,7 @@ class MenuController extends Controller
      */
     public function show(string $name, Request $request)
     {
-        $availableMenus = config('platform.resource.menu');
+        $availableMenus = config('platform.menu');
         $currentLocale = $request->get('lang', app()->getLocale());
 
         $menu = Dashboard::modelClass(Menu::class)

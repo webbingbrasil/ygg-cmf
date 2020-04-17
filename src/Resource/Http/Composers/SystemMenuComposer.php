@@ -37,7 +37,7 @@ class SystemMenuComposer
                     ->icon('icon-menu')
                     ->route('platform.systems.menu.index')
                     ->permission('platform.systems.menu')
-                    ->canSee(count(config('platform.resource.menu', [])) > 0)
+                    ->canSee(count(config('platform.menu', [])) > 0)
                     ->title(__('Editing of a custom menu (navigation) using drag & drop and localization support.'))
             )
             ->add('CMS',

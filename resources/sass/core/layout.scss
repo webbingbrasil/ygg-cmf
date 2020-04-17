@@ -202,7 +202,7 @@ small {
     .form-group {
         margin: 0;
     }
-    .btn {
+    .btn, .dropdown-toggle {
         color: $text-01;
         background-color: $white;
         @extend .dropdown-item;
