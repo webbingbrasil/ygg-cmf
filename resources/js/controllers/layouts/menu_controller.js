@@ -23,15 +23,16 @@ export default class extends Controller {
     connect() {
 
         let menu = this;
-
-        $('.dd').nestable({})
-            .on('change', () => {
+        let list = $('.dd');
+        list.on('change', () => {
                 menu.sort();
-
                 menu.send();
-            }).on('click', '.edit', (event) => {
-            menu.edit(event.target);
-        });
+            })
+            .on('click', '.edit', (event) => {
+                menu.edit(event.target);
+            });
+
+        list.nestable({});
 
         menu.sort();
 

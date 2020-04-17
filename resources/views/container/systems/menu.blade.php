@@ -14,7 +14,7 @@
         <ul class="nav justify-content-sm-end justify-content-start v-center">
             @if(count($locales) > 1)
                 <li class="dropdown nav-item">
-                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button"
+                    <a href="#" class="btn dropdown-toggle nav-link" data-toggle="dropdown" role="button"
                        aria-haspopup="true"
                        aria-expanded="false">
                         <i class="icon-globe m-r-xs"></i>
@@ -33,7 +33,7 @@
 
             @if(count($availableMenus) > 1)
                 <li class="dropdown nav-item">
-                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button"
+                    <a href="#" class="btn dropdown-toggle nav-link" data-toggle="dropdown" role="button"
                        aria-haspopup="true"
                        aria-expanded="false">
                         <i class="icon-menu m-r-xs"></i> {{ __($availableMenus[$name]) }}

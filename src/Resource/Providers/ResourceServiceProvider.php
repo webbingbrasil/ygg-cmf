@@ -51,6 +51,11 @@ class ResourceServiceProvider extends ServiceProvider
                 ->registerPermissions($this->registerPermissions());
         });
 
+        View::composer('platform::app', function () use ($dashboard) {
+            $dashboard
+                ->registerAsset('scripts', 'https://cdnjs.cloudflare.com/ajax/libs/nestable2/1.6.0/jquery.nestable.min.js');
+        });
+
         $this->registerMigrations()
             ->registerCommands()
             ->registerMacros();
