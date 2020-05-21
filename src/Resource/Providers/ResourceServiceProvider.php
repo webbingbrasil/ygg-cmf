@@ -16,7 +16,7 @@ use Ygg\Resource\Http\Composers\SystemMenuComposer;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Class PressServiceProvider
+ * Class ResourceServiceProvider
  * @package Ygg\Resource\Providers
  */
 class ResourceServiceProvider extends ServiceProvider
