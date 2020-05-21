@@ -3,7 +3,7 @@
 namespace Ygg\Database\Resource\Seeds;
 
 use Illuminate\Database\Seeder;
-use Orchid\Attachment\Models\Attachmentable;
+use Ygg\Attachment\Models\Attachmentable;
 use Ygg\Resource\Models\Comment;
 use Ygg\Resource\Models\Resource;
 

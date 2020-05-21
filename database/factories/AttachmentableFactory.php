@@ -19,7 +19,7 @@ $factory->define(Attachmentable::class, function (Faker $faker) {
     $attachments = Attachment::get()->count();
 
     return $attachments > 0 ? [
-        'attachmentable_type' => "Ygg\Press\Models\Post",
+        'attachmentable_type' => "Ygg\Resource\Models\Resource",
         'attachment_id'       => Attachment::inRandomOrder()->first()->id,
     ] : [];
 });

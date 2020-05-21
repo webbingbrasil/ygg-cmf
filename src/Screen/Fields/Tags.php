@@ -104,7 +104,7 @@ class Tags extends Field
     /**
      * @param string|\Closure $name
      *
-     * @return \Orchid\Screen\Field|void
+     * @return \Ygg\Screen\Field|void
      */
     public function modifyName()
     {

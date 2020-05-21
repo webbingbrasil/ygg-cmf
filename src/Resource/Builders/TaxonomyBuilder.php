@@ -14,7 +14,7 @@ class TaxonomyBuilder extends Builder
     /**
      * Add resources to the relationship builder.
      *
-     * @return \Orchid\Press\Builders\TaxonomyBuilder
+     * @return \Ygg\Resource\Builders\TaxonomyBuilder
      */
     public function resources(): self
     {
