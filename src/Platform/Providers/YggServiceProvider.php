@@ -253,7 +253,7 @@ class YggServiceProvider extends ServiceProvider
             Ygg::install();
             $command->warn('Please run "npm install && npm run dev" to compile your fresh scaffolding.');
             $command->warn("After that, You need to add this line to AppServiceProvider's register method:");
-            $command->warn("app(\Ygg\Platform\Dashboard::class)->registerResource('scripts','/js/dashboard.js');");
+            $command->warn("app(\Ygg\Platform\Dashboard::class)->registerAsset('scripts','/js/dashboard.js');");
             $command->info('Ygg scaffolding installed successfully.');
         });
     }

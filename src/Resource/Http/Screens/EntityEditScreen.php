@@ -2,6 +2,7 @@
 
 namespace Ygg\Resource\Http\Screens;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -12,6 +13,7 @@ use Ygg\Actions\Button;
 use Ygg\Screen\Layout;
 use Ygg\Screen\Screen;
 use Ygg\Support\Facades\Alert;
+use Ygg\Support\Facades\Dashboard;
 
 class EntityEditScreen extends Screen
 {
@@ -51,11 +53,14 @@ class EntityEditScreen extends Screen
 
     /**
      * @param Entity $type
-     * @param Resource $resource
+     * @param $resource
      * @return array
      */
-    public function query(Entity $type, Resource $resource): array
+    public function query(Entity $type, $resource): array
     {
+        if($resource instanceof Model === false) {
+            $resource = Dashboard::modelClass($type->model());
+        }
         if(is_a($type, SingleResource::class)) {
             $resource = $resource::firstOrNew(['slug' => $type->slug]);
         }

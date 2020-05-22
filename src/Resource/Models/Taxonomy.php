@@ -11,6 +11,8 @@ use Ygg\Resource\Builders\TaxonomyBuilder;
 
 class Taxonomy extends Model
 {
+    protected $resource = Resource::class;
+
     /**
      * @var bool
      */
@@ -99,7 +101,7 @@ class Taxonomy extends Model
      */
     public function resources(): BelongsToMany
     {
-        return $this->belongsToMany(Dashboard::model(Resource::class), 'term_relationships', 'term_taxonomy_id', 'resource_id');
+        return $this->belongsToMany(Dashboard::model($this->resource), 'term_relationships', 'term_taxonomy_id', 'resource_id');
     }
 
     /**

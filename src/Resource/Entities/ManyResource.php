@@ -49,11 +49,20 @@ abstract class ManyResource implements Entity, UrlRoutable
     }
 
     /**
+     * Return resource model class namespace
+     * @return string
+     */
+    public function model(): string
+    {
+        return Resource::class;
+    }
+
+    /**
      * @return \Illuminate\Contracts\Pagination\Paginator
      */
     public function get(): Paginator
     {
-        return Resource::type($this->slug)
+        return $this->model()::type($this->slug)
             ->filtersApplyDashboard($this->slug)
             ->filters()
             ->with($this->with)

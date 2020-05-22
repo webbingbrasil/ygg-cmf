@@ -8,6 +8,12 @@ namespace Ygg\Resource\Entities;
 interface Entity
 {
     /**
+     * Return resource model class namespace
+     * @return string
+     */
+    public function model(): string;
+
+    /**
      * Basic statuses possible for the object.
      *
      * @return array

@@ -6,7 +6,8 @@ use Illuminate\Http\RedirectResponse;
 use Ygg\Resource\Entities\Entity;
 use Ygg\Resource\Entities\ManyResource;
 use Ygg\Resource\Http\Layouts\EntitiesLayout;
-use Ygg\Resource\Http\Layouts\EntitiesSelection;
+use Ygg\Resource\Http\Layouts\EntityFilterLayout;
+use Ygg\Resource\Http\Layouts\EntityListLayout;
 use Ygg\Resource\Models\Resource;
 use Ygg\Actions\Link;
 use Ygg\Screen\Layout;
@@ -93,8 +94,7 @@ class EntityListScreen extends Screen
     {
         return [
             Layout::view('platform::container.resources.restore'),
-            new EntitiesSelection($this->filters),
-            Layout::table('data', $this->grid),
+            new EntityListLayout($this->filters, $this->grid),
         ];
     }
 

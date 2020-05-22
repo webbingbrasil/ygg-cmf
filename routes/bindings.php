@@ -37,8 +37,9 @@ Route::bind('page', function ($value) {
 });
 
 Route::bind('resource', function ($value) {
+    $type = request()->route('type');
     /** @var Resource $resource */
-    $resource = Dashboard::modelClass(Resource::class);
+    $resource = Dashboard::modelClass($type->model());
 
     return $resource->where('id', $value)
         ->orWhere('slug', $value)

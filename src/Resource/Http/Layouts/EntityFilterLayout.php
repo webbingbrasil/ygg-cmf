@@ -4,7 +4,7 @@ namespace Ygg\Resource\Http\Layouts;
 
 use Ygg\Screen\Layouts\Selection;
 
-class EntitiesSelection extends Selection
+class EntityFilterLayout extends Selection
 {
     /**
      * @var array
