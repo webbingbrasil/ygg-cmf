@@ -2,60 +2,179 @@
 
 namespace Ygg\Actions;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
-use Throwable;
-use Ygg\Traits\Transformers\WithTransformers;
+use Ygg\Screen\Field;
+use Ygg\Screen\Repository;
+use Ygg\Support\Color;
 
-/**
- * Class Action
- * @package Ygg\Actions
- */
-abstract class Action
+abstract class Action extends Field implements ActionInterface
 {
-    use WithTransformers, WithBasicResponseActions;
-
-    abstract public function type(): string;
+    /**
+     * @deprecated
+     */
+    public const DEFAULT = 'default';
 
     /**
-     * @return array|bool
+     * @deprecated
      */
-    public function getGlobalAuthorization()
-    {
-        return $this->authorize();
-    }
+    public const SUCCESS = 'success';
 
     /**
-     * @return bool
+     * @deprecated
      */
-    public function authorize(): bool
-    {
-        return true;
-    }
+    public const WARNING = 'warning';
 
     /**
-     * @return string|null
+     * @deprecated
      */
-    public function confirmationText(): ?string
-    {
-        return null;
-    }
+    public const DANGER = 'danger';
 
     /**
-     * @param array $params
-     * @param array $rules
-     * @param array $messages
-     * @throws ValidationException
+     * @deprecated
      */
-    public function validate(array $params, array $rules, array $messages = []): void
-    {
-        $validator = Validator::make($params, $rules, $messages);
+    public const INFO = 'info';
 
-        if ($validator->fails()) {
-            throw new ValidationException(
-                $validator, new JsonResponse($validator->errors()->getMessages(), 422)
-            );
+    /**
+     * @deprecated
+     */
+    public const PRIMARY = 'primary';
+
+    /**
+     * @deprecated
+     */
+    public const SECONDARY = 'secondary';
+
+    /**
+     * @deprecated
+     */
+    public const LIGHT = 'light';
+
+    /**
+     * @deprecated
+     */
+    public const DARK = 'dark';
+
+    /**
+     * @deprecated
+     */
+    public const LINK = 'link';
+
+    /**
+     * Override the form view.
+     *
+     * @var string
+     */
+    protected $typeForm = 'platform::partials.fields.clear';
+
+    /**
+     * Attributes available for a particular tag.
+     *
+     * @var array
+     */
+    protected $inlineAttributes = [
+        'type',
+        'autofocus',
+        'disabled',
+        'tabindex',
+    ];
+
+    /**
+     * Create instance of the action.
+     *
+     * @param string $name
+     *
+     * @return ModalToggle
+     */
+    abstract static function make(string $name = ''): ActionInterface;
+
+    protected static function buildInstance(string $name, callable $beforeRender = null): self
+    {
+        /** @var self $instance */
+        $instance = (new static())->name($name);
+        if ($beforeRender) {
+            $instance->addBeforeRender($beforeRender);
         }
+        return $instance;
+    }
+
+    /**
+     * Align button to the right.
+     *
+     * @return static
+     */
+    public function right(): self
+    {
+        $class = $this->get('class').' pull-right';
+
+        $this->set('class', $class);
+
+        return $this;
+    }
+
+    /**
+     * @param Color|string $visual
+     *
+     * @throws \ReflectionException
+     *
+     * @return static
+     */
+    public function type($visual): self
+    {
+        $reflectionClass = new \ReflectionClass(Color::class);
+
+        $colors = array_map(static function (string $color) {
+            return 'btn-'.$color;
+        }, $reflectionClass->getConstants());
+
+        $class = str_replace($colors, '', (string) $this->get('class'));
+
+        $this->set('class', $class.' btn-'.$visual);
+
+        return $this;
+    }
+
+    /**
+     * Set the button as block.
+     *
+     * @return static
+     */
+    public function block(): self
+    {
+        $class = $this->get('class').' pull-block';
+
+        $this->set('class', $class);
+
+        return $this;
+    }
+
+    /**
+     * @param Repository $repository
+     *
+     * @throws \Throwable
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     */
+    public function build(Repository $repository = null)
+    {
+        return $this->render();
+    }
+
+    /**
+     * @param bool $status
+     *
+     * @return static
+     */
+    public function rawClick(bool $status = false): self
+    {
+        $this->set('turbolinks', $status);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getId(): ?string
+    {
+        return $this->get('id');
     }
 }

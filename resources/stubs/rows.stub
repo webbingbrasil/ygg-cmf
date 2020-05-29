@@ -1,0 +1,19 @@
+<?php
+
+namespace DummyNamespace;
+
+use Ygg\Screen\Field;
+use Ygg\Screen\Layouts\Rows;
+
+class DummyClass extends Rows
+{
+    /**
+     * Views.
+     *
+     * @return Field[]
+     */
+    protected function fields(): array
+    {
+        return [];
+    }
+}
