@@ -32,9 +32,6 @@ jobs:
       - name: Build project
         run: yarn build --if-present
 
-      - name: Check tests
-        run: yarn test
-
   release:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
