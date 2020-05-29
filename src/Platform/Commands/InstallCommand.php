@@ -38,7 +38,6 @@ class InstallCommand extends Command
         $this->info("Version: $updates->currentVersion");
 
         $this
-            ->executeCommand('migrate')
             ->executeCommand('vendor:publish', [
                 '--force' => true,
                 '--tag'   => 'migrations',
@@ -50,6 +49,7 @@ class InstallCommand extends Command
                     'config',
                     'migrations',
                     'ygg-stubs',
+                    'translations',
                 ],
             ])
             ->executeCommand('migrate')

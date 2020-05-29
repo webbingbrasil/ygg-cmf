@@ -83,7 +83,9 @@ class YggServiceProvider extends ServiceProvider
      */
     public function registerTranslations(): self
     {
-        $this->loadJsonTranslationsFrom(Dashboard::path('resources/lang/'));
+        $this->publishes([
+            Dashboard::path('resources/lang/') => resource_path('lang'),
+        ], 'translations');
 
         return $this;
     }
