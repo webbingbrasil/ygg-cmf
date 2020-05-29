@@ -1,6 +1,5 @@
 <?php
 
-use Ygg\Platform\Dashboard;
 use Ygg\Resource\Models\Resource;
 use Ygg\Actions\Link;
 use Ygg\Screen\TD;

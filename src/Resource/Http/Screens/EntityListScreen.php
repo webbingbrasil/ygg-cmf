@@ -106,7 +106,7 @@ class EntityListScreen extends Screen
      */
     public function restore(Entity $type, int $id): RedirectResponse
     {
-        Resource::onlyTrashed()->findOrFail($id)->restore();
+        $type->model()::onlyTrashed()->findOrFail($id)->restore();
 
         Alert::success(__('Operation completed successfully.'));
 

@@ -419,7 +419,20 @@ class Resource extends Model
             'slug',
             $slug, [
             'includeTrashed' => true,
+            'resourceType' => $entityObject->slug
         ]));
+    }
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param string $attribute
+     * @param array $config
+     * @param string $slug
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithUniqueSlugConstraints(Builder $query, Model $model, $attribute, $config, $slug)
+    {
+        return $query->type(Arr::get($config, 'resourceType'));
     }
 
     /**
@@ -459,7 +472,6 @@ class Resource extends Model
     public function scopeSearch(Builder $builder, $query = '')
     {
         $entity = $this->getEntityObject();
-        //dd($entity->slug);
         if ($builder->getQuery()->getConnection() instanceof PostgresConnection) {
             return $builder->type($entity->slug)->whereRaw('content::TEXT ILIKE ?', '%'.$query.'%');
         }

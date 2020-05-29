@@ -3,6 +3,7 @@
 namespace DummyNamespace;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Ygg\Resource\Entities\ManyResource;
 use Ygg\Resource\Http\Filters\CreatedFilter;
@@ -62,10 +63,18 @@ class DummyClass extends ManyResource
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param Model $model
+     * @param Request $request
      */
-    public function save(Model $model)
+    public function save(Model $model, Request $request)
     {
+        $model
+            ->fill($request->all())
+            ->fill([
+                'type' => $this->slug,
+                'author_id' => $request->user()->id,
+                'options' => $model->getOptions(),
+            ]);
         $model->save();
 
         $model->taxonomies()->sync(Arr::flatten(request(['category'])));

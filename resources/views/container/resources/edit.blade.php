@@ -28,10 +28,10 @@
                         @forelse($locales as $code => $lang)
                         <div class="tab-pane @if($loop->first) active @endif" id="local-{{$code}}"
                              role="tabpanel">
-                            {!! generate_form($type->fields(), $resource->toArray(), $code, 'content') !!}
+                            {!! generate_form($type->fields(), $resource->toArray(), $code, $type->prefix) !!}
                         </div>
                         @empty
-                        {!! generate_form($type->fields(), $resource->toArray(), null, 'content') !!}
+                        {!! generate_form($type->fields(), $resource->toArray(), null, $type->prefix) !!}
                         @endforelse
                     </div>
                 </div>

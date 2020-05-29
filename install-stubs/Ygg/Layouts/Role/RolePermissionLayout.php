@@ -14,8 +14,6 @@ class RolePermissionLayout extends Rows
      * Views.
      *
      * @return array
-     * @throws \Throwable
-     *
      */
     public function fields(): array
     {
@@ -26,8 +24,6 @@ class RolePermissionLayout extends Rows
      * @param Collection $permissionsRaw
      *
      * @return array
-     * @throws \Throwable|\Ygg\Screen\Exceptions\TypeException
-     *
      */
     public function generatedPermissionFields(Collection $permissionsRaw): array
     {

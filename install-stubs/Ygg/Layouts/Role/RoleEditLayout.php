@@ -11,8 +11,6 @@ class RoleEditLayout extends Rows
      * Views.
      *
      * @return array
-     * @throws \Throwable|\Ygg\Screen\Exceptions\TypeException
-     *
      */
     public function fields(): array
     {

@@ -9,6 +9,7 @@ use Ygg\Resource\Models\Resource;
 use Ygg\Screen\Fields\DateTimer;
 use Ygg\Screen\Fields\Input;
 use Ygg\Screen\Fields\Select;
+use Ygg\Support\Facades\Dashboard;
 
 abstract class ManyResource implements Entity, UrlRoutable
 {
@@ -62,12 +63,19 @@ abstract class ManyResource implements Entity, UrlRoutable
      */
     public function get(): Paginator
     {
-        return $this->model()::type($this->slug)
-            ->filtersApplyDashboard($this->slug)
+        $modelClass = $this->model();
+        $query = $modelClass::query();
+        if(is_a($modelClass, Resource::class)) {
+            $query = $modelClass::type($this->slug)
+                ->filtersApplyDashboard($this->slug);
+        }
+
+        return $query
             ->filters()
             ->with($this->with)
             ->defaultSort('id', 'desc')
             ->paginate();
+
     }
 
     /**

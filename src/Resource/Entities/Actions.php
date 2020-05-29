@@ -5,6 +5,7 @@ namespace Ygg\Resource\Entities;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Ygg\Resource\Models\Resource;
 use Ygg\Support\Facades\Dashboard;
 
@@ -29,9 +30,10 @@ trait Actions
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param Model $model
+     * @param Request $request
      */
-    public function save(Model $model)
+    public function save(Model $model, Request $request)
     {
         $model->save();
     }

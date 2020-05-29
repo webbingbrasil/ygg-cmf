@@ -2,6 +2,8 @@
 
 namespace DummyNamespace;
 
+use Ygg\Actions\Action;
+use Ygg\Screen\Layout;
 use Ygg\Screen\Screen;
 
 class DummyClass extends Screen
@@ -35,7 +37,7 @@ class DummyClass extends Screen
      *
      * @return Action[]
      */
-    public function commandBar(): array
+    public function actions(): array
     {
         return [];
     }

@@ -58,7 +58,7 @@ class EntityEditScreen extends Screen
      */
     public function query(Entity $type, $resource): array
     {
-        if($resource instanceof Model === false) {
+        if(!is_a($resource, Model::class)) {
             $resource = Dashboard::modelClass($type->model());
         }
         if(is_a($type, SingleResource::class)) {
@@ -114,32 +114,29 @@ class EntityEditScreen extends Screen
 
     /**
      * @param Entity $type
-     * @param Resource $resource
+     * @param $resource
      * @param Request $request
      * @return RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function save(Entity $type, Resource $resource, Request $request): RedirectResponse
+    public function save(Entity $type, $resource, Request $request): RedirectResponse
     {
+        if(!is_a($resource, Model::class)) {
+            $resource = Dashboard::modelClass($type->model());
+        }
         if(is_a($type, SingleResource::class)) {
             $resource = $resource::firstOrNew(['slug' => $type->slug]);
         }
         $this->checkPermission(Resource::PERMISSION_PREFIX.$type->slug);
         $type->isValid();
 
-        $resource->fill($request->all())->fill([
-            'type'    => $type->slug,
-            'author_id' => $request->user()->id,
-            'options' => $resource->getOptions(),
-        ]);
-
-        $type->save($resource);
+        $type->save($resource, $request);
 
         Alert::success(__('Operation completed successfully.'));
 
         $route = 'platform.resource.type';
         $params = [
-            'type' => $resource->type,
+            'type' => $type->slug,
         ];
 
         if(is_a($type, SingleResource::class)) {
@@ -152,10 +149,10 @@ class EntityEditScreen extends Screen
 
     /**
      * @param Entity $type
-     * @param Resource $resource
+     * @param $resource
      * @return RedirectResponse
      */
-    public function destroy(Entity $type, Resource $resource): RedirectResponse
+    public function destroy(Entity $type, $resource): RedirectResponse
     {
         $this->checkPermission(Resource::PERMISSION_PREFIX.$type->slug);
 

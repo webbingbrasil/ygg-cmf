@@ -47,6 +47,6 @@ class ScreenCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace.'\Ygg\Screen';
+        return $rootNamespace.'\Ygg\Screens';
     }
 }
