@@ -41,6 +41,7 @@ class Relation extends Field
         'value'          => [],
         'relationScope'  => null,
         'relationAppend' => null,
+        'action' => null,
     ];
 
     /**
