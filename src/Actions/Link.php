@@ -82,7 +82,10 @@ class Link extends Action
      */
     public function route(string $name, $parameters = [], $absolute = true): self
     {
-        $route = route($name, $parameters, $absolute);
+        $route = '';
+        if($this->isSee()) {
+            $route = route($name, $parameters, $absolute);
+        }
 
         return $this->href($route);
     }
