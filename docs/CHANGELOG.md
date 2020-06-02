@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/webbingbrasil/ygg-cmf/compare/v2.2.0...v2.2.1) (2020-06-02)
+
+
+### Bug Fixes
+
+* change switch-lagoutroute to match get and post ([17a2773](https://github.com/webbingbrasil/ygg-cmf/commit/17a2773289e48da4129b3c92e32fa10250644e56))
+
 # [2.2.0](https://github.com/webbingbrasil/ygg-cmf/compare/v2.1.1...v2.2.0) (2020-06-02)
 
 
