@@ -1,3 +1,19 @@
+# [2.1.0](https://github.com/webbingbrasil/ygg-cmf/compare/v2.0.0...v2.1.0) (2020-06-02)
+
+
+### Bug Fixes
+
+* add adjusts to allow resource work with custom classes ([22297b4](https://github.com/webbingbrasil/ygg-cmf/commit/22297b4068bbe74cfba3cf9029049b4fd3c03b3e))
+* add missing translation and css class ([17a8dbd](https://github.com/webbingbrasil/ygg-cmf/commit/17a8dbd08836e75dbb1a97ccf8bd21ad9ec830d6))
+* display icon only if exists ([4e4e19c](https://github.com/webbingbrasil/ygg-cmf/commit/4e4e19c20def8b749efad128adbdd11d4a2bd88e))
+* publish translation in installation process ([45ebad5](https://github.com/webbingbrasil/ygg-cmf/commit/45ebad5c3dff7e5f42e2a7e5d81e5c023118a58f))
+* update base translation ([08ddda5](https://github.com/webbingbrasil/ygg-cmf/commit/08ddda53d051f3eab7c58410ad4a203861de874e))
+
+
+### Features
+
+* add action option in relation field ([18621dc](https://github.com/webbingbrasil/ygg-cmf/commit/18621dcded579bcaf9e2d61f4e725ec85bd3d783))
+
 # [2.0.0](https://github.com/webbingbrasil/ygg-cmf/compare/v1.0.6...v2.0.0) (2020-05-29)
 
 
