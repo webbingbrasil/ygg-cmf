@@ -31,8 +31,8 @@ class PlatformServiceProvider extends ServiceProvider
 
         $this->app->booted(function () {
             $this->dashboard
-                ->registerAsset('stylesheets', config('platform.assets.stylesheets', null))
-                ->registerAsset('scripts', config('platform.assets.scripts', null))
+                ->registerAsset('stylesheets', config('platform.resource.stylesheets', null))
+                ->registerAsset('scripts', config('platform.resource.scripts', null))
                 ->registerPermissions($this->registerPermissionsMain())
                 ->registerPermissions($this->registerPermissionsSystems())
                 ->addPublicDirectory('ygg', Dashboard::path('public/'));

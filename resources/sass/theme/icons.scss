@@ -2,11 +2,11 @@
 
 @font-face {
     font-family: 'o-icon';
-    src: url('#{$ygg-font-path}/icon.eot?eo25wp');
-    src: url('#{$ygg-font-path}/icon.eot?eo25wp#iefix') format('embedded-opentype'),
-    url('#{$ygg-font-path}/icon.ttf?eo25wp') format('truetype'),
-    url('#{$ygg-font-path}/icon.woff?eo25wp') format('woff'),
-    url('#{$ygg-font-path}/icon.svg?eo25wp#o-icon') format('svg');
+    src: url('#{$ygg-font-path}/icons.eot?eo25wp');
+    src: url('#{$ygg-font-path}/icons.eot?eo25wp#iefix') format('embedded-opentype'),
+    url('#{$ygg-font-path}/icons.ttf?eo25wp') format('truetype'),
+    url('#{$ygg-font-path}/icons.woff?eo25wp') format('woff'),
+    url('#{$ygg-font-path}/icons.svg?eo25wp#o-icon') format('svg');
     font-weight: normal;
     font-style:  normal;
 }

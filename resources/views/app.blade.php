@@ -7,11 +7,7 @@
     <title>@yield('title','Ygg') - @yield('description','Admin')</title>
     <meta name="csrf_token" content="{{  csrf_token() }}" id="csrf_token" data-turbolinks-permanent>
     <meta name="auth" content="{{  Auth::check() }}"  id="auth" data-turbolinks-permanent>
-    @if(file_exists(public_path('/css/ygg/ygg.css')))
-        <link rel="stylesheet" type="text/css" href="{{  mix('/css/ygg/ygg.css') }}">
-    @else
-        <link rel="stylesheet" type="text/css" href="{{  ygg_mix('/css/ygg.css','ygg') }}">
-    @endif
+    <link rel="stylesheet" type="text/css" href="{{  ygg_mix('/css/ygg.css','ygg') }}">
 
     @stack('head')
 
