@@ -26,7 +26,5 @@ if (config('platform.auth', true)) {
     $this->router->post('password/reset', [ResetPasswordController::class, 'reset']);
 }
 
-$this->router->get('switch-logout', [LoginController::class, 'switchLogout'])->name('switch.logout');
-
-$this->router->post('switch-logout', [LoginController::class, 'switchLogout'])->name('switch.logout');
+$this->router->match(['get', 'post'],'switch-logout', [LoginController::class, 'switchLogout'])->name('switch.logout');
 $this->router->post('logout', [LoginController::class, 'logout'])->name('logout');
