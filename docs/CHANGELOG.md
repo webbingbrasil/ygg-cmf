@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/webbingbrasil/ygg-cmf/compare/v2.1.0...v2.1.1) (2020-06-02)
+
+
+### Bug Fixes
+
+* update assets path ([898f4e8](https://github.com/webbingbrasil/ygg-cmf/commit/898f4e8c2ec401d1280695b9c28665779e743753))
+
 # [2.1.0](https://github.com/webbingbrasil/ygg-cmf/compare/v2.0.0...v2.1.0) (2020-06-02)
 
 
