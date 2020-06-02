@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/webbingbrasil/ygg-cmf/compare/v2.1.1...v2.2.0) (2020-06-02)
+
+
+### Features
+
+* use actions in modal footer ([073b92c](https://github.com/webbingbrasil/ygg-cmf/commit/073b92c81497c5d4b8a2825b5193664e76d3371c))
+
 ## [2.1.1](https://github.com/webbingbrasil/ygg-cmf/compare/v2.1.0...v2.1.1) (2020-06-02)
 
 
