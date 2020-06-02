@@ -2,6 +2,7 @@
 
 namespace Ygg\Screen\Layouts;
 
+use Ygg\Actions\Button;
 use Ygg\Actions\WithActions;
 use Ygg\Screen\Repository;
 
@@ -43,17 +44,17 @@ class Modal extends Base
      * Modal constructor.
      *
      * @param string $key
-     * @param array  $layouts
+     * @param array $layouts
      */
     public function __construct(string $key, array $layouts = [])
     {
         $this->variables = [
-            'apply'      => __('Apply'),
-            'close'      => __('Close'),
-            'size'       => '',
-            'type'       => self::TYPE_CENTER,
-            'key'        => $key,
-            'title'      => $key,
+            'apply' => __('Apply'),
+            'close' => __('Close'),
+            'size' => '',
+            'type' => self::TYPE_CENTER,
+            'key' => $key,
+            'title' => $key,
             'turbolinks' => true,
             'actions' => [],
         ];
@@ -68,7 +69,33 @@ class Modal extends Base
      */
     public function build(Repository $repository)
     {
+        $this->variables['actions'] = $this->buildActions($repository);
         return $this->buildAsDeep($repository);
+    }
+
+    protected function actions(): array
+    {
+        return [
+            $this->closeAction(),
+            $this->applyAction(),
+        ];
+    }
+
+    protected function closeAction()
+    {
+        return Button::make($this->variables['close'])
+            ->dismissModal()
+            ->class('btn btn-link');
+    }
+
+    protected function applyAction()
+    {
+        return Button::make($this->variables['apply'])
+            ->id('submit-modal-' . $this->variables['key'])
+            ->type('submit')
+            ->turbolinks($this->variables['turbolinks'])
+            ->class('btn btn-default')
+            ->disableAction();
     }
 
     /**

@@ -33,10 +33,24 @@ class Button extends Action
         'novalidate'  => false,
         'method'      => null,
         'icon'        => null,
+        'disableAction' => false,
         'action'      => null,
         'confirm'     => null,
         'parameters'  => [],
         'turbolinks'  => true,
+    ];
+
+    /**
+     * Attributes available for a particular tag.
+     *
+     * @var array
+     */
+    protected $inlineAttributes = [
+        'type',
+        'autofocus',
+        'disabled',
+        'tabindex',
+        'data-dismiss'
     ];
 
     /**
@@ -55,5 +69,20 @@ class Button extends Action
             $action = "{$url}/{$this->get('method')}?{$query}";
             $this->set('action', $action);
         });
+    }
+
+    public function disableAction()
+    {
+        $this->set('disableAction', true);
+        return $this;
+    }
+
+    public function dismissModal()
+    {
+        return $this
+            ->type('button')
+            ->rawClick()
+            ->disableAction()
+            ->set('data-dismiss', 'modal');
     }
 }
