@@ -5,6 +5,7 @@ namespace App\Ygg\Screens\User;
 use App\Ygg\Layouts\Role\RolePermissionLayout;
 use App\Ygg\Layouts\User\UserEditLayout;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Ygg\Access\UserSwitch;
 use Ygg\Actions\Action;
@@ -106,7 +107,7 @@ class UserEditScreen extends Screen
     public function layout(): array
     {
         return [
-            UserEditLayout::class,
+            (new UserEditLayout)->withPassword(!$this->exist),
 
             Layout::rubbers([
                 RolePermissionLayout::class,
@@ -138,13 +139,20 @@ class UserEditScreen extends Screen
             ->collapse()
             ->toArray();
 
+        $userData = $request->get('user');
+
+        if(Arr::has($userData, 'password')) {
+            $userData['password'] = Hash::make($userData['password']);
+        }
+
         $user
-            ->fill($request->get('user'))
-            ->replaceRoles($request->input('user.roles'))
+            ->fill($userData)
             ->fill([
                 'permissions' => $permissions,
             ])
             ->save();
+
+        $user->replaceRoles($request->input('user.roles'));
 
         Toast::info(__('User was saved.'));
 
@@ -155,8 +163,6 @@ class UserEditScreen extends Screen
      * @param User $user
      *
      * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     *
      */
     public function remove(User $user)
     {

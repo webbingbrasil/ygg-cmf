@@ -9,6 +9,16 @@ use Ygg\Screen\Layouts\Rows;
 
 class UserEditLayout extends Rows
 {
+
+    protected $displayPassword = false;
+
+    public function withPassword($enable = true)
+    {
+        $this->displayPassword = $enable;
+
+        return $this;
+    }
+
     /**
      * Views.
      *
@@ -29,6 +39,13 @@ class UserEditLayout extends Rows
                 ->required()
                 ->title(__('Email'))
                 ->placeholder(__('Email')),
+
+            Input::make('user.password')
+                ->type('password')
+                ->required()
+                ->title(__('Password'))
+                ->placeholder(__('password'))
+                ->canSee($this->displayPassword),
 
             Select::make('user.roles.')
                 ->fromModel(Role::class, 'name')
