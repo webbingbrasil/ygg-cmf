@@ -24,6 +24,7 @@ class RelationController extends Controller
             'name'   => $name,
             'key'    => $key,
             'scope'  => $scope,
+            'searchScope'  => $searchScope,
             'append' => $append,
         ] = collect($request->except(['search']))->map(static function ($item) {
             return is_null($item) ? null : Crypt::decryptString($item);
@@ -35,7 +36,7 @@ class RelationController extends Controller
 
         $method = is_a($model, Model::class) ? 'buildersItems' : 'getItems';
 
-        $items = $this->{$method}($model, $name, $key, $search, $scope, $append);
+        $items = $this->{$method}($model, $name, $key, $search, $searchScope, $scope, $append);
 
         return response()->json($items);
     }
@@ -50,8 +51,9 @@ class RelationController extends Controller
      *
      * @return mixed
      */
-    private function buildersItems(Model $model, string $name, string $key, string $search = null, string $scope = null, string $append = null)
+    private function buildersItems(Model $model, string $name, string $key, string $search = null, string $searchScope = null, string $scope = null, string $append = null)
     {
+
         if ($scope !== null) {
             $model = $model->{$scope}();
         }
@@ -64,8 +66,13 @@ class RelationController extends Controller
             return $model->take(10)->pluck($append ?? $name, $key);
         }
 
+        if ($searchScope !== null) {
+            $model = $model->{$searchScope}($search);
+        } else {
+            $model = $model->where($name, 'like', '%'.$search.'%');
+        }
+
         return $model
-            ->where($name, 'like', '%'.$search.'%')
             ->limit(10)
             ->get()
             ->pluck($append ?? $name, $key);
@@ -80,7 +87,7 @@ class RelationController extends Controller
      *
      * @return Collection|array
      */
-    private function getItems($model, string $name, string $key, string $search = null, string $scope = null): iterable
+    private function getItems($model, string $name, string $key, string $search = null, string $searchScope = null, string $scope = null): iterable
     {
         if (! is_array($model) && property_exists($model, 'search')) {
             $model->search = $search;

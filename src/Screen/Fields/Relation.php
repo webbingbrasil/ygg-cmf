@@ -23,6 +23,7 @@ use Ygg\Support\Assert;
  * @method Relation placeholder(string $placeholder = null)
  * @method Relation popover(string $value = null)
  * @method Relation title(string $value = null)
+ * @method Relation searchRoute(string $value = null)
  */
 class Relation extends Field
 {
@@ -40,7 +41,9 @@ class Relation extends Field
         'class'          => 'form-control',
         'value'          => [],
         'relationScope'  => null,
+        'relationSearchScope'  => null,
         'relationAppend' => null,
+        'searchRoute' => 'platform.systems.relation',
         'action' => null,
     ];
 
@@ -201,6 +204,18 @@ class Relation extends Field
         $scope = lcfirst($scope);
         $this->set('scope', $scope);
         $this->set('relationScope', Crypt::encryptString($scope));
+
+        return $this;
+    }
+    /**
+     * @param string $scope
+     *
+     * @return Relation
+     */
+    public function useSearchScope(string $scope): self
+    {
+        $scope = lcfirst($scope);
+        $this->set('relationSearchScope', Crypt::encryptString($scope));
 
         return $this;
     }

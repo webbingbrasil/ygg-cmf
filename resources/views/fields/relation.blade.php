@@ -8,8 +8,9 @@
              data-fields--relation-name="{{ $relationName }}"
              data-fields--relation-key="{{ $relationKey }}"
              data-fields--relation-scope="{{ $relationScope }}"
+             data-fields--relation-search-scope="{{ $relationSearchScope }}"
              data-fields--relation-append="{{ $relationAppend }}"
-             data-fields--relation-route="{{ route('platform.systems.relation') }}"
+             data-fields--relation-route="{{ route($searchRoute) }}"
         >
             <select id="{{$id}}" class="form-control" data-target="fields--relation.select" @attributes($attributes)>
             </select>

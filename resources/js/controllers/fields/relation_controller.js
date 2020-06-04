@@ -15,6 +15,7 @@ export default class extends Controller {
         const name = this.data.get('name');
         const key = this.data.get('key');
         const scope = this.data.get('scope');
+        const searchScope = this.data.get('search-scope');
         const append = this.data.get('append');
 
 
@@ -56,6 +57,7 @@ export default class extends Controller {
                     name,
                     key,
                     scope,
+                    searchScope,
                     append,
                 }),
             },
