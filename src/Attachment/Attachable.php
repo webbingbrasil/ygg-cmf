@@ -26,7 +26,7 @@ trait Attachable
             'attachment_id'
         );
 
-        if (! is_null($group)) {
+        if ($group !== null) {
             $query->where('group', $group);
         }
 

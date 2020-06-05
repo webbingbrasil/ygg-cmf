@@ -412,7 +412,6 @@ export default class extends Controller {
             return;
         }
 
-        /** todo: Дублируется дважды */
         const file = {
             id: attachment.id,
             name: attachment.original_name,

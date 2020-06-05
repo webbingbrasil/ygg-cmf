@@ -73,32 +73,16 @@ class Upload extends Field
      */
     protected $inlineAttributes = [
         'accept',
-        'accesskey',
-        'autocomplete',
-        'autofocus',
-        'checked',
-        'disabled',
         'form',
         'formaction',
         'formenctype',
         'formmethod',
         'formnovalidate',
         'formtarget',
-        'list',
-        'max',
-        'maxlength',
-        'min',
-        'multiple',
         'name',
-        'pattern',
+        'multiple',
         'placeholder',
-        'readonly',
         'required',
-        'size',
-        'src',
-        'step',
-        'tabindex',
-        'type',
         'value',
         'groups',
         'storage',
@@ -142,31 +126,18 @@ class Upload extends Field
 
         // set load relation attachment
         $this->addBeforeRender(function () {
-            $groups = $this->get('groups');
             $value = Arr::wrap($this->get('value'));
 
             if (! Assert::isIntArray($value)) {
-                if(!empty($groups)) {
-                    $value = array_filter($value, function ($attachment) use ($groups) {
-                        return Arr::get($attachment, 'group') === $groups;
-                    });
-                    $this->set('value', $value);
-                }
                 return;
             }
 
             /** @var Attachment $attach */
-            $attach = Dashboard::model(Attachment::class)::query();
-            $attach->whereIn('id', $value)->orderBy('sort');
+            $attach = Dashboard::model(Attachment::class);
 
-            if(!empty($groups)) {
-                $attach->where('group', $groups);
-            }
-
-            $value = $attach->get()->toArray();
+            $value = $attach::whereIn('id', $value)->orderBy('sort')->get()->toArray();
 
             $this->set('value', $value);
         });
     }
-
 }

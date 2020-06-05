@@ -17,10 +17,9 @@ use Symfony\Component\HttpFoundation\Response;
  * Class AttachmentController.
  */
 class AttachmentController extends Controller
-{
-    /**
-     * @var Attachment
-     */
+{   /**
+ * @var Attachment
+ */
     protected $attachment;
 
     /**
@@ -66,22 +65,22 @@ class AttachmentController extends Controller
     /**
      * Delete files.
      *
-     * @param int     $id
+     * @param string  $id
      * @param Request $request
      */
-    public function destroy(int $id, Request $request)
+    public function destroy(string $id, Request $request)
     {
         $storage = $request->get('storage', 'public');
         $this->attachment->findOrFail($id)->delete($storage);
     }
 
     /**
-     * @param int     $id
+     * @param string  $id
      * @param Request $request
      *
      * @return ResponseFactory|Response
      */
-    public function update(int $id, Request $request)
+    public function update(string $id, Request $request)
     {
         $attachment = $this->attachment
             ->findOrFail($id)
@@ -104,7 +103,7 @@ class AttachmentController extends Controller
     {
         $model = app()->make(File::class, [
             'file'  => $file,
-            'disk'  => $request->get('storage', 'public'),
+            'disk'  => $request->get('storage'),
             'group' => $request->get('group'),
         ])->load();
 

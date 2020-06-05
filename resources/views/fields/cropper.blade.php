@@ -4,17 +4,21 @@
          data-fields--cropper-storage="{{ $storage ?? 'public' }}"
          data-fields--cropper-width="{{ $width }}"
          data-fields--cropper-height="{{ $height }}"
+         data-fields--cropper-min-width="{{ $minWidth }}"
+         data-fields--cropper-min-height="{{ $minHeight }}"
+         data-fields--cropper-max-width="{{ $maxWidth }}"
+         data-fields--cropper-max-height="{{ $maxHeight }}"
          data-fields--cropper-target="{{ $target }}"
          data-fields--cropper-url="{{ $url }}"
          data-fields--cropper-max-file-size="{{ $maxFileSize }}"
     >
-        <div class="b text-right wrapper cropper-actions">
+        <div class="border-dashed text-left p-3 cropper-actions">
 
             <div class="fields-cropper-container">
-                <img src="#" class="cropper-preview img-fluid img-full m-b-md b" alt="">
+                <img width="{{ $width }}" height="{{ $height }}" src="#" class="cropper-preview img-fluid m-b-md border" alt="">
             </div>
 
-            <span class="mt-1 float-left">{{ __('Upload image from your computer:') }}</span>
+            <span class="mt-1 float-left pr-3">{{ __('Upload image from your computer:') }}</span>
 
             <div class="btn-group">
                 <label class="btn btn-default m-n">
@@ -35,10 +39,10 @@
                    class="d-none">
         </div>
 
-        <input class="cropper-path"
-               type="hidden"
+        <input class="cropper-path d-none"
+               type="text"
                data-target="fields--cropper.source"
-            @attributes($attributes)
+               @attributes($attributes)
         >
 
         <div class="modal" role="dialog">
