@@ -1,3 +1,10 @@
+## [2.3.2](https://github.com/webbingbrasil/ygg-cmf/compare/v2.3.1...v2.3.2) (2020-06-05)
+
+
+### Bug Fixes
+
+* add to set accepted files using extension ([c688474](https://github.com/webbingbrasil/ygg-cmf/commit/c688474a57648d135001a986f608361890639104))
+
 ## [2.3.1](https://github.com/webbingbrasil/ygg-cmf/compare/v2.3.0...v2.3.1) (2020-06-05)
 
 
