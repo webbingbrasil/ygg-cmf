@@ -1,3 +1,15 @@
+# [2.3.0](https://github.com/webbingbrasil/ygg-cmf/compare/v2.2.1...v2.3.0) (2020-06-04)
+
+
+### Bug Fixes
+
+* add password field in user creation screen ([e384eef](https://github.com/webbingbrasil/ygg-cmf/commit/e384eef201afb4e3087afb158d54ea2b50cfdf1a))
+
+
+### Features
+
+* allow relation select to use a custom search scope ([8e2a6d2](https://github.com/webbingbrasil/ygg-cmf/commit/8e2a6d2726ba70dac67949fc4c3d10475b9c064b))
+
 ## [2.2.1](https://github.com/webbingbrasil/ygg-cmf/compare/v2.2.0...v2.2.1) (2020-06-02)
 
 
