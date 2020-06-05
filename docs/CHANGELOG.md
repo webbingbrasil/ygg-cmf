@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/webbingbrasil/ygg-cmf/compare/v2.3.0...v2.3.1) (2020-06-05)
+
+
+### Bug Fixes
+
+* add option to set storage disk in upload fields ([9956324](https://github.com/webbingbrasil/ygg-cmf/commit/995632447da993ce959d8c35303f22cda1093163))
+
 # [2.3.0](https://github.com/webbingbrasil/ygg-cmf/compare/v2.2.1...v2.3.0) (2020-06-04)
 
 
