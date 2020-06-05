@@ -5,6 +5,7 @@ namespace Ygg\Screen\Fields;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Arr;
 use Illuminate\View\View;
+use Mimey\MimeTypes;
 use Ygg\Attachment\Models\Attachment;
 use Ygg\Platform\Dashboard;
 use Ygg\Screen\Exceptions\FieldRequiredAttributeException;
@@ -139,5 +140,17 @@ class Upload extends Field
 
             $this->set('value', $value);
         });
+    }
+
+    public function acceptedExtensions(array $extensions)
+    {
+        $mimes = new MimeTypes();
+        $mimeTypes = collect();
+        foreach ($extensions as $extension) {
+            $mimeTypes->add($mimes->getAllMimeTypes($extension));
+        }
+        $this->acceptedFiles($mimeTypes->flatten()->implode(','));
+
+        return $this;
     }
 }
