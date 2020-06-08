@@ -86,7 +86,7 @@ abstract class Screen extends Controller
      */
     public function handle(...$parameters)
     {
-        abort_if(!$this->hasPermission(), 443);
+        abort_if(!$this->hasPermission(), 403);
 
         if($this->request->method() === 'GET' || !count($parameters)) {
             $this->arguments = $parameters;
@@ -217,7 +217,7 @@ abstract class Screen extends Controller
     /**
      * @return bool
      */
-    private function hasPermission()
+    protected function hasPermission()
     {
         return true;
     }
