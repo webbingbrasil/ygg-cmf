@@ -1,3 +1,10 @@
+## [2.3.7](https://github.com/webbingbrasil/ygg-cmf/compare/v2.3.6...v2.3.7) (2020-06-09)
+
+
+### Bug Fixes
+
+* display icon only if exists ([fc717bd](https://github.com/webbingbrasil/ygg-cmf/commit/fc717bd5f183ef81690c79b831a8b2577a2627f1))
+
 ## [2.3.6](https://github.com/webbingbrasil/ygg-cmf/compare/v2.3.5...v2.3.6) (2020-06-09)
 
 
