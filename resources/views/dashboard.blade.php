@@ -26,7 +26,7 @@
         </ul>
     </nav>
 
-    <div class="h-100 w-100 d-none d-sm-block position-relative to-top cursor b-b mt-md-5"
+    <div class="h-100 w-100 d-none d-md-block position-relative to-top cursor b-b mt-md-5"
          data-action="click->layouts--html-load#goToTop"
          title="{{ __('Go to top') }}"
          style="border-bottom: 1px solid rgba(233, 236, 239, 0.05);">

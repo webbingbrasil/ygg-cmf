@@ -751,6 +751,7 @@
   display: block;
   border-radius: 500px;
   white-space: nowrap;
+  min-width: 20px;
   img {
     border-radius: 500px;
     width: 100%;
@@ -1144,24 +1145,24 @@
 }
 
 .pull-up {
-    position: absolute !important;
-    top: 0;
+  position: absolute !important;
+  top: 0;
 }
 
 .cursor {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .cursor-wait {
-    cursor: wait;
+  cursor: wait;
 }
 
 .pull-left {
-    float: left;
+  float: left;
 }
 
 .pull-right {
-    float: right;
+  float: right;
 }
 
 .w-b-k {
