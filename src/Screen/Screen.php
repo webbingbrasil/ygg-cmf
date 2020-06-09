@@ -5,6 +5,7 @@ namespace Ygg\Screen;
 
 use Illuminate\Contracts\Routing\UrlRoutable;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionException;
@@ -219,7 +220,11 @@ abstract class Screen extends Controller
      */
     protected function hasPermission()
     {
-        return property_exists($this, 'permission') ? $this->checkPermission($this->permission) : true;
+        if(property_exists($this, 'permission')) {
+            return Auth::check() && Auth::user()->hasAccess($this->permission);
+        }
+
+        return true;
     }
 
     /**
