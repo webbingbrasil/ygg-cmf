@@ -1,3 +1,10 @@
+## [2.3.4](https://github.com/webbingbrasil/ygg-cmf/compare/v2.3.3...v2.3.4) (2020-06-09)
+
+
+### Bug Fixes
+
+* check if user has permission needed ([84570b6](https://github.com/webbingbrasil/ygg-cmf/commit/84570b6436f2c615ab1012eb8c3601887589e3fa))
+
 ## [2.3.3](https://github.com/webbingbrasil/ygg-cmf/compare/v2.3.2...v2.3.3) (2020-06-09)
 
 
