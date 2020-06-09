@@ -219,7 +219,7 @@ abstract class Screen extends Controller
      */
     protected function hasPermission()
     {
-        return true;
+        return property_exists($this, 'permission') ? $this->checkPermission($this->permission) : true;
     }
 
     /**
