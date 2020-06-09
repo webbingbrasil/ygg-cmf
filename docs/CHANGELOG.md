@@ -1,3 +1,10 @@
+## [2.3.6](https://github.com/webbingbrasil/ygg-cmf/compare/v2.3.5...v2.3.6) (2020-06-09)
+
+
+### Bug Fixes
+
+* check user has permission to see screen ([3fc8f5e](https://github.com/webbingbrasil/ygg-cmf/commit/3fc8f5e227cb684eb4c8194ced601325be95477c))
+
 ## [2.3.5](https://github.com/webbingbrasil/ygg-cmf/compare/v2.3.4...v2.3.5) (2020-06-09)
 
 
