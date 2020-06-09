@@ -1,3 +1,10 @@
+## [2.3.3](https://github.com/webbingbrasil/ygg-cmf/compare/v2.3.2...v2.3.3) (2020-06-09)
+
+
+### Bug Fixes
+
+* update forbidden status code and make hasPermission protected ([1473b70](https://github.com/webbingbrasil/ygg-cmf/commit/1473b705c87bb45fa02ed32ea41d9905247ce5d4))
+
 ## [2.3.2](https://github.com/webbingbrasil/ygg-cmf/compare/v2.3.1...v2.3.2) (2020-06-05)
 
 
