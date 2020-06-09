@@ -1,3 +1,10 @@
+## [2.3.5](https://github.com/webbingbrasil/ygg-cmf/compare/v2.3.4...v2.3.5) (2020-06-09)
+
+
+### Bug Fixes
+
+* return if user has permission ([0eb21f1](https://github.com/webbingbrasil/ygg-cmf/commit/0eb21f1f5db0627bfbd37dba3ffe1abec8311e15))
+
 ## [2.3.4](https://github.com/webbingbrasil/ygg-cmf/compare/v2.3.3...v2.3.4) (2020-06-09)
 
 
