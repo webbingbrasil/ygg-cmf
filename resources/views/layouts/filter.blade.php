@@ -1,7 +1,7 @@
 @if($filters->count() > 0)
     <div class="row justify-content-start" data-controller="screen--filter">
         @foreach($filters->where('display', true) as $filter)
-            <div class="col-sm-auto align-self-start">
+            <div class="{{$filter->col}} align-self-start">
                 {!! $filter->build() !!}
             </div>
         @endforeach

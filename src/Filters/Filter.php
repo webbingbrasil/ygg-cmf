@@ -14,6 +14,11 @@ abstract class Filter
     public $request;
 
     /**
+     * @var string
+     */
+    public $col = 'col-sm-auto';
+
+    /**
      * @var null|array
      */
     public $parameters;
