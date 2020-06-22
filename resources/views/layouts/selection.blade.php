@@ -21,7 +21,7 @@
                         </a>
                         <div class="dropdown-menu" data-action="click->screen--filter#onMenuClick" data-target="screen--filter.filterItem">
                             <div class="px-3 py-2 w-md">
-                                {!! $filter->render() !!}
+                                {!! $filter->build() !!}
                                 <div class="dropdown-divider"></div>
                                 <button type="submit"
                                         form="filters"

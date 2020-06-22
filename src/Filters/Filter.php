@@ -83,16 +83,39 @@ abstract class Filter
     /**
      * @return string
      */
-    public function render(): string
+    public function render(Field $field): string
     {
-        return collect($this->display())->reduce(static function ($html, Field $field) {
-            return $html.$field->form('filters')->render();
-        });
+        return $field->form('filters')->render();
+    }
+
+    /**
+     * @param Field[] $groupField
+     *
+     * @throws \Throwable
+     *
+     * @return array|string
+     */
+    private function renderGroup(array $groupField)
+    {
+        $cols = collect($groupField)->map(function ($field) {
+            return $this->render($field);
+        })->filter();
+
+        return view('platform::partials.fields.groups', [
+            'cols' => $cols,
+        ])->render();
     }
 
     public function build(): string
     {
-        return $this->render();
+        $html = '';
+        collect($this->display())->each(function ($field) use (&$html) {
+            $html .= is_array($field)
+                ? $this->renderGroup($field)
+                : $this->render($field);
+        });
+
+        return $html;
     }
 
     /**

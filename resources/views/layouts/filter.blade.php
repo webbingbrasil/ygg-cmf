@@ -2,7 +2,7 @@
     <div class="row justify-content-start" data-controller="screen--filter">
         @foreach($filters->where('display', true) as $filter)
             <div class="col-sm-auto align-self-start">
-                {!! $filter->render() !!}
+                {!! $filter->build() !!}
             </div>
         @endforeach
         <div class="col-sm-auto ml-auto align-self-end text-right">
