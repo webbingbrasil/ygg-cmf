@@ -34,7 +34,7 @@
                 @else
                     <div class="dropdown-toggle" data-action="click->screen--filter#onMenuClick" data-target="screen--filter.filterItem">
                         <div class="px-3 py-2 w-md">
-                            {!! $filters->where('display', true)->first()->render() !!}
+                            {!! $filters->where('display', true)->first()->build() !!}
                             <div class="dropdown-divider"></div>
                             <button type="submit"
                                     form="filters"
