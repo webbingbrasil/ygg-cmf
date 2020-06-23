@@ -1,3 +1,16 @@
+## [2.3.8](https://github.com/webbingbrasil/ygg-cmf/compare/v2.3.7...v2.3.8) (2020-06-23)
+
+
+### Bug Fixes
+
+* add option to set custom column class in inline filter ([874fbaa](https://github.com/webbingbrasil/ygg-cmf/commit/874fbaa47d6dfe4f13d8a70dda52e35accfa9ba2))
+* add options to set icon, color and link ([b417d97](https://github.com/webbingbrasil/ygg-cmf/commit/b417d97be8154af85962a04eef92c2bbdd4a5d84))
+* adjusts profile layout for small screens ([191da74](https://github.com/webbingbrasil/ygg-cmf/commit/191da7469dd72d5782af16c80f6b84794f3f0dec))
+* adjusts top bar buttons margins ([0d285df](https://github.com/webbingbrasil/ygg-cmf/commit/0d285df807cbb4f6fc177b62e5b2e4f4765d5f52))
+* allow field groups in filters ([edfc56d](https://github.com/webbingbrasil/ygg-cmf/commit/edfc56d0510f7058d1d6b2b12b03ec7952223df5))
+* clear filters in url ([13d9837](https://github.com/webbingbrasil/ygg-cmf/commit/13d9837feb908a4b0d691b4b03fa74739d87cec1))
+* get metric value and diff using custom fields ([6549945](https://github.com/webbingbrasil/ygg-cmf/commit/654994525ad861851ffb2885728885d5bf95c110))
+
 ## [2.3.7](https://github.com/webbingbrasil/ygg-cmf/compare/v2.3.6...v2.3.7) (2020-06-09)
 
 
