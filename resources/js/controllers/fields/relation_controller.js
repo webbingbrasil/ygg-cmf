@@ -17,7 +17,8 @@ export default class extends Controller {
         const scope = this.data.get('scope');
         const searchScope = this.data.get('search-scope');
         const append = this.data.get('append');
-
+        const form = select.getAttribute('form')
+        const relatedFields = JSON.parse(this.data.get('related-fields'));
 
         $.ajaxSetup({
             headers: {
@@ -51,15 +52,35 @@ export default class extends Controller {
                         }, []),
                     };
                 },
-                data: params => ({
-                    search: params.term,
-                    model,
-                    name,
-                    key,
-                    scope,
-                    searchScope,
-                    append,
-                }),
+                data: params => {
+                    const formElement = document.getElementById(form);
+                    const fields = window.platform.formToObject(formElement);
+                    const filters = Object.keys(fields)
+                        .filter(key => {
+                            if(relatedFields !== null) {
+                                return relatedFields.includes(key)
+                            }
+
+                            return false;
+                        })
+                        .reduce((obj, key) => {
+                            obj[key] = fields[key];
+                            return obj;
+                        }, {});
+
+                    console.log(filters, relatedFields);
+
+                    return {
+                        search: params.term,
+                        filters,
+                        model,
+                        name,
+                        key,
+                        scope,
+                        searchScope,
+                        append,
+                    }
+                },
             },
             placeholder: select.getAttribute('placeholder') || '',
         });

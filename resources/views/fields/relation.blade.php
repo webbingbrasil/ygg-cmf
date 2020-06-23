@@ -11,6 +11,7 @@
              data-fields--relation-search-scope="{{ $relationSearchScope }}"
              data-fields--relation-append="{{ $relationAppend }}"
              data-fields--relation-route="{{ route($searchRoute) }}"
+             data-fields--relation-related-fields="{{ json_encode($relatedFields) }}"
         >
             <select id="{{$id}}" class="form-control" data-target="fields--relation.select" @attributes($attributes)>
             </select>

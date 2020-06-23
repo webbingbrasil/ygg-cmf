@@ -17,6 +17,8 @@ use Ygg\Support\Assert;
  * @method Relation form($value = true)
  * @method Relation name(string $value = null)
  * @method Relation required(bool $value = true)
+ * @method Relation relatedFields(array $fields = [])
+ * @method Relation empty()
  * @method Relation size($value = true)
  * @method Relation tabindex($value = true)
  * @method Relation help(string $value = null)
@@ -43,6 +45,7 @@ class Relation extends Field
         'relationScope'  => null,
         'relationSearchScope'  => null,
         'relationAppend' => null,
+        'relatedFields' => [],
         'searchRoute' => 'platform.systems.relation',
         'action' => null,
     ];

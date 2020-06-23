@@ -26,17 +26,18 @@ class RelationController extends Controller
             'scope'  => $scope,
             'searchScope'  => $searchScope,
             'append' => $append,
-        ] = collect($request->except(['search']))->map(static function ($item) {
+        ] = collect($request->except(['search', 'filters']))->map(static function ($item) {
             return is_null($item) ? null : Crypt::decryptString($item);
         });
 
         /** @var Model $model */
         $model = new $model;
         $search = $request->get('search', '');
+        $filters = $request->get('filters', []);
 
         $method = is_a($model, Model::class) ? 'buildersItems' : 'getItems';
 
-        $items = $this->{$method}($model, $name, $key, $search, $searchScope, $scope, $append);
+        $items = $this->{$method}($model, $name, $key, $search, $searchScope, $scope, $append, $filters);
 
         return response()->json($items);
     }
@@ -51,7 +52,7 @@ class RelationController extends Controller
      *
      * @return mixed
      */
-    private function buildersItems(Model $model, string $name, string $key, string $search = null, string $searchScope = null, string $scope = null, string $append = null)
+    private function buildersItems(Model $model, string $name, string $key, string $search = null, string $searchScope = null, string $scope = null, string $append = null, $filters = [])
     {
 
         if ($scope !== null) {
@@ -67,7 +68,7 @@ class RelationController extends Controller
         }
 
         if ($searchScope !== null) {
-            $model = $model->{$searchScope}($search);
+            $model = $model->{$searchScope}($search, $filters);
         } else {
             $model = $model->where($name, 'like', '%'.$search.'%');
         }
@@ -87,7 +88,7 @@ class RelationController extends Controller
      *
      * @return Collection|array
      */
-    private function getItems($model, string $name, string $key, string $search = null, string $searchScope = null, string $scope = null): iterable
+    private function getItems($model, string $name, string $key, string $search = null, string $searchScope = null, string $scope = null, $filters = []): iterable
     {
         if (! is_array($model) && property_exists($model, 'search')) {
             $model->search = $search;
