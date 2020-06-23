@@ -1,3 +1,10 @@
+## [2.4.1](https://github.com/webbingbrasil/ygg-cmf/compare/v2.4.0...v2.4.1) (2020-06-23)
+
+
+### Bug Fixes
+
+* build first filter in selection ([5a1d89b](https://github.com/webbingbrasil/ygg-cmf/commit/5a1d89ba42a177c5e1d1bb87f8869cf5449c1397))
+
 # [2.4.0](https://github.com/webbingbrasil/ygg-cmf/compare/v2.3.8...v2.4.0) (2020-06-23)
 
 
