@@ -82,10 +82,11 @@ export default class extends Controller {
      * @param event
      */
     clear(event) {
-
-        const params = {
+        const filters = {
             sort: this.getUrlParameter('sort'),
         };
+
+        const params = $.param(this.removeEmpty(filters));
         const url = `${window.location.origin + window.location.pathname}?${params}`;
 
         window.Turbolinks.visit(url, {action: 'replace'});
