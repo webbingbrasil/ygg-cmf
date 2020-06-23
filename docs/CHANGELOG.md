@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/webbingbrasil/ygg-cmf/compare/v2.3.8...v2.4.0) (2020-06-23)
+
+
+### Features
+
+* add option to set related fields to relation field ([fd681f1](https://github.com/webbingbrasil/ygg-cmf/commit/fd681f11304aabef97cb8c32f9980016f5b3f020))
+
 ## [2.3.8](https://github.com/webbingbrasil/ygg-cmf/compare/v2.3.7...v2.3.8) (2020-06-23)
 
 
