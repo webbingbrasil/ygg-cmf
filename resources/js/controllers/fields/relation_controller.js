@@ -17,7 +17,6 @@ export default class extends Controller {
         const scope = this.data.get('scope');
         const searchScope = this.data.get('search-scope');
         const append = this.data.get('append');
-        const form = select.getAttribute('form')
         const relatedFields = JSON.parse(this.data.get('related-fields'));
 
         $.ajaxSetup({
@@ -53,8 +52,7 @@ export default class extends Controller {
                     };
                 },
                 data: params => {
-                    const formElement = document.getElementById(form);
-                    const fields = window.platform.formToObject(formElement);
+                    const fields = window.platform.formToObject(select.form);
                     const filters = Object.keys(fields)
                         .filter(key => {
                             if(relatedFields !== null) {
@@ -67,8 +65,6 @@ export default class extends Controller {
                             obj[key] = fields[key];
                             return obj;
                         }, {});
-
-                    console.log(filters, relatedFields);
 
                     return {
                         search: params.term,
