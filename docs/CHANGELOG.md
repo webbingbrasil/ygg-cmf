@@ -1,3 +1,10 @@
+## [2.4.2](https://github.com/webbingbrasil/ygg-cmf/compare/v2.4.1...v2.4.2) (2020-06-25)
+
+
+### Bug Fixes
+
+* get related fields from same form ([1a34878](https://github.com/webbingbrasil/ygg-cmf/commit/1a3487827a709a9587bdd6156811859dadfec2bd))
+
 ## [2.4.1](https://github.com/webbingbrasil/ygg-cmf/compare/v2.4.0...v2.4.1) (2020-06-23)
 
 
