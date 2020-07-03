@@ -1,3 +1,10 @@
+## [2.4.3](https://github.com/webbingbrasil/ygg-cmf/compare/v2.4.2...v2.4.3) (2020-07-03)
+
+
+### Bug Fixes
+
+* require export format selection ([31017f7](https://github.com/webbingbrasil/ygg-cmf/commit/31017f7b7fcb714c5c1fb4c071393b4056fff118))
+
 ## [2.4.2](https://github.com/webbingbrasil/ygg-cmf/compare/v2.4.1...v2.4.2) (2020-06-25)
 
 
