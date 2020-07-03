@@ -65,6 +65,7 @@ class Export extends ModalToggle
         $layout = Layout::modal('export-action', [
             Layout::rows([
                 RadioButtons::make('writer_type')
+                    ->required()
                     ->title(__('File format'))
                     ->options($this->get('exportOptions')),
             ]),
