@@ -45,7 +45,7 @@ abstract class Selection extends Base
         }
 
         $filters = $filters->map(static function ($filter) {
-            return app()->make($filter);
+            return is_object($filter) ? $filter : app()->make($filter);
         });
 
         return view($this->view, [
