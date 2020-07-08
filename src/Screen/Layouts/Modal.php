@@ -179,4 +179,10 @@ class Modal extends Base
 
         return $this;
     }
+
+    public function jsonSerialize()
+    {
+        $props = collect(get_object_vars($this));
+        return $props->except(['query','variables.actions'])->toArray();
+    }
 }
