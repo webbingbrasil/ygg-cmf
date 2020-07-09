@@ -1,3 +1,12 @@
+## [2.4.4](https://github.com/webbingbrasil/ygg-cmf/compare/v2.4.3...v2.4.4) (2020-07-09)
+
+
+### Bug Fixes
+
+* allow actions have access to repository data ([0166303](https://github.com/webbingbrasil/ygg-cmf/commit/01663036437ae6b101dca0a6c96efdc2a938cd20))
+* check if filter is object ([dcda58d](https://github.com/webbingbrasil/ygg-cmf/commit/dcda58d7a42bb16c3abeeaadb06fdf37d74cedbb))
+* ignore actions when json serialize a modal ([0f74f8c](https://github.com/webbingbrasil/ygg-cmf/commit/0f74f8cae05e242a6ff5af4216b3287ebbbb1e3b))
+
 ## [2.4.3](https://github.com/webbingbrasil/ygg-cmf/compare/v2.4.2...v2.4.3) (2020-07-03)
 
 
