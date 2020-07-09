@@ -3,6 +3,8 @@
 namespace Ygg\Actions;
 
 
+use Ygg\Screen\Repository;
+
 /**
  * Class Button.
  *
@@ -32,6 +34,7 @@ class Button extends Action
         'type'        => 'submit',
         'novalidate'  => false,
         'method'      => null,
+        'source'      => null,
         'icon'        => null,
         'disableAction' => false,
         'action'      => null,
@@ -84,5 +87,19 @@ class Button extends Action
             ->rawClick()
             ->disableAction()
             ->set('data-dismiss', 'modal');
+    }
+
+    /**
+     * @param Repository $repository
+     *
+     * @throws \Throwable
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     */
+    public function build(Repository $repository = null)
+    {
+        $this->set('source', $repository);
+
+        return $this->render();
     }
 }

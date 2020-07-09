@@ -2,6 +2,8 @@
 
 namespace Ygg\Actions;
 
+use Ygg\Screen\Repository;
+
 /**
  * Class Link.
  *
@@ -28,6 +30,7 @@ class Link extends Action
     protected $attributes = [
         'class'       => 'btn btn-link',
         'icon'        => null,
+        'source'        => null,
         'href'        => '#!',
         'turbolinks'  => true,
     ];
@@ -88,5 +91,19 @@ class Link extends Action
         }
 
         return $this->href($route);
+    }
+
+    /**
+     * @param Repository $repository
+     *
+     * @throws \Throwable
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     */
+    public function build(Repository $repository = null)
+    {
+        $this->set('source', $repository);
+
+        return $this->render();
     }
 }

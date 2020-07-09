@@ -118,8 +118,8 @@ class Field implements FieldInterface
      */
     public function __call(string $name, array $arguments): self
     {
-        $arguments = collect($arguments)->map(static function ($argument) {
-            return $argument instanceof Closure ? $argument() : $argument;
+        $arguments = collect($arguments)->map(function ($argument) {
+            return $argument instanceof Closure ? $argument->call($this) : $argument;
         });
 
         if (method_exists($this, $name)) {
@@ -177,6 +177,8 @@ class Field implements FieldInterface
      */
     public function render()
     {
+        $this->runBeforeRender();
+
         if (! $this->isSee()) {
             return;
         }
@@ -185,7 +187,6 @@ class Field implements FieldInterface
             ->checkRequired()
             ->modifyName()
             ->modifyValue()
-            ->runBeforeRender()
             ->translate()
             ->checkError();
 

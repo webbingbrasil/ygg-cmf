@@ -40,6 +40,8 @@ class Modal extends Base
      */
     protected $view = 'platform::layouts.modal';
 
+    protected $query;
+
     /**
      * Modal constructor.
      *
@@ -60,6 +62,7 @@ class Modal extends Base
         ];
 
         $this->layouts = $layouts;
+        $this->query = new Repository();
     }
 
     /**
@@ -69,6 +72,12 @@ class Modal extends Base
      */
     public function build(Repository $repository)
     {
+        if ($repository) {
+            $this->query = $repository;
+        }
+        if(method_exists($this, 'layouts')) {
+            $this->layouts = $this->layouts();
+        }
         $this->variables['actions'] = $this->buildActions($repository);
         return $this->buildAsDeep($repository);
     }
