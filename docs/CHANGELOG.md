@@ -1,3 +1,10 @@
+## [2.4.5](https://github.com/webbingbrasil/ygg-cmf/compare/v2.4.4...v2.4.5) (2020-08-10)
+
+
+### Bug Fixes
+
+* check if layout is instance of Base ([b6544ac](https://github.com/webbingbrasil/ygg-cmf/commit/b6544ac7d65c6f77747b090ea2c9481b0260ebea))
+
 ## [2.4.4](https://github.com/webbingbrasil/ygg-cmf/compare/v2.4.3...v2.4.4) (2020-07-09)
 
 
