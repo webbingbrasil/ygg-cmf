@@ -131,8 +131,8 @@ abstract class Screen extends Controller
             ->map(static function ($layout) {
                 return is_object($layout) ? $layout : app()->make($layout);
             })
-            ->filter(static function (Base $layout) use ($slugLayout) {
-                return $layout->getSlug() === $slugLayout;
+            ->filter(static function ($layout) use ($slugLayout) {
+                return is_a($layout, Base::class) && $layout->getSlug() === $slugLayout;
             })
             ->whenEmpty(static function () use ($method) {
                 abort(404, $method . ' not found');
