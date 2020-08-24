@@ -68,7 +68,7 @@ class ResourceController
 
         $this->resource = collect($iterator)
             ->filter(static function (SplFileInfo $file) use ($path) {
-                return $file->getRelativePathname() === $path;
+                return str_replace('\\', '/', $file->getRelativePathname()) === $path;
             })
             ->first();
 
