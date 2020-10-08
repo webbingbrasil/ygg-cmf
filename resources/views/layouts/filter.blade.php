@@ -5,21 +5,23 @@
                 {!! $filter->build() !!}
             </div>
         @endforeach
-        <div class="col-sm-auto ml-auto align-self-end text-right">
-            <div class="form-group">
-                <div class="btn-group" role="group">
-                    <button
-                            data-action="screen--filter#clear"
-                            class="btn btn-default">
-                        <i class="icon-refresh"></i>
-                    </button>
-                    <button type="submit"
-                            form="filters"
-                            class="btn btn-default">
-                        <i class="icon-filter"></i>
-                    </button>
+        @if($displayFormButtons)
+            <div class="col-sm-auto ml-auto align-self-end text-right">
+                <div class="form-group">
+                    <div class="btn-group" role="group">
+                        <button
+                                data-action="screen--filter#clear"
+                                class="btn btn-default">
+                            <i class="icon-refresh"></i>
+                        </button>
+                        <button type="submit"
+                                form="filters"
+                                class="btn btn-default">
+                            <i class="icon-filter"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 @endif

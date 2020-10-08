@@ -3,6 +3,7 @@
 namespace Ygg\Screen\Layouts;
 
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Support\Arr;
 use Ygg\Filters\Filter;
 use Ygg\Screen\Repository;
 
@@ -27,6 +28,31 @@ abstract class Selection extends Base
     public $view = self::TEMPLATE_DROP_DOWN;
 
     /**
+     * @var array
+     */
+    protected $variables = [
+        'displayFormButtons' => true,
+    ];
+
+    /**
+     * @return $this
+     */
+    public function hideFormButtons()
+    {
+        $this->variables['displayFormButtons'] = false;
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function showFormButtons()
+    {
+        $this->variables['displayFormButtons'] = true;
+        return $this;
+    }
+
+    /**
      * @param Repository $repository
      *
      * @return Factory|\Illuminate\View\View|void
@@ -48,10 +74,12 @@ abstract class Selection extends Base
             return is_object($filter) ? $filter : app()->make($filter);
         });
 
-        return view($this->view, [
+        $variables = array_merge($this->variables, [
             'filters' => $filters,
             'chunk'   => ceil($count / 4),
         ]);
+
+        return view($this->view, $variables);
     }
 
     /**
