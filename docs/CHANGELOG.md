@@ -1,3 +1,10 @@
+## [2.4.6](https://github.com/webbingbrasil/ygg-cmf/compare/v2.4.5...v2.4.6) (2020-08-26)
+
+
+### Bug Fixes
+
+* replace rab to bar in getRelativePathname to windows platform ([de95f54](https://github.com/webbingbrasil/ygg-cmf/commit/de95f54e8d7d55a5538d9cc1ee79921af7d3e629))
+
 ## [2.4.5](https://github.com/webbingbrasil/ygg-cmf/compare/v2.4.4...v2.4.5) (2020-08-10)
 
 
