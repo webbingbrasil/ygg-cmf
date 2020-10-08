@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/webbingbrasil/ygg-cmf/compare/v2.4.6...v2.5.0) (2020-10-08)
+
+
+### Features
+
+* add option to show/hide form buttons ([32f4e48](https://github.com/webbingbrasil/ygg-cmf/commit/32f4e4814732eaa1f3c6b3ec7e1dd4416af33b6b))
+
 ## [2.4.6](https://github.com/webbingbrasil/ygg-cmf/compare/v2.4.5...v2.4.6) (2020-08-26)
 
 
