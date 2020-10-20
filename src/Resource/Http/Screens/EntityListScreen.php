@@ -31,11 +31,6 @@ class EntityListScreen extends Screen
     public $description;
 
     /**
-     * @var string
-     */
-    public $permission;
-
-    /**
      * @var array
      */
     protected $grid = [];

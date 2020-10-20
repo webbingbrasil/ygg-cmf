@@ -32,11 +32,6 @@ class EntityEditScreen extends Screen
     public $description;
 
     /**
-     * @var string
-     */
-    public $permission;
-
-    /**
      * @var Entity
      */
     protected $entity;
