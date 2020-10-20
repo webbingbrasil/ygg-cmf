@@ -1,3 +1,10 @@
+## [2.5.1](https://github.com/webbingbrasil/ygg-cmf/compare/v2.5.0...v2.5.1) (2020-10-20)
+
+
+### Bug Fixes
+
+* remove permission propertie for resource screen ([d9c458f](https://github.com/webbingbrasil/ygg-cmf/commit/d9c458fed0201797a3b7e271bce182a931b1adea))
+
 # [2.5.0](https://github.com/webbingbrasil/ygg-cmf/compare/v2.4.6...v2.5.0) (2020-10-08)
 
 
