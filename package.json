@@ -56,7 +56,7 @@
         "vue-template-compiler": "^2.6.11",
         "husky": "^4.2.5",
         "patch-package": "^6.2.2",
-        "semantic-release": "^17.0.7"
+        "semantic-release": "^17.2.3"
     },
     "husky": {
         "hooks": {
