@@ -22,26 +22,26 @@
         }
     ],
     "require": {
-        "php": "^7.2.5",
+        "php": "^7.3|^8.0",
         "ext-intl": "*",
         "ext-json": "*",
         "ext-curl": "*",
-        "laravel/framework": "^7.0",
+        "laravel/framework": "^8.12",
         "cviebrock/eloquent-sluggable": "^7.0",
         "laravel/ui": "^2.0",
         "intervention/image": "^2.4",
         "ralouphie/mimey": "^2.1",
         "bensampo/laravel-enum": "^1.33",
-        "davejamesmiller/laravel-breadcrumbs": "^5.3"
+        "diglactic/laravel-breadcrumbs": "^6.0"
     },
     "suggest": {
-        "laravel/scout": "^7.1"
+        "laravel/scout": "^8.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
-        "fzaninotto/faker": "^1.4",
-        "mockery/mockery": "^1.0",
-        "phpunit/phpunit": "^8.0",
+        "fakerphp/faker": "^1.9.1",
+        "mockery/mockery": "^1.4.2",
+        "phpunit/phpunit": "^9.3.3",
         "doctrine/dbal": "~2.5",
         "orchestra/testbench": "~5.0"
     },
