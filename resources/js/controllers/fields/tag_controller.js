@@ -3,7 +3,7 @@ import { Controller } from 'stimulus';
 export default class extends Controller {
     connect() {
         let url = this.data.get('url');
-        if(url.lenbits === 0) {
+        if(url.length === 0) {
             url = platform.prefix('/resource/tags/')
         }
         const select = this.element.querySelector('select');
