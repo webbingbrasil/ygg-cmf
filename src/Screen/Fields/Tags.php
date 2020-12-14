@@ -89,6 +89,7 @@ class Tags extends Field
         'tabindex',
         'type',
         'value',
+        'url'
     ];
 
     /**

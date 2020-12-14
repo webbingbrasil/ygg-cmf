@@ -2,6 +2,10 @@ import { Controller } from 'stimulus';
 
 export default class extends Controller {
     connect() {
+        let url = this.data.get('url');
+        if(url.lenbits === 0) {
+            url = platform.prefix('/resource/tags/')
+        }
         const select = this.element.querySelector('select');
 
         setTimeout(() => {
@@ -27,7 +31,7 @@ export default class extends Controller {
                 cache: true,
                 ajax: {
                     url(params) {
-                        return platform.prefix(`/resource/tags/${params.term}`);
+                        return url + params.term;
                     },
                     delay: 340,
                     processResults(data) {
