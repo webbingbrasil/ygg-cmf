@@ -15,7 +15,7 @@
         "@babel/plugin-proposal-class-properties": "^7.7.4",
         "@babel/plugin-transform-block-scoping": "^7.7.4",
         "@babel/preset-env": "^7.7.6",
-        "axios": "^0.18.1",
+        "axios": "^0.21.1",
         "bootstrap": "^4.4.1",
         "codeflask": "^1.4.0",
         "cropperjs": "^1.5.7",
